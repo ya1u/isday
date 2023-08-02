@@ -5,8 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import languageSVG from "../images/language_icon.svg";
-import questionSVG from "../images/question_icon.svg";
-import smallQuestionSVG from "../images/question_small_icon.svg";
+import smallSupportSVG from "../images/support_small_icon.svg";
+import supportSVG from "../images/support_icon.svg";
 import hamburgurSVG from "../images/hamburger_icon.svg";
 
 // @font-face를 선언합니다.
@@ -78,6 +78,24 @@ const StyledInquireBtn = styled(Button)`
 
 const Header = () => {
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 599);
+  const [showMenuDropdown, setShowMenuDropdown] = useState(false);
+  const [showLangDropdown, setShowLangDropdown] = useState(false);
+
+  const handleMouseEnter = (mode: String) => {
+    if (mode === "menu") {
+      setShowMenuDropdown(true);
+    } else if (mode === "lang") {
+      setShowLangDropdown(true);
+    }
+  };
+
+  const handleMouseLeave = (mode: String) => {
+    if (mode === "menu") {
+      setShowMenuDropdown(false);
+    } else if (mode === "lang") {
+      setShowLangDropdown(false);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -102,6 +120,9 @@ const Header = () => {
             align={{ lg: "end" }}
             variant="light"
             title={<img src={hamburgurSVG} alt="Hamburgur Icon" />}
+            show={showMenuDropdown}
+            onMouseEnter={() => handleMouseEnter("menu")}
+            onMouseLeave={() => handleMouseLeave("menu")}
           >
             <Dropdown.Item href="/ko/">계산기</Dropdown.Item>
             <Dropdown.Item href="/en/">복리 계산기</Dropdown.Item>
@@ -109,7 +130,7 @@ const Header = () => {
             <Dropdown.Divider />
             <Dropdown.Item href="/ja/">
               문의하기
-              <img src={smallQuestionSVG} alt="Question Icon" />
+              <img src={smallSupportSVG} alt="Question Icon" />
             </Dropdown.Item>
           </StyledMobileDropdownButton>
           <StyledNavBrand href="#home">isDay</StyledNavBrand>
@@ -121,8 +142,12 @@ const Header = () => {
             </Nav>
           )}
           <Nav className="">
-            <StyledInquireBtn className="btn btn-light me-3 nav-desktop">
-              <img src={questionSVG} alt="Question Icon" />
+            <StyledInquireBtn className="btn btn-light me-2 nav-desktop">
+              <img
+                src={supportSVG}
+                alt="Support Icon"
+                style={{ marginRight: 7 }}
+              />
               문의하기
             </StyledInquireBtn>
             <DropdownButton
@@ -130,6 +155,9 @@ const Header = () => {
               align={{ lg: "start" }}
               variant="light"
               title={<img src={languageSVG} alt="Language Icon" />}
+              show={showLangDropdown}
+              onMouseEnter={() => handleMouseEnter("lang")}
+              onMouseLeave={() => handleMouseLeave("lang")}
             >
               <Dropdown.Item href="/ko/">한국어</Dropdown.Item>
               <Dropdown.Item href="/en/">English</Dropdown.Item>
