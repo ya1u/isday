@@ -23,7 +23,7 @@ const FontFaceStyle = styled.div`
 
 const StyledNavbar = styled(Navbar)`
   background-color: darkcyan;
-  height: 100px;
+  height: 110px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,10 +109,7 @@ const Header = () => {
   }, []);
   return (
     <>
-      {/* @font-face 스타일 컴포넌트를 네비게이션 바 컴포넌트 밖에서 선언합니다. */}
       <FontFaceStyle />
-
-      {/* 스타일이 적용된 StyledNavbar를 사용합니다. */}
       <StyledNavbar variant="dark">
         <StyledContainer className="justify-content-center">
           <StyledMobileDropdownButton
@@ -124,21 +121,21 @@ const Header = () => {
             onMouseEnter={() => handleMouseEnter("menu")}
             onMouseLeave={() => handleMouseLeave("menu")}
           >
-            <Dropdown.Item href="/ko/">계산기</Dropdown.Item>
+            <Dropdown.Item href="/calc">계산기</Dropdown.Item>
             <Dropdown.Item href="/en/">복리 계산기</Dropdown.Item>
-            <Dropdown.Item href="/ja/">공학용 계산기</Dropdown.Item>
+            <Dropdown.Item href="/engineer-calc">공학용 계산기</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="/ja/">
               문의하기
               <img src={smallSupportSVG} alt="Question Icon" />
             </Dropdown.Item>
           </StyledMobileDropdownButton>
-          <StyledNavBrand href="#home">isDay</StyledNavBrand>
+          <StyledNavBrand href="/">isDay</StyledNavBrand>
           {isWideScreen && (
             <Nav className="me-auto">
-              <StyledNavLink href="#home">계산기</StyledNavLink>
+              <StyledNavLink href="/calc">계산기</StyledNavLink>
               <StyledNavLink href="#features">복리 계산기</StyledNavLink>
-              <StyledNavLink href="#pricing">공학용 계산기</StyledNavLink>
+              <StyledNavLink href="/engineer-calc">공학용 계산기</StyledNavLink>
             </Nav>
           )}
           <Nav className="">

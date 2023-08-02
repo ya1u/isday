@@ -31,6 +31,31 @@
   color: #61dafb;
 }
 
+.App-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Style for the advertisement area */
+.SideAdvertisements {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+/* Style for each advertisement */
+.Advertisement {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  width: 200px; /* 원하는 광고 너비로 설정하세요 */
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
