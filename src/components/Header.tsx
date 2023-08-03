@@ -30,9 +30,8 @@ const StyledNavbar = styled(Navbar)`
 `;
 
 const StyledContainer = styled(Container)`
-  margin-left: 20%;
-  margin-right: 20%;
-  @media (max-width: 599px) {
+  width: 1000px;
+  @media (max-width: 629px) {
     justify-content: space-around;
     text-align: center;
     margin: 0 auto;
@@ -40,7 +39,7 @@ const StyledContainer = styled(Container)`
 `;
 
 const StyledMobileDropdownButton = styled(DropdownButton)`
-  @media (min-width: 600px) {
+  @media (min-width: 631px) {
     display: none;
   }
 `;
@@ -48,9 +47,15 @@ const StyledMobileDropdownButton = styled(DropdownButton)`
 const StyledNavBrand = styled(Navbar.Brand)`
   font-family: "Jalnan", "MaplestoryBold";
   font-size: 32px;
-  @media (max-width: 599px) {
+  @media (max-width: 630px) {
     font-size: 34px;
     margin: 0 auto;
+  }
+`;
+
+const StyleNav = styled(Nav)`
+  @media (min-width: 631px) {
+    flex: 1;
   }
 `;
 
@@ -58,10 +63,10 @@ const StyledNavLink = styled(Nav.Link)`
   font-family: "Jalnan", "MaplestoryBold";
   font-size: 18px;
   white-space: nowrap;
-  @media (max-width: 638px) {
+  @media (max-width: 660px) {
     font-size: 16px;
   }
-  @media (max-width: 599px) {
+  @media (max-width: 630px) {
     display: none;
     margin: 0 auto;
   }
@@ -71,7 +76,7 @@ const StyledInquireBtn = styled(Button)`
   font-family: "MaplestoryBold", "Jalnan";
   font-size: 15px;
   width: 122px;
-  @media (max-width: 599px) {
+  @media (max-width: 630px) {
     display: none;
   }
 `;
@@ -122,8 +127,8 @@ const Header = () => {
             onMouseLeave={() => handleMouseLeave("menu")}
           >
             <Dropdown.Item href="/calc">계산기</Dropdown.Item>
-            <Dropdown.Item href="/en/">복리 계산기</Dropdown.Item>
-            <Dropdown.Item href="/engineer-calc">공학용 계산기</Dropdown.Item>
+            <Dropdown.Item href="/compound-interest-calc/">복리 계산기</Dropdown.Item>
+            <Dropdown.Item href="/pomodoro">뽀모도로 타이머</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="/ja/">
               문의하기
@@ -132,11 +137,14 @@ const Header = () => {
           </StyledMobileDropdownButton>
           <StyledNavBrand href="/">isDay</StyledNavBrand>
           {isWideScreen && (
-            <Nav className="me-auto">
+            // <Nav className="me-auto"> 미오토 잠시지움
+            <StyleNav>
               <StyledNavLink href="/calc">계산기</StyledNavLink>
-              <StyledNavLink href="#features">복리 계산기</StyledNavLink>
-              <StyledNavLink href="/engineer-calc">공학용 계산기</StyledNavLink>
-            </Nav>
+              <StyledNavLink href="/compound-interest-calc">복리 계산기</StyledNavLink>
+              <StyledNavLink href="/pomodoro">
+                뽀모도로 타이머
+              </StyledNavLink>
+            </StyleNav>
           )}
           <Nav className="">
             <StyledInquireBtn className="btn btn-light me-2 nav-desktop">

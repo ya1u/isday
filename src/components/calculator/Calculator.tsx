@@ -55,36 +55,55 @@ const Calculator: React.FC = () => {
   };
 
   return (
-    <CalculatorContainer>
-      <CalculatorScreen>
-        <ResultDisplay>{result}</ResultDisplay>
-        <Input type="text" value={inputValue} onChange={handleInputChange} />
-      </CalculatorScreen>
-      <ButtonGrid>
-        <GreyBtn onClick={() => handleButtonClick("(")}>(</GreyBtn>
-        <GreyBtn onClick={() => handleButtonClick(")")}>)</GreyBtn>
-        <GreyBtn onClick={handlePercentage}>%</GreyBtn>
-        <ResultBtn onClick={() => handleButtonClick("/")}>&#247;</ResultBtn>
-        <Button onClick={() => handleButtonClick("7")}>7</Button>
-        <Button onClick={() => handleButtonClick("8")}>8</Button>
-        <Button onClick={() => handleButtonClick("9")}>9</Button>
-        <ResultBtn onClick={() => handleButtonClick("*")}>&times;</ResultBtn>
-        <Button onClick={() => handleButtonClick("4")}>4</Button>
-        <Button onClick={() => handleButtonClick("5")}>5</Button>
-        <Button onClick={() => handleButtonClick("6")}>6</Button>
-        <ResultBtn onClick={() => handleButtonClick("-")}>-</ResultBtn>
-        <Button onClick={() => handleButtonClick("1")}>1</Button>
-        <Button onClick={() => handleButtonClick("2")}>2</Button>
-        <Button onClick={() => handleButtonClick("3")}>3</Button>
-        <ResultBtn onClick={() => handleButtonClick("+")}>+</ResultBtn>
-        <Button onClick={() => handleButtonClick(".")}>.</Button>
-        <Button onClick={() => handleButtonClick("0")}>0</Button>
-        <Button onClick={handleClear}>C</Button>
-        <ResultBtn onClick={calculateResult}>=</ResultBtn>
-      </ButtonGrid>
-    </CalculatorContainer>
+    <StyledContainer>
+      <StyledTitle>일반 계산기</StyledTitle>
+      <CalculatorContainer>
+        <CalculatorScreen>
+          <ResultDisplay>{result}</ResultDisplay>
+          <Input type="text" value={inputValue} onChange={handleInputChange} />
+        </CalculatorScreen>
+        <ButtonGrid>
+          <GreyBtn onClick={() => handleButtonClick("(")}>(</GreyBtn>
+          <GreyBtn onClick={() => handleButtonClick(")")}>)</GreyBtn>
+          <GreyBtn onClick={handlePercentage}>%</GreyBtn>
+          <ResultBtn onClick={() => handleButtonClick("/")}>&#247;</ResultBtn>
+          <Button onClick={() => handleButtonClick("7")}>7</Button>
+          <Button onClick={() => handleButtonClick("8")}>8</Button>
+          <Button onClick={() => handleButtonClick("9")}>9</Button>
+          <ResultBtn onClick={() => handleButtonClick("*")}>&times;</ResultBtn>
+          <Button onClick={() => handleButtonClick("4")}>4</Button>
+          <Button onClick={() => handleButtonClick("5")}>5</Button>
+          <Button onClick={() => handleButtonClick("6")}>6</Button>
+          <ResultBtn onClick={() => handleButtonClick("-")}>-</ResultBtn>
+          <Button onClick={() => handleButtonClick("1")}>1</Button>
+          <Button onClick={() => handleButtonClick("2")}>2</Button>
+          <Button onClick={() => handleButtonClick("3")}>3</Button>
+          <ResultBtn onClick={() => handleButtonClick("+")}>+</ResultBtn>
+          <Button onClick={() => handleButtonClick(".")}>.</Button>
+          <Button onClick={() => handleButtonClick("0")}>0</Button>
+          <Button onClick={handleClear}>C</Button>
+          <ResultBtn onClick={calculateResult}>=</ResultBtn>
+        </ButtonGrid>
+      </CalculatorContainer>
+    </StyledContainer>
   );
 };
+
+const StyledContainer = styled.div`
+  /* width: 680px; */
+  background-color: #F7F7F7;
+  border: 1px solid transparent;
+  border-radius: 25px; /* 둥근 모서리 추가 */
+  box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+  margin: 0;
+  padding: 0;
+`;
+
+const StyledTitle = styled.div`
+  font-family: "Jalnan", "MaplestoryBold";
+  font-size: 28px;
+  margin: 40px auto;
+`;
 
 const CalculatorContainer = styled.div`
   background-color: #333;
@@ -92,7 +111,7 @@ const CalculatorContainer = styled.div`
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   width: 350px;
-  margin: 0 auto;
+  margin: 40px auto;
   text-align: center;
 `;
 
@@ -141,7 +160,7 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 30px;
   &:hover {
-    background-color: #20B2AA;
+    background-color: #20b2aa;
     /* 다른 스타일을 추가하고 싶다면 여기에 작성하면 돼 */
   }
 `;
@@ -169,7 +188,7 @@ const ResultBtn = styled.button`
   cursor: pointer;
   font-size: 30px;
   &:hover {
-    background-color: #FFA500;
+    background-color: #ffa500;
     /* 다른 스타일을 추가하고 싶다면 여기에 작성하면 돼 */
   }
 `;
