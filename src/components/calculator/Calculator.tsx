@@ -91,7 +91,7 @@ const Calculator: React.FC = () => {
 
 const StyledContainer = styled.div`
   /* width: 680px; */
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   border: 1px solid transparent;
   border-radius: 25px; /* 둥근 모서리 추가 */
   box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
@@ -102,7 +102,7 @@ const StyledContainer = styled.div`
 const StyledTitle = styled.div`
   font-family: "Jalnan", "MaplestoryBold";
   font-size: 28px;
-  margin: 40px auto;
+  margin: 80px 0 auto;
 `;
 
 const CalculatorContainer = styled.div`

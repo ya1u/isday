@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+interface InvestmentData {
+  year: number;
+  amount: number;
+  income: number;
+  interestRate: number;
+}
+
 interface CalculatorState {
   principal: number;
   interestRate: number;
   period: number;
   result: number | null;
+  investmentData: InvestmentData[];
 }
 
 const CompoundCalculator: React.FC = () => {
@@ -14,6 +22,7 @@ const CompoundCalculator: React.FC = () => {
     interestRate: 0,
     period: 0,
     result: null,
+    investmentData: [],
   });
 
   const handlePrincipalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +43,30 @@ const CompoundCalculator: React.FC = () => {
   const calculateCompoundInterest = () => {
     const { principal, interestRate, period } = calculatorState;
     const r = interestRate / 100;
-    const compoundInterest = principal * Math.pow(1 + r, period);
+    const investmentData: {
+      year: number;
+      amount: number;
+      income: number;
+      interestRate: number;
+    }[] = [];
+
+    let totalAmount = principal;
+    for (let i = 1; i <= period; i++) {
+      totalAmount *= 1 + r;
+      const income = totalAmount - principal;
+      const interestRate = (income / principal) * 100;
+      investmentData.push({
+        year: i,
+        amount: totalAmount,
+        income,
+        interestRate,
+      });
+    }
+
     setCalculatorState((prevState) => ({
       ...prevState,
-      result: compoundInterest,
+      result: totalAmount,
+      investmentData,
     }));
   };
 
@@ -66,7 +95,7 @@ const CompoundCalculator: React.FC = () => {
       <CalculatorContainer>
         <CalculatorScreen>
           <StyledTitle>복리 계산기</StyledTitle>
-          <InputLabel>투자원금 입력</InputLabel>
+          <InputLabel>투자원금 (원) :</InputLabel>
           <Input
             type="text"
             value={
@@ -79,15 +108,7 @@ const CompoundCalculator: React.FC = () => {
             placeholder="원금을 입력하세요"
           />
 
-          <InputLabel>연이율 입력 (%)</InputLabel>
-          <Input
-            type="number"
-            value={calculatorState.interestRate}
-            onChange={handleInterestRateChange}
-            placeholder="연이율을 입력하세요"
-          />
-
-          <InputLabel>투자기간 입력 (년)</InputLabel>
+          <InputLabel>투자기간 (년) :</InputLabel>
           <Input
             type="text"
             value={calculatorState.period > 0 ? calculatorState.period : ""}
@@ -96,18 +117,60 @@ const CompoundCalculator: React.FC = () => {
             placeholder="기간을 입력하세요"
           />
 
-          {calculatorState.result !== null && (
-            <ResultDisplay>
-              복리 계산 결과:{" "}
-              {numberWithCommas(calculatorState.result.toFixed(2))} 원
-            </ResultDisplay>
-          )}
+          <InputLabel>연이율 (%) :</InputLabel>
+          <Input
+            type="number"
+            value={
+              calculatorState.interestRate > 0
+                ? calculatorState.interestRate
+                : ""
+            }
+            onChange={handleInterestRateChange}
+            placeholder="연이율을 입력하세요"
+          />
 
           <CalculateButton onClick={handleCalculateClick}>
             계산하기
           </CalculateButton>
         </CalculatorScreen>
       </CalculatorContainer>
+
+      {calculatorState.result !== null && (
+        <ResultDisplay>
+          <p>
+            수익 금액 :{" "}
+            {numberWithCommas(
+              (calculatorState.result - calculatorState.principal).toFixed(0)
+            )}{" "}
+            원
+          </p>
+          <BoldGreenText>
+            최종 금액 : {numberWithCommas(calculatorState.result.toFixed(0))} 원
+          </BoldGreenText>
+          {calculatorState.investmentData && (
+            <Table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>수익</th>
+                  <th>총 금액</th>
+                  <th>수익률</th>
+                </tr>
+              </thead>
+              <tbody>
+                {calculatorState.investmentData.map((data) => (
+                  <tr key={data.year}>
+                    <th>{data.year}</th>
+                    <td>{numberWithCommas(data.income.toFixed(0))} 원</td>
+                    <td>{numberWithCommas(data.amount.toFixed(0))} 원</td>
+                    <td>{data.interestRate.toFixed(2)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+        </ResultDisplay>
+      )}
     </StyledContainer>
   );
 };
@@ -129,7 +192,7 @@ const StyledContainer = styled.div`
 const StyledTitle = styled.div`
   font-family: "Jalnan", "MaplestoryBold";
   font-size: 28px;
-  margin: 40px auto;
+  margin: 20px auto;
 `;
 
 const CalculatorContainer = styled.div`
@@ -141,7 +204,7 @@ const CalculatorContainer = styled.div`
 `;
 
 const CalculatorScreen = styled.div`
-  background-color: #f5f5f5;
+  background-color: #f7f7f7;
   border-radius: 10px;
   padding: 20px;
   display: flex;
@@ -150,13 +213,15 @@ const CalculatorScreen = styled.div`
 `;
 
 const InputLabel = styled.label`
-  font-size: 14px;
+  width: 90%;
+  font-size: 18px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 15px;
+  text-align: left;
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
@@ -166,10 +231,32 @@ const Input = styled.input`
 `;
 
 const ResultDisplay = styled.p`
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid grey;
   font-size: 18px;
-  margin-top: 20px;
-  span {
-    margin-left: 5px;
+  margin: 30px 30px;
+  padding-top: 30px;
+  p {
+    font-family: "Jalnan", "MaplestoryBold";
+  }
+`;
+
+const Table = styled.table`
+  border-top: 1px solid grey;
+  margin-top: 30px;
+  th,
+  td {
+    padding: 3px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+  }
+  th {
+    font-weight: bold;
+    text-align: center;
+  }
+  td {
+    text-align: right;
   }
 `;
 
@@ -178,9 +265,16 @@ const CalculateButton = styled.button`
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 10px 30px;
   font-size: 16px;
+  margin-top: 30px;
   cursor: pointer;
+`;
+
+const BoldGreenText = styled.span`
+  font-family: "Jalnan", "MaplestoryBold";
+  font-weight: bold;
+  color: green;
 `;
 
 export default CompoundCalculator;
