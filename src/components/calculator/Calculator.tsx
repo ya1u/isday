@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import * as math from "mathjs";
+import { FormattedMessage, IntlProvider } from "react-intl";
+import messages from "../../locales/messages";
 
-const Calculator: React.FC = () => {
+const Calculator = ({ selectedLang }: { selectedLang: string }) => {
   const [inputValue, setInputValue] = useState("");
   const [result, setResult] = useState("");
 
@@ -55,37 +57,47 @@ const Calculator: React.FC = () => {
   };
 
   return (
-    <StyledContainer>
-      <StyledTitle>일반 계산기</StyledTitle>
-      <CalculatorContainer>
-        <CalculatorScreen>
-          <ResultDisplay>{result}</ResultDisplay>
-          <Input type="text" value={inputValue} onChange={handleInputChange} />
-        </CalculatorScreen>
-        <ButtonGrid>
-          <GreyBtn onClick={() => handleButtonClick("(")}>(</GreyBtn>
-          <GreyBtn onClick={() => handleButtonClick(")")}>)</GreyBtn>
-          <GreyBtn onClick={handlePercentage}>%</GreyBtn>
-          <ResultBtn onClick={() => handleButtonClick("/")}>&#247;</ResultBtn>
-          <Button onClick={() => handleButtonClick("7")}>7</Button>
-          <Button onClick={() => handleButtonClick("8")}>8</Button>
-          <Button onClick={() => handleButtonClick("9")}>9</Button>
-          <ResultBtn onClick={() => handleButtonClick("*")}>&times;</ResultBtn>
-          <Button onClick={() => handleButtonClick("4")}>4</Button>
-          <Button onClick={() => handleButtonClick("5")}>5</Button>
-          <Button onClick={() => handleButtonClick("6")}>6</Button>
-          <ResultBtn onClick={() => handleButtonClick("-")}>-</ResultBtn>
-          <Button onClick={() => handleButtonClick("1")}>1</Button>
-          <Button onClick={() => handleButtonClick("2")}>2</Button>
-          <Button onClick={() => handleButtonClick("3")}>3</Button>
-          <ResultBtn onClick={() => handleButtonClick("+")}>+</ResultBtn>
-          <Button onClick={() => handleButtonClick(".")}>.</Button>
-          <Button onClick={() => handleButtonClick("0")}>0</Button>
-          <Button onClick={handleClear}>C</Button>
-          <ResultBtn onClick={calculateResult}>=</ResultBtn>
-        </ButtonGrid>
-      </CalculatorContainer>
-    </StyledContainer>
+    <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+      <StyledContainer>
+        <StyledTitle selectedLang={selectedLang}>
+          <FormattedMessage id="content.generalcalculator" />
+        </StyledTitle>
+        <CalculatorContainer>
+          <CalculatorScreen>
+            <ResultDisplay>{result}</ResultDisplay>
+            <Input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+          </CalculatorScreen>
+          <ButtonGrid>
+            <GreyBtn onClick={() => handleButtonClick("(")}>(</GreyBtn>
+            <GreyBtn onClick={() => handleButtonClick(")")}>)</GreyBtn>
+            <GreyBtn onClick={handlePercentage}>%</GreyBtn>
+            <ResultBtn onClick={() => handleButtonClick("/")}>&#247;</ResultBtn>
+            <Button onClick={() => handleButtonClick("7")}>7</Button>
+            <Button onClick={() => handleButtonClick("8")}>8</Button>
+            <Button onClick={() => handleButtonClick("9")}>9</Button>
+            <ResultBtn onClick={() => handleButtonClick("*")}>
+              &times;
+            </ResultBtn>
+            <Button onClick={() => handleButtonClick("4")}>4</Button>
+            <Button onClick={() => handleButtonClick("5")}>5</Button>
+            <Button onClick={() => handleButtonClick("6")}>6</Button>
+            <ResultBtn onClick={() => handleButtonClick("-")}>-</ResultBtn>
+            <Button onClick={() => handleButtonClick("1")}>1</Button>
+            <Button onClick={() => handleButtonClick("2")}>2</Button>
+            <Button onClick={() => handleButtonClick("3")}>3</Button>
+            <ResultBtn onClick={() => handleButtonClick("+")}>+</ResultBtn>
+            <Button onClick={() => handleButtonClick(".")}>.</Button>
+            <Button onClick={() => handleButtonClick("0")}>0</Button>
+            <Button onClick={handleClear}>C</Button>
+            <ResultBtn onClick={calculateResult}>=</ResultBtn>
+          </ButtonGrid>
+        </CalculatorContainer>
+      </StyledContainer>
+    </IntlProvider>
   );
 };
 
@@ -99,10 +111,30 @@ const StyledContainer = styled.div`
   padding: 0;
 `;
 
-const StyledTitle = styled.div`
-  font-family: "Jalnan", "MaplestoryBold";
+interface StyledTitleProps {
+  selectedLang: string;
+}
+
+const StyledTitle = styled.div<StyledTitleProps>`
   font-size: 28px;
   margin: 80px 0 auto;
+  ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+    `}
 `;
 
 const CalculatorContainer = styled.div`
@@ -161,7 +193,6 @@ const Button = styled.button`
   font-size: 30px;
   &:hover {
     background-color: #20b2aa;
-    /* 다른 스타일을 추가하고 싶다면 여기에 작성하면 돼 */
   }
 `;
 
@@ -175,7 +206,6 @@ const GreyBtn = styled.button`
   font-size: 30px;
   &:hover {
     background-color: #888;
-    /* 다른 스타일을 추가하고 싶다면 여기에 작성하면 돼 */
   }
 `;
 

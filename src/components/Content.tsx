@@ -1,9 +1,10 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { FormattedMessage, IntlProvider } from "react-intl";
+import messages from "../locales/messages";
 
 const StyledContainer = styled.div`
   /* width: 680px; */
@@ -25,7 +26,6 @@ const StyledCard = styled(Card)`
 `;
 
 const CardHeader = styled(Card.Header)`
-  font-family: "Jalnan", "MaplestoryBold";
   height: 70px;
   line-height: 53px;
   background-color: darkcyan;
@@ -34,10 +34,26 @@ const CardHeader = styled(Card.Header)`
   font-size: 22px;
   text-align: left; /* 왼쪽 정렬 추가 */
   padding-left: 50px;
+  ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+    `}
 `;
 
 const StyledListGroup = styled(ListGroup)`
-font-family: "Jalnan", "MaplestoryBold";
   .list-group-item {
     /* border: none; */
     background-color: transparent;
@@ -49,33 +65,56 @@ font-family: "Jalnan", "MaplestoryBold";
     padding-left: 50px;
     color: black;
     opacity: 0.6;
+    ${(props) =>
+      props.selectedLang === "ko" &&
+      css`
+        font-family: "Jalnan", "MaplestoryBold";
+      `}
+
+    ${(props) =>
+      props.selectedLang === "en" &&
+      css`
+        font-family: "Jalnan", "MaplestoryBold";
+      `}
+
+  ${(props) =>
+      props.selectedLang === "ja" &&
+      css`
+        font-weight: 900;
+      `}
     &:hover {
       background-color: #f0f0f0;
     }
   }
 `;
 
-const Content = () => {
+const Content = ({ selectedLang }: { selectedLang: string }) => {
   return (
-    <StyledContainer>
-      <StyledCard>
-        <CardHeader>계산기</CardHeader>
-        <StyledListGroup variant="flush">
-          <ListGroup.Item as={Link} to="/calc">
-            - 일반 계산기
-          </ListGroup.Item>
-          <ListGroup.Item as={Link} to="/compound-interest-calc">
-            - 복리 계산기
-          </ListGroup.Item>
-        </StyledListGroup>
-        <CardHeader>타이머</CardHeader>
-        <StyledListGroup variant="flush">
-          <ListGroup.Item as={Link} to="/pomodoro">
-            - 뽀모도로 타이머
-          </ListGroup.Item>
-        </StyledListGroup>
-      </StyledCard>
-    </StyledContainer>
+    <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+      <StyledContainer>
+        <StyledCard>
+          <CardHeader selectedLang={selectedLang}>
+            <FormattedMessage id="content.calculator" />
+          </CardHeader>
+          <StyledListGroup selectedLang={selectedLang} variant="flush">
+            <ListGroup.Item as={Link} to="/calc">
+              <FormattedMessage id="content.calculator.general" />
+            </ListGroup.Item>
+            <ListGroup.Item as={Link} to="/compound-interest-calc">
+              <FormattedMessage id="content.calculator.compound" />
+            </ListGroup.Item>
+          </StyledListGroup>
+          <CardHeader selectedLang={selectedLang}>
+            <FormattedMessage id="content.timer" />
+          </CardHeader>
+          <StyledListGroup selectedLang={selectedLang} variant="flush">
+            <ListGroup.Item as={Link} to="/pomodoro">
+              <FormattedMessage id="content.timer.pomodoro" />
+            </ListGroup.Item>
+          </StyledListGroup>
+        </StyledCard>
+      </StyledContainer>
+    </IntlProvider>
   );
 };
 

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { FormattedMessage, IntlProvider } from "react-intl";
+import messages from "../../locales/messages";
 
 interface InvestmentData {
   year: number;
@@ -16,7 +18,7 @@ interface CalculatorState {
   investmentData: InvestmentData[];
 }
 
-const CompoundCalculator: React.FC = () => {
+const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
   const [calculatorState, setCalculatorState] = useState<CalculatorState>({
     principal: 0,
     interestRate: 0,
@@ -91,87 +93,162 @@ const CompoundCalculator: React.FC = () => {
   };
 
   return (
-    <StyledContainer>
-      <CalculatorContainer>
-        <CalculatorScreen>
-          <StyledTitle>복리 계산기</StyledTitle>
-          <InputLabel>투자원금 (원) :</InputLabel>
-          <Input
-            type="text"
-            value={
-              calculatorState.principal > 0
-                ? calculatorState.principal.toLocaleString()
-                : ""
-            } // 화폐 형식으로 변환
-            onChange={handlePrincipalChange}
-            onKeyPress={handleKeyPress}
-            placeholder="원금을 입력하세요"
-          />
+    <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+      <StyledContainer>
+        <CalculatorContainer>
+          <CalculatorScreen>
+            <StyledTitle selectedLang={selectedLang}>
+              <FormattedMessage id="content.compoundCalc.title" />
+            </StyledTitle>
+            <InputLabel>
+              <FormattedMessage id="content.compoundCalc.investment" /> :
+            </InputLabel>
+            <Input
+              type="text"
+              value={
+                calculatorState.principal > 0
+                  ? calculatorState.principal.toLocaleString()
+                  : ""
+              } // 화폐 형식으로 변환
+              onChange={handlePrincipalChange}
+              onKeyPress={handleKeyPress}
+              placeholder={
+                selectedLang === "ko"
+                  ? "원금을 입력하세요"
+                  : selectedLang === "en"
+                  ? "Enter principal amount"
+                  : "元金を入力してください"
+              }
+            />
 
-          <InputLabel>투자기간 (년) :</InputLabel>
-          <Input
-            type="text"
-            value={calculatorState.period > 0 ? calculatorState.period : ""}
-            onChange={handlePeriodChange}
-            onKeyPress={handleKeyPress}
-            placeholder="기간을 입력하세요"
-          />
+            <InputLabel>
+              <FormattedMessage id="content.compoundCalc.period" /> :
+            </InputLabel>
+            <Input
+              type="text"
+              value={calculatorState.period > 0 ? calculatorState.period : ""}
+              onChange={handlePeriodChange}
+              onKeyPress={handleKeyPress}
+              placeholder={
+                selectedLang === "ko"
+                  ? "기간을 입력하세요"
+                  : selectedLang === "en"
+                  ? "Enter period"
+                  : "期間を入力してください"
+              }
+            />
 
-          <InputLabel>연이율 (%) :</InputLabel>
-          <Input
-            type="number"
-            value={
-              calculatorState.interestRate > 0
-                ? calculatorState.interestRate
-                : ""
-            }
-            onChange={handleInterestRateChange}
-            placeholder="연이율을 입력하세요"
-          />
+            <InputLabel>
+              <FormattedMessage id="content.compoundCalc.rate" /> :
+            </InputLabel>
+            <Input
+              type="number"
+              value={
+                calculatorState.interestRate > 0
+                  ? calculatorState.interestRate
+                  : ""
+              }
+              onChange={handleInterestRateChange}
+              placeholder={
+                selectedLang === "ko"
+                  ? "연이율을 입력하세요"
+                  : selectedLang === "en"
+                  ? "Enter annual interest rate"
+                  : "年利を入力してください"
+              }
+            />
 
-          <CalculateButton onClick={handleCalculateClick}>
-            계산하기
-          </CalculateButton>
-        </CalculatorScreen>
-      </CalculatorContainer>
+            <CalculateButton onClick={handleCalculateClick}>
+              {selectedLang === "ko"
+                ? "계산하기"
+                : selectedLang === "en"
+                ? "Calculate"
+                : "計算する"}
+            </CalculateButton>
+          </CalculatorScreen>
+        </CalculatorContainer>
 
-      {calculatorState.result !== null && (
-        <ResultDisplay>
-          <p>
-            수익 금액 :{" "}
-            {numberWithCommas(
-              (calculatorState.result - calculatorState.principal).toFixed(0)
-            )}{" "}
-            원
-          </p>
-          <BoldGreenText>
-            최종 금액 : {numberWithCommas(calculatorState.result.toFixed(0))} 원
-          </BoldGreenText>
-          {calculatorState.investmentData && (
-            <Table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>수익</th>
-                  <th>총 금액</th>
-                  <th>수익률</th>
-                </tr>
-              </thead>
-              <tbody>
-                {calculatorState.investmentData.map((data) => (
-                  <tr key={data.year}>
-                    <th>{data.year}</th>
-                    <td>{numberWithCommas(data.income.toFixed(0))} 원</td>
-                    <td>{numberWithCommas(data.amount.toFixed(0))} 원</td>
-                    <td>{data.interestRate.toFixed(2)}%</td>
+        {calculatorState.result !== null && (
+          <ResultDisplay selectedLang={selectedLang}>
+            <p>
+              {selectedLang === "ko"
+                ? "수익 금액"
+                : selectedLang === "en"
+                ? "Income"
+                : "収益"}{" "}
+              :{" "}
+              {numberWithCommas(
+                (calculatorState.result - calculatorState.principal).toFixed(0)
+              )}{" "}
+              {selectedLang === "ko" ? "₩" : selectedLang === "en" ? "$" : "円"}
+            </p>
+            <BoldGreenText selectedLang={selectedLang}>
+              {selectedLang === "ko"
+                ? "최종 금액"
+                : selectedLang === "en"
+                ? "Final Amount"
+                : "最終金額"}{" "}
+              : {numberWithCommas(calculatorState.result.toFixed(0))}{" "}
+              {selectedLang === "ko" ? "₩" : selectedLang === "en" ? "$" : "円"}
+            </BoldGreenText>
+            {calculatorState.investmentData && (
+              <Table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      {selectedLang === "ko"
+                        ? "수익"
+                        : selectedLang === "en"
+                        ? "Income"
+                        : "収益"}
+                    </th>
+                    <th>
+                      {selectedLang === "ko"
+                        ? "총 금액"
+                        : selectedLang === "en"
+                        ? "Total Amount"
+                        : "合計金額"}
+                    </th>
+                    <th>
+                      {selectedLang === "ko"
+                        ? "수익률"
+                        : selectedLang === "en"
+                        ? "Interest Rate"
+                        : "収益率"}
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
-        </ResultDisplay>
-      )}
-    </StyledContainer>
+                </thead>
+                <tbody>
+                  {calculatorState.investmentData.map((data) => (
+                    <tr key={data.year}>
+                      <th>{data.year}</th>
+                      <td>
+                        {numberWithCommas(data.income.toFixed(0))}{" "}
+                        {selectedLang === "ko"
+                          ? "₩"
+                          : selectedLang === "en"
+                          ? "$"
+                          : "円"}
+                      </td>
+                      <td>
+                        {numberWithCommas(data.amount.toFixed(0))}{" "}
+                        {selectedLang === "ko"
+                          ? "₩"
+                          : selectedLang === "en"
+                          ? "$"
+                          : "円"}
+                      </td>
+                      <td>{data.interestRate.toFixed(2)}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
+          </ResultDisplay>
+        )}
+      </StyledContainer>
+    </IntlProvider>
   );
 };
 
@@ -189,10 +266,30 @@ const StyledContainer = styled.div`
   padding: 0;
 `;
 
-const StyledTitle = styled.div`
-  font-family: "Jalnan", "MaplestoryBold";
+interface StyledTitleProps {
+  selectedLang: string;
+}
+
+const StyledTitle = styled.div<StyledTitleProps>`
   font-size: 28px;
   margin: 20px auto;
+  ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+    `}
 `;
 
 const CalculatorContainer = styled.div`
@@ -230,7 +327,7 @@ const Input = styled.input`
   text-align: left; /* 숫자가 왼쪽 정렬되도록 설정 */
 `;
 
-const ResultDisplay = styled.p`
+const ResultDisplay = styled.p<StyledTitleProps>`
   display: flex;
   flex-direction: column;
   border-top: 1px solid grey;
@@ -238,7 +335,23 @@ const ResultDisplay = styled.p`
   margin: 30px 30px;
   padding-top: 30px;
   p {
-    font-family: "Jalnan", "MaplestoryBold";
+    ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+    `}
   }
 `;
 
@@ -271,10 +384,26 @@ const CalculateButton = styled.button`
   cursor: pointer;
 `;
 
-const BoldGreenText = styled.span`
-  font-family: "Jalnan", "MaplestoryBold";
+const BoldGreenText = styled.span<StyledTitleProps>`
   font-weight: bold;
   color: green;
+  ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+    `}
 `;
 
 export default CompoundCalculator;

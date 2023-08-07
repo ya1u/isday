@@ -25,12 +25,16 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Footer = () => {
+const Footer = ({ selectedLang }: { selectedLang: string }) => {
   return (
     <FooterWrapper>
       <StyledLink to="/">
         <img src={smallSupportSVG} alt="Question Icon" />
-        문의하기
+        {selectedLang === "ko"
+                ? "문의하기"
+                : selectedLang === "en"
+                ? "Inquiry"
+                : "問い合わせ"}
       </StyledLink>
       <StyledLink to="/">
         <img src={smallQuestionSVG} alt="Question Icon" />

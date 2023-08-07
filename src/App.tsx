@@ -27,7 +27,7 @@ const ContentContainer = styled.div`
   flex: 1;
   @media (max-width: 991px) {
     margin: 0 40px;
-  };
+  }
 `;
 
 const Advertisement = styled.div`
@@ -35,7 +35,7 @@ const Advertisement = styled.div`
   border: 1px solid black;
   @media (max-width: 991px) {
     display: none;
-  };
+  }
 `;
 
 const FirstAD = styled.div`
@@ -51,18 +51,29 @@ const SecondAD = styled.div`
 `;
 
 function App() {
+  const [selectedLang, setSelectedLang] = React.useState(
+    localStorage.getItem("lang") || navigator.language.split("-")[0]
+  );
+
+  const handleLanguageChange = (lang: string) => {
+    setSelectedLang(lang);
+    localStorage.setItem("lang", lang);
+  };
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
+        <Header
+          selectedLang={selectedLang}
+          onLanguageChange={handleLanguageChange}
+        />
         <StyledContainer>
           <MainContainer>
             <ContentContainer>
               <Routes>
-                <Route path="/" element={<Content />} />
-                <Route path="/calc" element={<Calculator />} />
-                <Route path="/compound-interest-calc" element={<CompoundCalc />} />
-                <Route path="/pomodoro" element={<PomodoroTimer />} />
+                <Route path="/" element={<Content selectedLang={selectedLang} />} />
+                <Route path="/calc" element={<Calculator selectedLang={selectedLang} />} />
+                <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
+                <Route path="/pomodoro" element={<PomodoroTimer selectedLang={selectedLang} />} />
               </Routes>
             </ContentContainer>
             <Advertisement>
@@ -71,7 +82,7 @@ function App() {
             </Advertisement>
           </MainContainer>
         </StyledContainer>
-        <Footer />
+        <Footer selectedLang={selectedLang} />
       </BrowserRouter>
     </div>
   );

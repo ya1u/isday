@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,6 +8,8 @@ import languageSVG from "../images/language_icon.svg";
 import smallSupportSVG from "../images/support_small_icon.svg";
 import supportSVG from "../images/support_icon.svg";
 import hamburgurSVG from "../images/hamburger_icon.svg";
+import { FormattedMessage, IntlProvider } from "react-intl";
+import messages from "../locales/messages";
 
 // @font-face를 선언합니다.
 const FontFaceStyle = styled.div`
@@ -18,6 +20,10 @@ const FontFaceStyle = styled.div`
   @font-face {
     font-family: "MaplestoryBold";
     src: url("../fonts/MaplestoryBold.ttf") format("truetype"); /* ttf -> truetype로 수정 */
+  }
+  @font-face {
+    font-family: "DSEG7Classic-BoldItalic";
+    src: url("../fonts/DSEG7Classic-BoldItalic.woff") format("woff"); /* ttf -> truetype로 수정 */
   }
 `;
 
@@ -60,7 +66,6 @@ const StyleNav = styled(Nav)`
 `;
 
 const StyledNavLink = styled(Nav.Link)`
-  font-family: "Jalnan", "MaplestoryBold";
   font-size: 18px;
   white-space: nowrap;
   @media (max-width: 660px) {
@@ -70,21 +75,67 @@ const StyledNavLink = styled(Nav.Link)`
     display: none;
     margin: 0 auto;
   }
+
+  ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+      /* 한국어 폰트 스타일을 여기에 추가 */
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+      font-size: 16px;
+      /* 영어 폰트 스타일을 여기에 추가 */
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+      /* 일본어 폰트 스타일을 여기에 추가 */
+    `}
 `;
 
 const StyledInquireBtn = styled(Button)`
-  font-family: "MaplestoryBold", "Jalnan";
-  font-size: 15px;
+  font-size: 14px;
   width: 122px;
   @media (max-width: 630px) {
     display: none;
   }
+
+  ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+      /* 한국어 폰트 스타일을 여기에 추가 */
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+      /* 영어 폰트 스타일을 여기에 추가 */
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+      /* 일본어 폰트 스타일을 여기에 추가 */
+    `}
 `;
 
-const Header = () => {
+const Header = ({ selectedLang, onLanguageChange }: { selectedLang: string, onLanguageChange: (lang: string) => void }) => {
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 599);
   const [showMenuDropdown, setShowMenuDropdown] = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
+
+  const handleLanguageButtonClick = (lang: string) => {
+    onLanguageChange(lang);
+  };
 
   const handleMouseEnter = (mode: String) => {
     if (mode === "menu") {
@@ -113,65 +164,87 @@ const Header = () => {
     };
   }, []);
   return (
-    <>
-      <FontFaceStyle />
-      <StyledNavbar variant="dark">
-        <StyledContainer className="justify-content-center">
-          <StyledMobileDropdownButton
-            id="dropdown-basic-button"
-            align={{ lg: "end" }}
-            variant="light"
-            title={<img src={hamburgurSVG} alt="Hamburgur Icon" />}
-            show={showMenuDropdown}
-            onMouseEnter={() => handleMouseEnter("menu")}
-            onMouseLeave={() => handleMouseLeave("menu")}
-          >
-            <Dropdown.Item href="/calc">계산기</Dropdown.Item>
-            <Dropdown.Item href="/compound-interest-calc/">복리 계산기</Dropdown.Item>
-            <Dropdown.Item href="/pomodoro">뽀모도로 타이머</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item href="/ja/">
-              문의하기
-              <img src={smallSupportSVG} alt="Question Icon" />
-            </Dropdown.Item>
-          </StyledMobileDropdownButton>
-          <StyledNavBrand href="/">isDay</StyledNavBrand>
-          {isWideScreen && (
-            // <Nav className="me-auto"> 미오토 잠시지움
-            <StyleNav>
-              <StyledNavLink href="/calc">계산기</StyledNavLink>
-              <StyledNavLink href="/compound-interest-calc">복리 계산기</StyledNavLink>
-              <StyledNavLink href="/pomodoro">
-                뽀모도로 타이머
-              </StyledNavLink>
-            </StyleNav>
-          )}
-          <Nav className="">
-            <StyledInquireBtn className="btn btn-light me-2 nav-desktop">
-              <img
-                src={supportSVG}
-                alt="Support Icon"
-                style={{ marginRight: 7 }}
-              />
-              문의하기
-            </StyledInquireBtn>
-            <DropdownButton
+    <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+      <>
+        <FontFaceStyle />
+        <StyledNavbar variant="dark">
+          <StyledContainer className="justify-content-center">
+            <StyledMobileDropdownButton
               id="dropdown-basic-button"
-              align={{ lg: "start" }}
+              align={{ lg: "end" }}
               variant="light"
-              title={<img src={languageSVG} alt="Language Icon" />}
-              show={showLangDropdown}
-              onMouseEnter={() => handleMouseEnter("lang")}
-              onMouseLeave={() => handleMouseLeave("lang")}
+              title={<img src={hamburgurSVG} alt="Hamburgur Icon" />}
+              show={showMenuDropdown}
+              onMouseEnter={() => handleMouseEnter("menu")}
+              onMouseLeave={() => handleMouseLeave("menu")}
             >
-              <Dropdown.Item href="/ko/">한국어</Dropdown.Item>
-              <Dropdown.Item href="/en/">English</Dropdown.Item>
-              <Dropdown.Item href="/ja/">日本語</Dropdown.Item>
-            </DropdownButton>
-          </Nav>
-        </StyledContainer>
-      </StyledNavbar>
-    </>
+              <Dropdown.Item href="/calc">
+                <FormattedMessage id="header.calculator" />
+              </Dropdown.Item>
+              <Dropdown.Item href="/compound-interest-calc/">
+                <FormattedMessage id="header.compoundCalculator" />
+              </Dropdown.Item>
+              <Dropdown.Item href="/pomodoro">
+                <FormattedMessage id="header.pomodoroTimer" />
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="/ja/">
+                <FormattedMessage id="header.inquiry" />
+                <img src={smallSupportSVG} alt="Question Icon" />
+              </Dropdown.Item>
+            </StyledMobileDropdownButton>
+            <StyledNavBrand href="/">
+              <FormattedMessage id="header.title" />
+            </StyledNavBrand>
+            {isWideScreen && (
+              <StyleNav>
+                <StyledNavLink selectedLang={selectedLang} href="/calc">
+                  <FormattedMessage id="header.calculator" />
+                </StyledNavLink>
+                <StyledNavLink
+                  selectedLang={selectedLang}
+                  href="/compound-interest-calc"
+                >
+                  <FormattedMessage id="header.compoundCalculator" />
+                </StyledNavLink>
+                <StyledNavLink selectedLang={selectedLang} href="/pomodoro">
+                  <FormattedMessage id="header.pomodoroTimer" />
+                </StyledNavLink>
+              </StyleNav>
+            )}
+            <Nav className="">
+              <StyledInquireBtn selectedLang={selectedLang} className="btn btn-light me-2 nav-desktop">
+                <img
+                  src={supportSVG}
+                  alt="Support Icon"
+                  style={{ marginRight: 7 }}
+                />
+                <FormattedMessage id="header.inquiry" />
+              </StyledInquireBtn>
+              <DropdownButton
+                id="dropdown-basic-button"
+                align={{ lg: "start" }}
+                variant="light"
+                title={<img src={languageSVG} alt="Language Icon" />}
+                show={showLangDropdown}
+                onMouseEnter={() => handleMouseEnter("lang")}
+                onMouseLeave={() => handleMouseLeave("lang")}
+              >
+                <Dropdown.Item onClick={() => handleLanguageButtonClick("ko")}>
+                  한국어
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleLanguageButtonClick("en")}>
+                  English
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleLanguageButtonClick("ja")}>
+                  日本語
+                </Dropdown.Item>
+              </DropdownButton>
+            </Nav>
+          </StyledContainer>
+        </StyledNavbar>
+      </>
+    </IntlProvider>
   );
 };
 
