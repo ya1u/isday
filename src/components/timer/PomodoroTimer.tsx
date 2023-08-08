@@ -1,12 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { Modal, Button } from "react-bootstrap";
+import startIcon from "../../images/start_icon.png";
+import pauseIcon from "../../images/pause_icon.png";
+import alramIcon from "../../images/alram_icon.png";
 
 // 알림음 리스트를 정의해 줄테니, 네가 경로를 맞춰서 파일을 추가하면 돼.
 const alertSounds = [
-  { id: 1, name: "Sound 1", src: "path/to/sound1.mp3" },
-  { id: 2, name: "Sound 2", src: "path/to/sound2.mp3" },
-  // TODO: 더 많은 알림음 추가
+  {
+    id: 1,
+    name: "Premiere",
+    src: "/alertSounds/Adrián Berenguer - Premiere.mp3",
+  },
+  { id: 2, name: "Blades", src: "/alertSounds/Evgeny Bardyuzha - Blades.mp3" },
+  {
+    id: 3,
+    name: "I Just Wanna Have Fun",
+    src: "/alertSounds/Flint - I Just Wanna Have Fun.mp3",
+  },
+  {
+    id: 4,
+    name: "Together",
+    src: "/alertSounds/John Dada & the Weathermen - Together.mp3",
+  },
+  {
+    id: 5,
+    name: "Eyes on the Prize",
+    src: "/alertSounds/Rewind Kid - Eyes on the Prize.mp3",
+  },
+  {
+    id: 6,
+    name: "Galaxy Groove",
+    src: "/alertSounds/Yarin Primak - Galaxy Groove.mp3",
+  },
+  {
+    id: 7,
+    name: "VI Gigue",
+    src: "/alertSounds/Yoed Nir - Cello Suite No1 in G Major BWV 1007 - VI Gigue.mp3",
+  },
+  {
+    id: 8,
+    name: "Its a Slippery Slope",
+    src: "/alertSounds/Yonatan Riklis - Its a Slippery Slope.mp3",
+  },
 ];
 
 const StyledContainer = styled.div`
@@ -83,12 +119,35 @@ const TimerButton = styled.button`
 
 const AlertSoundSelect = styled.select`
   /* 알림음 선택 셀렉트 박스 스타일링 */
-  font-size: 16px;
-  padding: 5px;
-  margin-right: 10px;
+  font-size: 18px;
+  padding-left: 10px;
+  border: none;
+  width: 230px;
+  height: 40px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const AlertDiv = styled.div`
+  margin-top: 40px;
+  div:first-child {
+    font-size: 22px;
+  }
+  div:last-child {
+    border: 1px solid lightgray;
+    width: 296px;
+    button {
+      border: none;
+      &:active {
+        opacity: 0.5;
+      }
+    }
+  }
 `;
 
 const CustomModal = styled(Modal)`
+  margin-top: 160px;
   /* 모달 헤더 스타일링 */
   .modal-header {
     font-family: "Jalnan", "MaplestoryBold";
@@ -118,16 +177,31 @@ const CustomModal = styled(Modal)`
       div {
         display: flex;
         flex-direction: column;
-        margin-right: 30px;
-        font-size: 26px;
+        margin: 0 10px 0 0;
+        font-size: 22px;
         label {
-          font-family: "MaplestoryBold";
+          /* font-family: "MaplestoryBold"; */
         }
-        select {
-          width: 80px;
-          height: 50px;
-          font-size: 24px;
-          text-align: center;
+        div {
+          flex-direction: row;
+          border: 1px solid lightgrey;
+          button {
+            border: none;
+            font-size: 22px;
+            &:active {
+              opacity: 0.5;
+            }
+          }
+          select {
+            width: 85px;
+            height: 50px;
+            font-size: 18px;
+            text-align: center;
+            border: none;
+            &:focus {
+              outline: none;
+            }
+          }
         }
       }
     }
@@ -139,19 +213,96 @@ const CustomModal = styled(Modal)`
     padding: 10px 20px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    button:first-child {
+      background-color: grey;
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      &:hover, &:active {
+        opacity: 0.8;
+      }
+    }
+    button:last-child {
+      background-color: darkcyan;
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      &:hover, &:active {
+        opacity: 0.8;
+      }
+    }
   }
 `;
 
-const PomodoroTimer = ({ selectedLang }: { selectedLang: string }) => {
+const AlertModal = styled(Modal)`
+  margin-top: 160px;
+  /* 모달 헤더 스타일링 */
+  .modal-header {
+    font-family: "Jalnan", "MaplestoryBold";
+    background-color: darkcyan;
+    border-bottom: none;
+    padding: 15px 20px;
+
+    .modal-title {
+      color: #fff;
+      font-size: 24px;
+    }
+  }
+
+  /* 모달 바디 스타일링 */
+  .modal-body {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 30px;
+    p {
+      margin-top: 30px;
+      font-size: 24px;
+    }
+  }
+
+  /* 모달 푸터 스타일링 */
+  .modal-footer {
+    button {
+      background-color: darkcyan;
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      &:hover, &:active {
+        background-color: darkcyan;
+        opacity: 0.8;
+      }
+    }
+  }
+`;
+
+interface Sound {
+  id: number;
+  name: string;
+  src: string;
+}
+
+interface PomodoroTimerProps {
+  selectedLang: string;
+}
+
+const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showAlertModal, setShowAlertModal] = useState<boolean>(false);
   const [hours, setHours] = useState<number>(0);
-  const [minutes, setMinutes] = useState<number>(25);
+  const [minutes, setMinutes] = useState<number>(5);
   const [seconds, setSeconds] = useState<number>(0);
+  const [inputHours, setInputHours] = useState<number>(0);
+  const [inputMinutes, setInputMinutes] = useState<number>(5);
+  const [inputSeconds, setInputSeconds] = useState<number>(0);
+  const [outputHours, setOutputHours] = useState<number>(0);
+  const [outputMinutes, setOutputMinutes] = useState<number>(5);
+  const [outputSeconds, setOutputSeconds] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [selectedAlertSound, setSelectedAlertSound] = useState<string>(
     alertSounds[0].src
   );
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -197,30 +348,104 @@ const PomodoroTimer = ({ selectedLang }: { selectedLang: string }) => {
   const handleResetTimer = () => {
     // 타이머 리셋 로직
     setIsRunning(false);
-    setHours(0);
-    setMinutes(25);
-    setSeconds(0);
+    setHours(inputHours);
+    setMinutes(inputMinutes);
+    setSeconds(inputSeconds);
+  };
+
+  const increaseTime = (unit: string) => {
+    if (unit === "hours") {
+      if (inputHours < 99) {
+        setInputHours((prev) => prev + 1);
+      } else {
+        setInputHours(0);
+      }
+    } else if (unit === "minutes") {
+      if (inputMinutes < 59) {
+        setInputMinutes((prev) => prev + 1);
+      } else {
+        setInputMinutes(0);
+      }
+    } else if (unit === "seconds") {
+      if (inputSeconds < 59) {
+        setInputSeconds((prev) => prev + 1);
+      } else {
+        setInputSeconds(0);
+      }
+    }
+  };
+
+  const decreaseTime = (unit: string) => {
+    if (unit === "hours") {
+      if (inputHours > 0) {
+        setInputHours((prev) => prev - 1);
+      } else {
+        setInputHours(99);
+      }
+    } else if (unit === "minutes") {
+      if (inputMinutes > 0) {
+        setInputMinutes((prev) => prev - 1);
+      } else {
+        setInputMinutes(59);
+      }
+    } else if (unit === "seconds") {
+      if (inputSeconds > 0) {
+        setInputSeconds((prev) => prev - 1);
+      } else {
+        setInputSeconds(59);
+      }
+    }
   };
 
   const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    setInputHours(outputHours);
+    setInputMinutes(outputMinutes);
+    setInputSeconds(outputSeconds);
+    setShowModal(false);
+  };
   const handleSaveModal = () => {
-    // 시간 설정 값과 알림음 저장 로직
+    setHours(inputHours);
+    setMinutes(inputMinutes);
+    setSeconds(inputSeconds);
+    setOutputHours(inputHours);
+    setOutputMinutes(inputMinutes);
+    setOutputSeconds(inputSeconds);
+    setIsRunning(false);
+    setIsPlaying(false);
+    audioRef.current?.pause();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // 음악을 처음으로 되감기하여 정지
+    }
     setShowModal(false);
   };
 
   const handleShowAlertModal = () => setShowAlertModal(true);
-  const handleCloseAlertModal = () => setShowAlertModal(false);
+  const handleCloseAlertModal = () => {
+    setIsPlaying(false);
+    audioRef.current?.pause();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // 음악을 처음으로 되감기하여 정지
+    }
+    setShowAlertModal(false);
+  };
 
   const handleAlertSoundChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // 알림음 선택 변경 로직
+    setIsPlaying(false);
+    audioRef.current?.pause();
     setSelectedAlertSound(e.target.value);
   };
 
+  // 알림음 재생 함수
   const playAlertSound = () => {
-    // TODO: 알림음 재생 로직을 구현해주세요.
-    // selectedAlertSound 변수에 저장된 알림음 경로를 사용하여 알림음을 재생할 수 있습니다.
-    console.log("알림음 재생!");
+    setIsPlaying(true);
+    audioRef.current?.play();
+  };
+
+  // 알림음 일시정지 함수
+  const pauseAlertSound = () => {
+    setIsPlaying(false);
+    audioRef.current?.pause();
   };
 
   return (
@@ -276,106 +501,149 @@ const PomodoroTimer = ({ selectedLang }: { selectedLang: string }) => {
         {/* 기존 시간 설정 모달 */}
         <CustomModal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
-            <Modal.Title>{selectedLang === "ko"
+            <Modal.Title>
+              {selectedLang === "ko"
                 ? "설정"
                 : selectedLang === "en"
                 ? "Setting"
-                : "設定"}</Modal.Title>
+                : "設定"}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div>
               <div>
-                <label>{selectedLang === "ko"
-                ? "시간"
-                : selectedLang === "en"
-                ? "hour"
-                : "時間"}</label>
-                <select
-                  value={hours}
-                  onChange={(e) => setHours(Number(e.target.value))}
-                >
-                  {/* 시간 설정 옵션, 0 이상 선택 가능 */}
-                  {Array.from({ length: 24 }, (_, i) => (
-                    <option key={i} value={i}>
-                      {i}
-                    </option>
-                  ))}
-                </select>
+                <label>
+                  {selectedLang === "ko"
+                    ? "시간"
+                    : selectedLang === "en"
+                    ? "Hour"
+                    : "時間"}
+                </label>
+                <div>
+                  <button onClick={() => decreaseTime("hours")}>&lt;</button>
+                  <select
+                    value={inputHours}
+                    onChange={(e) => setInputHours(Number(e.target.value))}
+                  >
+                    {/* 시간 설정 옵션, 0 이상 선택 가능 */}
+                    {Array.from({ length: 100 }, (_, i) => (
+                      <option key={i} value={i}>
+                        {i.toString().padStart(2, "0")}
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={() => increaseTime("hours")}>&gt;</button>
+                </div>
               </div>
               <div>
-                <label>{selectedLang === "ko"
-                ? "분"
-                : selectedLang === "en"
-                ? "min"
-                : "分"}</label>
-                <select
-                  value={minutes}
-                  onChange={(e) => setMinutes(Number(e.target.value))}
-                >
-                  {/* 분 설정 옵션, 0부터 59까지 선택 가능 */}
-                  {Array.from({ length: 60 }, (_, i) => (
-                    <option key={i} value={i}>
-                      {i}
-                    </option>
-                  ))}
-                </select>
+                <label>
+                  {selectedLang === "ko"
+                    ? "분"
+                    : selectedLang === "en"
+                    ? "Min"
+                    : "分"}
+                </label>
+                <div>
+                  <button onClick={() => decreaseTime("minutes")}>&lt;</button>
+                  <select
+                    value={inputMinutes}
+                    onChange={(e) => setInputMinutes(Number(e.target.value))}
+                  >
+                    {/* 분 설정 옵션, 0부터 59까지 선택 가능 */}
+                    {Array.from({ length: 60 }, (_, i) => (
+                      <option key={i} value={i}>
+                        {i.toString().padStart(2, "0")}
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={() => increaseTime("minutes")}>&gt;</button>
+                </div>
               </div>
               <div>
-                <label>{selectedLang === "ko"
-                ? "초"
-                : selectedLang === "en"
-                ? "sec"
-                : "秒"}</label>
-                <select
-                  value={seconds}
-                  onChange={(e) => setSeconds(Number(e.target.value))}
-                >
-                  {/* 초 설정 옵션, 0부터 59까지 선택 가능 */}
-                  {Array.from({ length: 60 }, (_, i) => (
-                    <option key={i} value={i}>
-                      {i}
-                    </option>
-                  ))}
-                </select>
+                <label>
+                  {selectedLang === "ko"
+                    ? "초"
+                    : selectedLang === "en"
+                    ? "Sec"
+                    : "秒"}
+                </label>
+                <div>
+                  <button onClick={() => decreaseTime("seconds")}>&lt;</button>
+                  <select
+                    value={inputSeconds}
+                    onChange={(e) => setInputSeconds(Number(e.target.value))}
+                  >
+                    {/* 초 설정 옵션, 0부터 59까지 선택 가능 */}
+                    {Array.from({ length: 60 }, (_, i) => (
+                      <option key={i} value={i}>
+                        {i.toString().padStart(2, "0")}
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={() => increaseTime("seconds")}>&gt;</button>
+                </div>
               </div>
             </div>
             {/* 알림음 선택 셀렉트 박스 */}
-            <div>
-              <AlertSoundSelect
-                value={selectedAlertSound}
-                onChange={handleAlertSoundChange}
-              >
-                {alertSounds.map((sound) => (
-                  <option key={sound.id} value={sound.src}>
-                    {sound.name}
-                  </option>
-                ))}
-              </AlertSoundSelect>
-            </div>
+            <AlertDiv>
+              <div>
+                {selectedLang === "ko"
+                  ? "알림음"
+                  : selectedLang === "en"
+                  ? "Sound"
+                  : "通知音"}
+              </div>
+              <div>
+                <AlertSoundSelect
+                  value={selectedAlertSound}
+                  onChange={handleAlertSoundChange}
+                >
+                  {alertSounds.map((sound) => (
+                    <option key={sound.id} value={sound.src}>
+                      {sound.name}
+                    </option>
+                  ))}
+                </AlertSoundSelect>
+                <button>
+                  <button
+                    onClick={() =>
+                      isPlaying ? pauseAlertSound() : playAlertSound()
+                    }
+                  >
+                    <img
+                      src={isPlaying ? pauseIcon : startIcon}
+                      width={40}
+                      alt="Toggle Icon"
+                    />
+                  </button>
+                </button>
+              </div>
+            </AlertDiv>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              취소
-            </Button>
-            <Button variant="primary" onClick={handleSaveModal}>
-              저장
-            </Button>
+            <Button onClick={handleCloseModal}>취소</Button>
+            <Button onClick={handleSaveModal}>저장</Button>
           </Modal.Footer>
         </CustomModal>
 
         {/* 별개의 알림 모달 */}
-        <Modal show={showAlertModal} onHide={handleCloseAlertModal}>
+        <AlertModal show={showAlertModal} onHide={handleCloseAlertModal}>
           <Modal.Header closeButton>
             <Modal.Title>타이머 종료</Modal.Title>
           </Modal.Header>
-          <Modal.Body>타이머가 종료되었습니다.</Modal.Body>
+          <Modal.Body>
+            <img src={alramIcon} alt="Toggle Icon" />
+            <p>타이머가 종료되었습니다.</p>
+          </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={handleCloseAlertModal}>
-              확인
-            </Button>
+            <Button onClick={handleCloseAlertModal}>확인</Button>
           </Modal.Footer>
-        </Modal>
+        </AlertModal>
       </PomodoroWrapper>
+      {/* 오디오 요소를 추가하여 알림음을 재생하는 역할 수행 */}
+      {selectedAlertSound && (
+        <audio ref={audioRef} src={selectedAlertSound} preload="auto" />
+      )}
     </StyledContainer>
   );
 };
