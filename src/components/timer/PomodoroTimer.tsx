@@ -5,13 +5,17 @@ import startIcon from "../../images/start_icon.png";
 import pauseIcon from "../../images/pause_icon.png";
 import alramIcon from "../../images/alram_icon.png";
 
-// 알림음 리스트를 정의해 줄테니, 네가 경로를 맞춰서 파일을 추가하면 돼.
 const alertSounds = [
   {
     id: 1,
-    name: "Premiere",
-    src: "/alertSounds/Adrián Berenguer - Premiere.mp3",
+    name: "알람",
+    src: "/alertSounds/alram1.mp3",
   },
+  // {
+  //   id: 1,
+  //   name: "Premiere",
+  //   src: "/alertSounds/Adrián Berenguer - Premiere.mp3",
+  // },
   { id: 2, name: "Blades", src: "/alertSounds/Evgeny Bardyuzha - Blades.mp3" },
   {
     id: 3,
@@ -93,11 +97,11 @@ const TimeDisplay = styled.div`
   /* 시간을 보여주는 부분의 스타일링 */
   font-family: "DSEG7Classic-BoldItalic";
   font-size: 64px;
-  background-color: darkorange;
+  color: darkorange;
+  background-color: #333333;
   margin: 52px;
   height: 200px;
   line-height: 200px;
-  border: 5px solid black;
   border-radius: 20px;
   p {
     position: relative;
@@ -107,14 +111,85 @@ const TimeDisplay = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  /* 버튼들을 담는 컨테이너 스타일링 */
-  /* display: flex; */
+  margin: 0 52px;
+  align-items: center;
 `;
+interface StyledTitleProps {
+  selectedLang: string;
+}
+interface TimerButtonProps {
+  variant: "start" | "pause" | "reset" | "setting";
+  onClick: () => void;
+}
 
-const TimerButton = styled.button`
-  /* 타이머 버튼 스타일링 */
-  /* font-size: 20px; */
-  padding: 10px 20px;
+const CustomButton = styled.button<TimerButtonProps & StyledTitleProps>`
+  width: 25%;
+  height: 61px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  ${(props) =>
+    props.selectedLang === "ko" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "en" &&
+    css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `}
+
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-weight: 900;
+    `}
+  font-size: 16px;
+  /* color: white; */
+  &:hover {
+    opacity: 0.8;
+  }
+  &:active {
+    opacity: 0.5;
+  }
+  ${(props) =>
+    props.variant === "start" &&
+    css`
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      background-color: grey;
+      color: #fff;
+    `}
+
+  ${(props) =>
+    props.variant === "pause" &&
+    css`
+      background-color: #333;
+      color: #fff;
+    `}
+
+  ${(props) =>
+    props.variant === "reset" &&
+    css`
+      background-color: grey;
+      color: #fff;
+    `}
+
+  ${(props) =>
+    props.variant === "setting" &&
+    css`
+      border-top-right-radius: 15px;
+      border-bottom-right-radius: 15px;
+      background-color: #333;
+      color: #fff;
+    `}
+
+  img {
+    width: 80%;
+    height: auto;
+  }
 `;
 
 const AlertSoundSelect = styled.select`
@@ -146,15 +221,30 @@ const AlertDiv = styled.div`
   }
 `;
 
-const CustomModal = styled(Modal)`
-  margin-top: 160px;
+const CustomModal = styled(Modal)<StyledTitleProps>`
+  margin-top: 200px;
   /* 모달 헤더 스타일링 */
   .modal-header {
-    font-family: "Jalnan", "MaplestoryBold";
     background-color: darkcyan;
     border-bottom: none;
     padding: 15px 20px;
+    ${(props) =>
+      props.selectedLang === "ko" &&
+      css`
+        font-family: "Jalnan", "MaplestoryBold";
+      `}
 
+    ${(props) =>
+      props.selectedLang === "en" &&
+      css`
+        font-family: "Jalnan", "MaplestoryBold";
+      `}
+
+  ${(props) =>
+      props.selectedLang === "ja" &&
+      css`
+        font-weight: 900;
+      `}
     .modal-title {
       color: #fff;
       font-size: 24px;
@@ -171,23 +261,24 @@ const CustomModal = styled(Modal)`
 
   /* 모달 바디 스타일링 */
   .modal-body {
-    padding: 50px;
+    margin: 0 10px;
     div:first-child {
       display: flex;
+      justify-content: space-between;
       div {
         display: flex;
         flex-direction: column;
-        margin: 0 10px 0 0;
         font-size: 22px;
         label {
-          /* font-family: "MaplestoryBold"; */
         }
         div {
           flex-direction: row;
           border: 1px solid lightgrey;
           button {
             border: none;
-            font-size: 22px;
+            &:hover {
+              opacity: 0.8;
+            }
             &:active {
               opacity: 0.5;
             }
@@ -218,8 +309,11 @@ const CustomModal = styled(Modal)`
       border: none;
       color: white;
       padding: 10px 30px;
-      &:hover, &:active {
+      &:hover {
         opacity: 0.8;
+      }
+      &:active {
+        opacity: 0.5;
       }
     }
     button:last-child {
@@ -227,22 +321,41 @@ const CustomModal = styled(Modal)`
       border: none;
       color: white;
       padding: 10px 30px;
-      &:hover, &:active {
+      &:hover {
         opacity: 0.8;
+      }
+      &:active {
+        opacity: 0.5;
       }
     }
   }
 `;
 
-const AlertModal = styled(Modal)`
-  margin-top: 160px;
+const AlertModal = styled(Modal)<StyledTitleProps>`
+  margin-top: 200px;
   /* 모달 헤더 스타일링 */
   .modal-header {
     font-family: "Jalnan", "MaplestoryBold";
     background-color: darkcyan;
     border-bottom: none;
     padding: 15px 20px;
+    ${(props) =>
+      props.selectedLang === "ko" &&
+      css`
+        font-family: "Jalnan", "MaplestoryBold";
+      `}
 
+    ${(props) =>
+      props.selectedLang === "en" &&
+      css`
+        font-family: "Jalnan", "MaplestoryBold";
+      `}
+
+  ${(props) =>
+      props.selectedLang === "ja" &&
+      css`
+        font-weight: 900;
+      `}
     .modal-title {
       color: #fff;
       font-size: 24px;
@@ -267,9 +380,12 @@ const AlertModal = styled(Modal)`
       border: none;
       color: white;
       padding: 10px 30px;
-      &:hover, &:active {
-        background-color: darkcyan;
+      &:hover {
         opacity: 0.8;
+      }
+      &:active {
+        background-color: darkcyan;
+        opacity: 0.5;
       }
     }
   }
@@ -302,6 +418,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     alertSounds[0].src
   );
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isLooping, setIsLooping] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -333,7 +450,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, hours, minutes, seconds]);
+  }, [isRunning, hours, minutes, seconds, isLooping]);
 
   const handleStartTimer = () => {
     // 타이머 시작 로직
@@ -402,6 +519,11 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     setInputHours(outputHours);
     setInputMinutes(outputMinutes);
     setInputSeconds(outputSeconds);
+    setIsPlaying(false);
+    audioRef.current?.pause();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // 음악을 처음으로 되감기하여 정지
+    }
     setShowModal(false);
   };
   const handleSaveModal = () => {
@@ -439,8 +561,28 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   // 알림음 재생 함수
   const playAlertSound = () => {
     setIsPlaying(true);
+  
+    const handleSoundEnded = () => {
+      setIsPlaying(false);
+      audioRef.current?.removeEventListener("ended", handleSoundEnded);
+      if (isLooping) {
+        if (audioRef.current) {
+          audioRef.current.currentTime = 0;
+          audioRef.current.play();
+        }
+      }
+    };
+  
+    audioRef.current?.addEventListener("ended", handleSoundEnded);
     audioRef.current?.play();
   };
+  
+  
+  
+  
+  
+  
+  
 
   // 알림음 일시정지 함수
   const pauseAlertSound = () => {
@@ -455,10 +597,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
         <TimerContainer>
           <StyledTitle selectedLang={selectedLang}>
             {selectedLang === "ko"
-              ? "뽀모도로 타이머"
+              ? "온라인 타이머"
               : selectedLang === "en"
-              ? "Pomodoro Timer"
-              : "ポモドーロタイマー"}
+              ? "Online Timer"
+              : "オンラインタイマー"}
           </StyledTitle>
           <TimeDisplay>
             {`${hours.toString().padStart(2, "0")}:${minutes
@@ -467,39 +609,59 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
             <p>88:88:88</p>
           </TimeDisplay>
           <ButtonContainer>
-            <TimerButton onClick={handleStartTimer}>
+            <CustomButton
+              selectedLang={selectedLang}
+              variant="start"
+              onClick={handleStartTimer}
+            >
               {selectedLang === "ko"
                 ? "시작"
                 : selectedLang === "en"
                 ? "Start"
                 : "スタート"}
-            </TimerButton>
-            <TimerButton onClick={handlePauseTimer}>
+            </CustomButton>
+            <CustomButton
+              selectedLang={selectedLang}
+              variant="pause"
+              onClick={handlePauseTimer}
+            >
               {selectedLang === "ko"
                 ? "일시정지"
                 : selectedLang === "en"
                 ? "Pause"
                 : "一時停止"}
-            </TimerButton>
-            <TimerButton onClick={handleResetTimer}>
+            </CustomButton>
+            <CustomButton
+              selectedLang={selectedLang}
+              variant="reset"
+              onClick={handleResetTimer}
+            >
               {selectedLang === "ko"
                 ? "리셋"
                 : selectedLang === "en"
                 ? "Reset"
                 : "リセット"}
-            </TimerButton>
-            <TimerButton onClick={handleShowModal}>
+            </CustomButton>
+            <CustomButton
+              selectedLang={selectedLang}
+              variant="setting"
+              onClick={handleShowModal}
+            >
               {selectedLang === "ko"
                 ? "설정"
                 : selectedLang === "en"
                 ? "Setting"
                 : "設定"}
-            </TimerButton>
+            </CustomButton>
           </ButtonContainer>
         </TimerContainer>
 
         {/* 기존 시간 설정 모달 */}
-        <CustomModal show={showModal} onHide={handleCloseModal}>
+        <CustomModal
+          selectedLang={selectedLang}
+          show={showModal}
+          onHide={handleCloseModal}
+        >
           <Modal.Header closeButton>
             <Modal.Title>
               {selectedLang === "ko"
@@ -605,38 +767,85 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
                   ))}
                 </AlertSoundSelect>
                 <button>
-                  <button
-                    onClick={() =>
-                      isPlaying ? pauseAlertSound() : playAlertSound()
-                    }
-                  >
-                    <img
-                      src={isPlaying ? pauseIcon : startIcon}
-                      width={40}
-                      alt="Toggle Icon"
-                    />
-                  </button>
+                  {isPlaying ? (
+                    <button onClick={pauseAlertSound}>
+                      <img src={pauseIcon} width={40} alt="Toggle Icon" />
+                    </button>
+                  ) : (
+                    <button onClick={playAlertSound}>
+                      <img src={startIcon} width={40} alt="Toggle Icon" />
+                    </button>
+                  )}
                 </button>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isLooping}
+                    onChange={() => {
+                      setIsLooping(!isLooping);
+                      console.log(isLooping);
+                    }}
+                  />
+                  {selectedLang === "ko"
+                    ? "반복 재생"
+                    : selectedLang === "en"
+                    ? "Loop"
+                    : "反復再生"}
+                </label>
               </div>
             </AlertDiv>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={handleCloseModal}>취소</Button>
-            <Button onClick={handleSaveModal}>저장</Button>
+            <Button onClick={handleCloseModal}>
+              {selectedLang === "ko"
+                ? "취소"
+                : selectedLang === "en"
+                ? "Cancel"
+                : "キャンセル"}
+            </Button>
+            <Button onClick={handleSaveModal}>
+              {selectedLang === "ko"
+                ? "저장"
+                : selectedLang === "en"
+                ? "Save"
+                : "貯蔵"}
+            </Button>
           </Modal.Footer>
         </CustomModal>
 
         {/* 별개의 알림 모달 */}
-        <AlertModal show={showAlertModal} onHide={handleCloseAlertModal}>
+        <AlertModal
+          selectedLang={selectedLang}
+          show={showAlertModal}
+          onHide={handleCloseAlertModal}
+        >
           <Modal.Header closeButton>
-            <Modal.Title>타이머 종료</Modal.Title>
+            <Modal.Title>
+              {selectedLang === "ko"
+                ? "타이머 종료"
+                : selectedLang === "en"
+                ? "Timer termination"
+                : "タイマー終了"}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <img src={alramIcon} alt="Toggle Icon" />
-            <p>타이머가 종료되었습니다.</p>
+            <p>
+              {selectedLang === "ko"
+                ? "타이머가 종료되었습니다."
+                : selectedLang === "en"
+                ? "Timer has ended."
+                : "タイマーが終了しました。"}
+            </p>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={handleCloseAlertModal}>확인</Button>
+            <Button onClick={handleCloseAlertModal}>
+              {selectedLang === "ko"
+                ? "확인"
+                : selectedLang === "en"
+                ? "Check"
+                : "確認"}
+            </Button>
           </Modal.Footer>
         </AlertModal>
       </PomodoroWrapper>

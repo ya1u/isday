@@ -321,10 +321,14 @@ const Input = styled.input`
   width: 90%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
   text-align: left; /* 숫자가 왼쪽 정렬되도록 설정 */
+  &:focus {
+    outline: none;
+    border: 2px solid darkcyan;
+  }
 `;
 
 const ResultDisplay = styled.p<StyledTitleProps>`
