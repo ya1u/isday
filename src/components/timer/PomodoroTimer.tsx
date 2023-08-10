@@ -525,6 +525,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     }
 
     return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, hours, minutes, seconds, isLooping]);
 
   const handleStartTimer = () => {
@@ -620,7 +621,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     setShowModal(false);
   };
 
-  const handleShowAlertModal = () => setShowAlertModal(true);
+  // const handleShowAlertModal = () => setShowAlertModal(true);
   const handleCloseAlertModal = () => {
     setIsPlaying(false);
     audioRef.current?.pause();
