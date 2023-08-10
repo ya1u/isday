@@ -5,50 +5,6 @@ import startIcon from "../../images/start_icon.png";
 import pauseIcon from "../../images/pause_icon.png";
 import alramIcon from "../../images/alram_icon.png";
 
-const alertSounds = [
-  {
-    id: 1,
-    name: "알람",
-    src: "/alertSounds/alram1.mp3",
-  },
-  // {
-  //   id: 1,
-  //   name: "Premiere",
-  //   src: "/alertSounds/Adrián Berenguer - Premiere.mp3",
-  // },
-  { id: 2, name: "Blades", src: "/alertSounds/Evgeny Bardyuzha - Blades.mp3" },
-  {
-    id: 3,
-    name: "I Just Wanna Have Fun",
-    src: "/alertSounds/Flint - I Just Wanna Have Fun.mp3",
-  },
-  {
-    id: 4,
-    name: "Together",
-    src: "/alertSounds/John Dada & the Weathermen - Together.mp3",
-  },
-  {
-    id: 5,
-    name: "Eyes on the Prize",
-    src: "/alertSounds/Rewind Kid - Eyes on the Prize.mp3",
-  },
-  {
-    id: 6,
-    name: "Galaxy Groove",
-    src: "/alertSounds/Yarin Primak - Galaxy Groove.mp3",
-  },
-  {
-    id: 7,
-    name: "VI Gigue",
-    src: "/alertSounds/Yoed Nir - Cello Suite No1 in G Major BWV 1007 - VI Gigue.mp3",
-  },
-  {
-    id: 8,
-    name: "Its a Slippery Slope",
-    src: "/alertSounds/Yonatan Riklis - Its a Slippery Slope.mp3",
-  },
-];
-
 const StyledContainer = styled.div`
   background-color: #f7f7f7;
   border: 1px solid transparent;
@@ -210,12 +166,26 @@ const AlertDiv = styled.div`
     font-size: 22px;
   }
   div:last-child {
-    border: 1px solid lightgray;
-    width: 296px;
-    button {
-      border: none;
-      &:active {
-        opacity: 0.5;
+    display: flex;
+    div {
+      border: 1px solid lightgray;
+      button {
+        border: none;
+        &:hover {
+          opacity: 0.7;
+        }
+        &:active {
+          opacity: 0.5;
+        }
+      }
+    }
+    label {
+      margin: auto 10px;
+      input {
+        margin-right: 3px;
+        :checked {
+          width: 100px;
+        }
       }
     }
   }
@@ -391,12 +361,6 @@ const AlertModal = styled(Modal)<StyledTitleProps>`
   }
 `;
 
-interface Sound {
-  id: number;
-  name: string;
-  src: string;
-}
-
 interface PomodoroTimerProps {
   selectedLang: string;
 }
@@ -414,12 +378,59 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   const [outputMinutes, setOutputMinutes] = useState<number>(5);
   const [outputSeconds, setOutputSeconds] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [inputIsLooping, setInputIsLooping] = useState<boolean>(true);
+  const [outputIsLooping, setOutputIsLooping] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isLooping, setIsLooping] = useState<boolean>(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const alertSounds = [
+    {
+      id: 0,
+      name: selectedLang === "ko" ? "코" : selectedLang === "en" ? "영" : selectedLang === "ja" ? "dkffka": "",
+      src: "/alertSounds/alram1.mp3",
+    },
+    {
+      id: 1,
+      name: "Premiere",
+      src: "/alertSounds/Adrián Berenguer - Premiere.mp3",
+    },
+    { id: 2, name: "Blades", src: "/alertSounds/Evgeny Bardyuzha - Blades.mp3" },
+    {
+      id: 3,
+      name: "I Just Wanna Have Fun",
+      src: "/alertSounds/Flint - I Just Wanna Have Fun.mp3",
+    },
+    {
+      id: 4,
+      name: "Together",
+      src: "/alertSounds/John Dada & the Weathermen - Together.mp3",
+    },
+    {
+      id: 5,
+      name: "Eyes on the Prize",
+      src: "/alertSounds/Rewind Kid - Eyes on the Prize.mp3",
+    },
+    {
+      id: 6,
+      name: "Galaxy Groove",
+      src: "/alertSounds/Yarin Primak - Galaxy Groove.mp3",
+    },
+    {
+      id: 7,
+      name: "VI Gigue",
+      src: "/alertSounds/Yoed Nir - Cello Suite No1 in G Major BWV 1007 - VI Gigue.mp3",
+    },
+    {
+      id: 8,
+      name: "Its a Slippery Slope",
+      src: "/alertSounds/Yonatan Riklis - Its a Slippery Slope.mp3",
+    },
+  ];
+
   const [selectedAlertSound, setSelectedAlertSound] = useState<string>(
     alertSounds[0].src
   );
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isLooping, setIsLooping] = useState<boolean>(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -519,6 +530,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     setInputHours(outputHours);
     setInputMinutes(outputMinutes);
     setInputSeconds(outputSeconds);
+    setInputIsLooping(outputIsLooping);
     setIsPlaying(false);
     audioRef.current?.pause();
     if (audioRef.current) {
@@ -530,9 +542,11 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     setHours(inputHours);
     setMinutes(inputMinutes);
     setSeconds(inputSeconds);
+    setIsLooping(inputIsLooping);
     setOutputHours(inputHours);
     setOutputMinutes(inputMinutes);
     setOutputSeconds(inputSeconds);
+    setOutputIsLooping(inputIsLooping);
     setIsRunning(false);
     setIsPlaying(false);
     audioRef.current?.pause();
@@ -558,36 +572,35 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     setSelectedAlertSound(e.target.value);
   };
 
-  // 알림음 재생 함수
   const playAlertSound = () => {
     setIsPlaying(true);
-  
-    const handleSoundEnded = () => {
-      setIsPlaying(false);
-      audioRef.current?.removeEventListener("ended", handleSoundEnded);
-      if (isLooping) {
-        if (audioRef.current) {
-          audioRef.current.currentTime = 0;
-          audioRef.current.play();
-        }
-      }
-    };
-  
-    audioRef.current?.addEventListener("ended", handleSoundEnded);
-    audioRef.current?.play();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.loop = isLooping; // 여기서 isLooping 값을 설정함
+      audioRef.current.play();
+      audioRef.current.onended = () => {
+        setIsPlaying(false);
+      };
+    }
   };
-  
-  
-  
-  
-  
-  
-  
+
+  const playPreviewAlertSound = () => {
+    setIsPlaying(true);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.loop = false;
+      audioRef.current.play();
+      audioRef.current.onended = () => {
+        setIsPlaying(false);
+      };
+    }
+  };
 
   // 알림음 일시정지 함수
   const pauseAlertSound = () => {
     setIsPlaying(false);
     audioRef.current?.pause();
+    console.log("정지");
   };
 
   return (
@@ -756,38 +769,49 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
                   : "通知音"}
               </div>
               <div>
-                <AlertSoundSelect
-                  value={selectedAlertSound}
-                  onChange={handleAlertSoundChange}
-                >
-                  {alertSounds.map((sound) => (
-                    <option key={sound.id} value={sound.src}>
-                      {sound.name}
-                    </option>
-                  ))}
-                </AlertSoundSelect>
-                <button>
-                  {isPlaying ? (
-                    <button onClick={pauseAlertSound}>
-                      <img src={pauseIcon} width={40} alt="Toggle Icon" />
-                    </button>
-                  ) : (
-                    <button onClick={playAlertSound}>
-                      <img src={startIcon} width={40} alt="Toggle Icon" />
-                    </button>
-                  )}
-                </button>
+                <div>
+                  <AlertSoundSelect
+                    value={selectedAlertSound}
+                    onChange={handleAlertSoundChange}
+                  >
+                    {alertSounds.map((sound) => (
+                      <option key={sound.id} value={sound.src}>
+                        {sound.name}
+                      </option>
+                    ))}
+                  </AlertSoundSelect>
+                  <button>
+                    {isPlaying ? (
+                      <button onClick={pauseAlertSound}>
+                        <img
+                          src={pauseIcon}
+                          width={40}
+                          style={{ opacity: 1 }}
+                          alt="Toggle Icon"
+                        />
+                      </button>
+                    ) : (
+                      <button onClick={playPreviewAlertSound}>
+                        <img
+                          src={startIcon}
+                          width={40}
+                          style={{ opacity: 1 }}
+                          alt="Toggle Icon"
+                        />
+                      </button>
+                    )}
+                  </button>
+                </div>
                 <label>
                   <input
                     type="checkbox"
-                    checked={isLooping}
+                    checked={inputIsLooping}
                     onChange={() => {
-                      setIsLooping(!isLooping);
-                      console.log(isLooping);
+                      setInputIsLooping(!inputIsLooping);
                     }}
                   />
                   {selectedLang === "ko"
-                    ? "반복 재생"
+                    ? "반복재생"
                     : selectedLang === "en"
                     ? "Loop"
                     : "反復再生"}
