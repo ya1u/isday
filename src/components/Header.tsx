@@ -12,6 +12,7 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../locales/messages";
 import EmailModal from "../components/emailModal/EmailModal";
 import emailjs from "emailjs-com";
+import { Link } from "react-router-dom";
 
 // @font-face를 선언합니다.
 const FontFaceStyle = styled.div`
@@ -55,6 +56,9 @@ const StyledMobileDropdownButton = styled(DropdownButton)`
 const StyledNavBrand = styled(Navbar.Brand)`
   font-family: "Jalnan", "MaplestoryBold";
   font-size: 32px;
+  text-decoration: none;
+  color: #fff;
+  margin-right: 16px;
   @media (max-width: 630px) {
     font-size: 34px;
     margin: 0 auto;
@@ -69,7 +73,10 @@ const StyleNav = styled(Nav)`
 
 const StyledNavLink = styled(Nav.Link)`
   font-size: 18px;
+  text-decoration: none;
+  color: #fff;
   white-space: nowrap;
+  padding: 8px;
   @media (max-width: 660px) {
     font-size: 16px;
   }
@@ -176,12 +183,11 @@ const Header = ({
         "service_y8z06b9",
         "template_zsto1gf",
         { message: content },
-        "wO4xP8bobDp6c9CK1",
+        "wO4xP8bobDp6c9CK1"
       )
       .then((response) => {
         console.log("Email sent successfully:", response);
         console.log(content);
-        
       })
       .catch((error) => {
         console.error("Error sending email:", error);
@@ -236,13 +242,13 @@ const Header = ({
             onMouseEnter={() => handleMouseEnter("menu")}
             onMouseLeave={() => handleMouseLeave("menu")}
           >
-            <Dropdown.Item href="/calc">
+            <Dropdown.Item as={Link} to="/calc">
               <FormattedMessage id="header.calculator" />
             </Dropdown.Item>
-            <Dropdown.Item href="/compound-interest-calc/">
+            <Dropdown.Item as={Link} to="/compound-interest-calc/">
               <FormattedMessage id="header.compoundCalculator" />
             </Dropdown.Item>
-            <Dropdown.Item href="/pomodoro">
+            <Dropdown.Item as={Link} to="/pomodoro">
               <FormattedMessage id="header.pomodoroTimer" />
             </Dropdown.Item>
             <Dropdown.Divider />
@@ -251,21 +257,26 @@ const Header = ({
               <img src={smallSupportSVG} alt="Question Icon" />
             </Dropdown.Item>
           </StyledMobileDropdownButton>
-          <StyledNavBrand href="/">
+          <StyledNavBrand as={Link} to="/">
             <FormattedMessage id="header.title" />
           </StyledNavBrand>
           {state.isWideScreen && (
             <StyleNav>
-              <StyledNavLink selectedLang={selectedLang} href="/calc">
+              <StyledNavLink selectedLang={selectedLang} as={Link} to="/calc">
                 <FormattedMessage id="header.calculator" />
               </StyledNavLink>
               <StyledNavLink
+                as={Link}
                 selectedLang={selectedLang}
-                href="/compound-interest-calc"
+                to="/compound-interest-calc"
               >
                 <FormattedMessage id="header.compoundCalculator" />
               </StyledNavLink>
-              <StyledNavLink selectedLang={selectedLang} href="/pomodoro">
+              <StyledNavLink
+                as={Link}
+                selectedLang={selectedLang}
+                to="/pomodoro"
+              >
                 <FormattedMessage id="header.pomodoroTimer" />
               </StyledNavLink>
             </StyleNav>
