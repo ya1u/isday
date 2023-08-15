@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
 import * as math from "mathjs";
 import { FormattedMessage, IntlProvider } from "react-intl";
@@ -12,20 +12,20 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
     setInputValue(e.target.value);
   };
 
-  const handleButtonClick = (value: string) => {
+  const handleButtonClick = useCallback((value: string) => {
     setInputValue((prevValue) => prevValue + value);
-  };
+  }, []);
 
-  const calculateWithParentheses = (expression: string): string => {
+  const calculateWithParentheses = useCallback((expression: string): string => {
     try {
       const sanitizedInput = expression.replace(/√/g, "");
       return math.evaluate(sanitizedInput).toString();
     } catch (error) {
       return "Error";
     }
-  };
+  }, []);
 
-  const calculateResult = () => {
+  const calculateResult = useCallback(() => {
     if (!inputValue) {
       setResult("");
       return;
@@ -37,11 +37,11 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
         : match;
     });
 
-    let result = calculateWithParentheses(expression);
+    const result = calculateWithParentheses(expression);
     setResult(result);
-  };
+  }, [inputValue, calculateWithParentheses]);
 
-  const handlePercentage = () => {
+  const handlePercentage = useCallback(() => {
     try {
       const sanitizedInput = inputValue.replace(/√/g, "");
       const res = math.evaluate(sanitizedInput) / 100;
@@ -49,12 +49,12 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
     } catch (error) {
       setResult("Error");
     }
-  };
+  }, [inputValue]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     setInputValue("");
     setResult("");
-  };
+  }, []);
 
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
@@ -102,11 +102,10 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
 };
 
 const StyledContainer = styled.div`
-  /* width: 680px; */
   background-color: #f7f7f7;
   border: 1px solid transparent;
-  border-radius: 25px; /* 둥근 모서리 추가 */
-  box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+  border-radius: 25px;
+  box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1);
   margin: 0;
   padding: 0;
 `;
@@ -219,7 +218,6 @@ const ResultBtn = styled.button`
   font-size: 30px;
   &:hover {
     background-color: #ffa500;
-    /* 다른 스타일을 추가하고 싶다면 여기에 작성하면 돼 */
   }
 `;
 

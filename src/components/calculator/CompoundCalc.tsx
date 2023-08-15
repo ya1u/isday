@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../../locales/messages";
@@ -27,30 +27,25 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
     investmentData: [],
   });
 
-  const handlePrincipalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const principal = parseFloat(e.target.value.replace(/[^0-9]/g, "")); // 숫자 이외의 문자 제거
+  const handlePrincipalChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const principal = parseFloat(e.target.value.replace(/[^0-9]/g, ""));
     setCalculatorState((prevState) => ({ ...prevState, principal }));
-  };
+  }, []);
 
-  const handleInterestRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInterestRateChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const interestRate = parseFloat(e.target.value);
     setCalculatorState((prevState) => ({ ...prevState, interestRate }));
-  };
+  }, []);
 
-  const handlePeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const period = parseFloat(e.target.value.replace(/[^0-9]/g, "")); // 숫자 이외의 문자 제거
+  const handlePeriodChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const period = parseFloat(e.target.value.replace(/[^0-9]/g, ""));
     setCalculatorState((prevState) => ({ ...prevState, period }));
-  };
+  }, []);
 
-  const calculateCompoundInterest = () => {
+  const calculateCompoundInterest = useCallback(() => {
     const { principal, interestRate, period } = calculatorState;
     const r = interestRate / 100;
-    const investmentData: {
-      year: number;
-      amount: number;
-      income: number;
-      interestRate: number;
-    }[] = [];
+    const investmentData: InvestmentData[] = [];
 
     let totalAmount = principal;
     for (let i = 1; i <= period; i++) {
@@ -70,9 +65,9 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
       result: totalAmount,
       investmentData,
     }));
-  };
+  }, [calculatorState]);
 
-  const handleCalculateClick = () => {
+  const handleCalculateClick = useCallback(() => {
     if (
       calculatorState.principal <= 0 ||
       calculatorState.interestRate <= 0 ||
@@ -82,15 +77,14 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
       return;
     }
     calculateCompoundInterest();
-  };
+  }, [calculatorState, calculateCompoundInterest]);
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // 입력된 값이 숫자가 아닌 경우 이벤트 막기
+  const handleKeyPress = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     const key = e.key;
     if (isNaN(Number(key))) {
       e.preventDefault();
     }
-  };
+  }, []);
 
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
@@ -109,7 +103,7 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
                 calculatorState.principal > 0
                   ? calculatorState.principal.toLocaleString()
                   : ""
-              } // 화폐 형식으로 변환
+              }
               onChange={handlePrincipalChange}
               onKeyPress={handleKeyPress}
               placeholder={

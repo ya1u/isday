@@ -11,6 +11,7 @@ import hamburgurSVG from "../images/hamburger_icon.svg";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../locales/messages";
 import EmailModal from "../components/emailModal/EmailModal";
+import emailjs from "emailjs-com";
 
 // @font-face를 선언합니다.
 const FontFaceStyle = styled.div`
@@ -137,6 +138,7 @@ const actionTypes = {
 };
 
 // 리듀서 함수
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const reducer = (state: any, action: { type: any; payload: any }) => {
   switch (action.type) {
     case actionTypes.SET_WIDESCREEN:
@@ -160,6 +162,31 @@ const Header = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const [showEmailModal, setShowEmailModal] = useState(false);
 
+  const handleEmailModalShow = () => {
+    setShowEmailModal(true);
+  };
+
+  const handleEmailModalClose = () => {
+    setShowEmailModal(false);
+  };
+
+  const sendEmail = (content: string) => {
+    emailjs
+      .send(
+        "service_y8z06b9",
+        "template_zsto1gf",
+        { message: content },
+        "wO4xP8bobDp6c9CK1",
+      )
+      .then((response) => {
+        console.log("Email sent successfully:", response);
+        console.log(content);
+        
+      })
+      .catch((error) => {
+        console.error("Error sending email:", error);
+      });
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -193,19 +220,6 @@ const Header = ({
 
   const handleLanguageButtonClick = (lang: string) => {
     onLanguageChange(lang);
-  };
-
-  const handleEmailModalShow = () => {
-    setShowEmailModal(true);
-  };
-
-  const handleEmailModalClose = () => {
-    setShowEmailModal(false);
-  };
-
-  const handleEmailSend = (content: string) => {
-    // 이메일 전송 로직을 여기에 작성합니다.
-    console.log("Sending email:", content);
   };
 
   return (
@@ -294,7 +308,7 @@ const Header = ({
       <EmailModal
         show={showEmailModal}
         onClose={handleEmailModalClose}
-        onSend={handleEmailSend}
+        onSend={sendEmail}
       />
     </IntlProvider>
   );

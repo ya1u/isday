@@ -7,7 +7,6 @@ import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../locales/messages";
 
 const StyledContainer = styled.div`
-  /* width: 680px; */
   border: 1px solid transparent;
   border-radius: 25px; /* 둥근 모서리 추가 */
   box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
@@ -16,24 +15,12 @@ const StyledContainer = styled.div`
 `;
 
 const StyledCard = styled(Card)`
-  /* width: 510px; */
   border: none;
   border-radius: 25px;
   margin: 0;
   .card-header:first-child {
     border-radius: 25px 25px 0 0;
   }
-`;
-
-const CardHeader = styled(Card.Header)`
-  height: 70px;
-  line-height: 53px;
-  background-color: darkcyan;
-  color: white;
-  font-weight: bold;
-  font-size: 22px;
-  text-align: left; /* 왼쪽 정렬 추가 */
-  padding-left: 50px;
   ${(props) =>
     props.selectedLang === "ko" &&
     css`
@@ -53,6 +40,17 @@ const CardHeader = styled(Card.Header)`
     `}
 `;
 
+const CardHeader = styled(Card.Header)`
+  height: 70px;
+  line-height: 53px;
+  background-color: darkcyan;
+  color: white;
+  font-weight: bold;
+  font-size: 22px;
+  text-align: left; /* 왼쪽 정렬 추가 */
+  padding-left: 50px;
+`;
+
 const StyledListGroup = styled(ListGroup)`
   .list-group-item {
     /* border: none; */
@@ -65,23 +63,6 @@ const StyledListGroup = styled(ListGroup)`
     padding-left: 50px;
     color: black;
     opacity: 0.6;
-    ${(props) =>
-      props.selectedLang === "ko" &&
-      css`
-        font-family: "Jalnan", "MaplestoryBold";
-      `}
-
-    ${(props) =>
-      props.selectedLang === "en" &&
-      css`
-        font-family: "Jalnan", "MaplestoryBold";
-      `}
-
-  ${(props) =>
-      props.selectedLang === "ja" &&
-      css`
-        font-weight: 900;
-      `}
     &:hover {
       background-color: #f0f0f0;
     }
@@ -92,11 +73,11 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
       <StyledContainer>
-        <StyledCard>
-          <CardHeader selectedLang={selectedLang}>
+        <StyledCard selectedLang={selectedLang}>
+          <CardHeader>
             <FormattedMessage id="content.calculator" />
           </CardHeader>
-          <StyledListGroup selectedLang={selectedLang} variant="flush">
+          <StyledListGroup variant="flush">
             <ListGroup.Item as={Link} to="/calc">
               <FormattedMessage id="content.calculator.general" />
             </ListGroup.Item>
@@ -104,10 +85,10 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
               <FormattedMessage id="content.calculator.compound" />
             </ListGroup.Item>
           </StyledListGroup>
-          <CardHeader selectedLang={selectedLang}>
+          <CardHeader>
             <FormattedMessage id="content.timer" />
           </CardHeader>
-          <StyledListGroup selectedLang={selectedLang} variant="flush">
+          <StyledListGroup variant="flush">
             <ListGroup.Item as={Link} to="/pomodoro">
               <FormattedMessage id="content.timer.pomodoro" />
             </ListGroup.Item>

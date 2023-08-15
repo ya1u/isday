@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 
 interface EmailModalProps {
@@ -10,12 +10,16 @@ interface EmailModalProps {
 const EmailModal: React.FC<EmailModalProps> = ({ show, onClose, onSend }) => {
   const [emailContent, setEmailContent] = useState("");
 
-  const handleSendClick = () => {
+  const handleSendClick = useCallback(() => {
     if (emailContent.trim() !== "") {
       onSend(emailContent);
       onClose();
     }
-  };
+  }, [emailContent, onSend, onClose]);
+
+  const handleContentChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setEmailContent(e.target.value);
+  }, []);
 
   return (
     <Modal show={show} onHide={onClose}>
@@ -30,7 +34,7 @@ const EmailModal: React.FC<EmailModalProps> = ({ show, onClose, onSend }) => {
               as="textarea"
               rows={4}
               value={emailContent}
-              onChange={(e) => setEmailContent(e.target.value)}
+              onChange={handleContentChange}
             />
           </Form.Group>
         </Form>

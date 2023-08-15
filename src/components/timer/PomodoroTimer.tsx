@@ -525,7 +525,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     }
 
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, hours, minutes, seconds, isLooping]);
 
   const handleStartTimer = () => {
@@ -938,7 +937,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
           </Modal.Footer>
         </AlertModal>
       </PomodoroWrapper>
-      {/* 오디오 요소를 추가하여 알림음을 재생하는 역할 수행 */}
       {selectedAlertSound && (
         <audio ref={audioRef} src={selectedAlertSound} preload="auto" />
       )}

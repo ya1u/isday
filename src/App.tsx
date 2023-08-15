@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Content from "./components/Content";
@@ -17,8 +17,6 @@ const StyledContainer = styled.div`
 
 const MainContainer = styled.div`
   width: 1000px;
-  /* margin: 0 20% 0 20%; */
-  /* padding: 0 8px 0 8px; */
   display: flex;
 `;
 
@@ -51,7 +49,7 @@ const SecondAD = styled.div`
 `;
 
 function App() {
-  const [selectedLang, setSelectedLang] = React.useState(
+  const [selectedLang, setSelectedLang] = useState(
     localStorage.getItem("lang") || navigator.language.split("-")[0]
   );
 
