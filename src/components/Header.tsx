@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import styled, { css } from "styled-components";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -10,6 +10,7 @@ import supportSVG from "../images/support_icon.svg";
 import hamburgurSVG from "../images/hamburger_icon.svg";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../locales/messages";
+import EmailModal from "../components/emailModal/EmailModal";
 
 // @font-face를 선언합니다.
 const FontFaceStyle = styled.div`
@@ -157,6 +158,8 @@ const Header = ({
   onLanguageChange: (lang: string) => void;
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -192,6 +195,19 @@ const Header = ({
     onLanguageChange(lang);
   };
 
+  const handleEmailModalShow = () => {
+    setShowEmailModal(true);
+  };
+
+  const handleEmailModalClose = () => {
+    setShowEmailModal(false);
+  };
+
+  const handleEmailSend = (content: string) => {
+    // 이메일 전송 로직을 여기에 작성합니다.
+    console.log("Sending email:", content);
+  };
+
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
       <FontFaceStyle />
@@ -216,7 +232,7 @@ const Header = ({
               <FormattedMessage id="header.pomodoroTimer" />
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item href="/ja/">
+            <Dropdown.Item onClick={handleEmailModalShow}>
               <FormattedMessage id="header.inquiry" />
               <img src={smallSupportSVG} alt="Question Icon" />
             </Dropdown.Item>
@@ -244,6 +260,7 @@ const Header = ({
             <StyledInquireBtn
               selectedLang={selectedLang}
               className="btn btn-light me-2 nav-desktop"
+              onClick={handleEmailModalShow}
             >
               <img
                 src={supportSVG}
@@ -274,6 +291,11 @@ const Header = ({
           </Nav>
         </StyledContainer>
       </StyledNavbar>
+      <EmailModal
+        show={showEmailModal}
+        onClose={handleEmailModalClose}
+        onSend={handleEmailSend}
+      />
     </IntlProvider>
   );
 };
