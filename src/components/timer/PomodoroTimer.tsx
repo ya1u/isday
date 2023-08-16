@@ -70,9 +70,6 @@ const ButtonContainer = styled.div`
   margin: 0 52px;
   align-items: center;
 `;
-interface StyledTitleProps {
-  selectedLang: string;
-}
 interface TimerButtonProps {
   variant: "start" | "pause" | "reset" | "setting";
   onClick: () => void;
@@ -198,34 +195,9 @@ const CustomModal = styled(Modal)<StyledTitleProps>`
     background-color: darkcyan;
     border-bottom: none;
     padding: 15px 20px;
-    ${(props) =>
-      props.selectedLang === "ko" &&
-      css`
-        font-family: "Jalnan", "MaplestoryBold";
-      `}
-
-    ${(props) =>
-      props.selectedLang === "en" &&
-      css`
-        font-family: "Jalnan", "MaplestoryBold";
-      `}
-
-  ${(props) =>
-      props.selectedLang === "ja" &&
-      css`
-        font-weight: 900;
-      `}
     .modal-title {
       color: #fff;
       font-size: 24px;
-    }
-
-    button.close {
-      color: #fff;
-      font-size: 24px;
-      &:hover {
-        color: #fff;
-      }
     }
   }
 
@@ -305,27 +277,10 @@ const AlertModal = styled(Modal)<StyledTitleProps>`
   margin-top: 200px;
   /* 모달 헤더 스타일링 */
   .modal-header {
-    font-family: "Jalnan", "MaplestoryBold";
     background-color: darkcyan;
     border-bottom: none;
     padding: 15px 20px;
-    ${(props) =>
-      props.selectedLang === "ko" &&
-      css`
-        font-family: "Jalnan", "MaplestoryBold";
-      `}
 
-    ${(props) =>
-      props.selectedLang === "en" &&
-      css`
-        font-family: "Jalnan", "MaplestoryBold";
-      `}
-
-  ${(props) =>
-      props.selectedLang === "ja" &&
-      css`
-        font-weight: 900;
-      `}
     .modal-title {
       color: #fff;
       font-size: 24px;
@@ -387,107 +342,254 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   const alertSounds = [
     {
       id: 1,
-      name: selectedLang === "ko" ? "알람소리 1" : selectedLang === "en" ? "Alarm 1" : selectedLang === "ja" ? "アラーム 1": "",
+      name:
+        selectedLang === "ko"
+          ? "알람소리 1"
+          : selectedLang === "en"
+          ? "Alarm 1"
+          : selectedLang === "ja"
+          ? "アラーム 1"
+          : "",
       src: "/alertSounds/alarm1.mp3",
     },
     {
       id: 2,
-      name: selectedLang === "ko" ? "알람소리 2" : selectedLang === "en" ? "Alarm 2" : selectedLang === "ja" ? "アラーム 2": "",
+      name:
+        selectedLang === "ko"
+          ? "알람소리 2"
+          : selectedLang === "en"
+          ? "Alarm 2"
+          : selectedLang === "ja"
+          ? "アラーム 2"
+          : "",
       src: "/alertSounds/alarm2.mp3",
     },
     {
       id: 3,
-      name: selectedLang === "ko" ? "알람소리 3" : selectedLang === "en" ? "Alarm 3" : selectedLang === "ja" ? "アラーム 3": "",
+      name:
+        selectedLang === "ko"
+          ? "알람소리 3"
+          : selectedLang === "en"
+          ? "Alarm 3"
+          : selectedLang === "ja"
+          ? "アラーム 3"
+          : "",
       src: "/alertSounds/alarm3.mp3",
     },
     {
       id: 4,
-      name: selectedLang === "ko" ? "알람소리 4" : selectedLang === "en" ? "Alarm 4" : selectedLang === "ja" ? "アラーム 4": "",
+      name:
+        selectedLang === "ko"
+          ? "알람소리 4"
+          : selectedLang === "en"
+          ? "Alarm 4"
+          : selectedLang === "ja"
+          ? "アラーム 4"
+          : "",
       src: "/alertSounds/alarm4.mp3",
     },
     {
       id: 5,
-      name: selectedLang === "ko" ? "뻐꾸기" : selectedLang === "en" ? "Cuckoo" : selectedLang === "ja" ? "カッコウ": "",
+      name:
+        selectedLang === "ko"
+          ? "뻐꾸기"
+          : selectedLang === "en"
+          ? "Cuckoo"
+          : selectedLang === "ja"
+          ? "カッコウ"
+          : "",
       src: "/alertSounds/cuckoo.mp3",
     },
     {
       id: 6,
-      name: selectedLang === "ko" ? "초인종 1" : selectedLang === "en" ? "Doorbell 1" : selectedLang === "ja" ? "呼び鈴 1": "",
+      name:
+        selectedLang === "ko"
+          ? "초인종 1"
+          : selectedLang === "en"
+          ? "Doorbell 1"
+          : selectedLang === "ja"
+          ? "呼び鈴 1"
+          : "",
       src: "/alertSounds/doorbell1.mp3",
     },
     {
       id: 7,
-      name: selectedLang === "ko" ? "초인종 2" : selectedLang === "en" ? "Doorbell 2" : selectedLang === "ja" ? "呼び鈴 2": "",
+      name:
+        selectedLang === "ko"
+          ? "초인종 2"
+          : selectedLang === "en"
+          ? "Doorbell 2"
+          : selectedLang === "ja"
+          ? "呼び鈴 2"
+          : "",
       src: "/alertSounds/doorbell2.mp3",
     },
     {
       id: 8,
-      name: selectedLang === "ko" ? "노크 1" : selectedLang === "en" ? "Knock 1" : selectedLang === "ja" ? "ノック 1": "",
+      name:
+        selectedLang === "ko"
+          ? "노크 1"
+          : selectedLang === "en"
+          ? "Knock 1"
+          : selectedLang === "ja"
+          ? "ノック 1"
+          : "",
       src: "/alertSounds/Knock1.mp3",
     },
     {
       id: 9,
-      name: selectedLang === "ko" ? "노크 2" : selectedLang === "en" ? "Knock 2" : selectedLang === "ja" ? "ノック 2": "",
+      name:
+        selectedLang === "ko"
+          ? "노크 2"
+          : selectedLang === "en"
+          ? "Knock 2"
+          : selectedLang === "ja"
+          ? "ノック 2"
+          : "",
       src: "/alertSounds/Knock2.mp3",
     },
     {
       id: 10,
-      name: selectedLang === "ko" ? "노크 3" : selectedLang === "en" ? "Knock 3" : selectedLang === "ja" ? "ノック 3": "",
+      name:
+        selectedLang === "ko"
+          ? "노크 3"
+          : selectedLang === "en"
+          ? "Knock 3"
+          : selectedLang === "ja"
+          ? "ノック 3"
+          : "",
       src: "/alertSounds/Knock3.mp3",
     },
     {
       id: 11,
-      name: selectedLang === "ko" ? "노크 4" : selectedLang === "en" ? "Knock 4" : selectedLang === "ja" ? "ノック 4": "",
+      name:
+        selectedLang === "ko"
+          ? "노크 4"
+          : selectedLang === "en"
+          ? "Knock 4"
+          : selectedLang === "ja"
+          ? "ノック 4"
+          : "",
       src: "/alertSounds/Knock4.mp3",
     },
     {
       id: 12,
-      name: selectedLang === "ko" ? "신나는 음악 1" : selectedLang === "en" ? "Exciting Music 1" : selectedLang === "ja" ? "楽しい音楽 1": "",
+      name:
+        selectedLang === "ko"
+          ? "신나는 음악 1"
+          : selectedLang === "en"
+          ? "Exciting Music 1"
+          : selectedLang === "ja"
+          ? "楽しい音楽 1"
+          : "",
       src: "/alertSounds/ExcitingMusic1.mp3",
     },
     {
       id: 13,
-      name: selectedLang === "ko" ? "신나는 음악 2" : selectedLang === "en" ? "Exciting Music 2" : selectedLang === "ja" ? "楽しい音楽 2": "",
+      name:
+        selectedLang === "ko"
+          ? "신나는 음악 2"
+          : selectedLang === "en"
+          ? "Exciting Music 2"
+          : selectedLang === "ja"
+          ? "楽しい音楽 2"
+          : "",
       src: "/alertSounds/ExcitingMusic2.mp3",
     },
     {
       id: 14,
-      name: selectedLang === "ko" ? "신나는 음악 3" : selectedLang === "en" ? "Exciting Music 3" : selectedLang === "ja" ? "楽しい音楽 3": "",
+      name:
+        selectedLang === "ko"
+          ? "신나는 음악 3"
+          : selectedLang === "en"
+          ? "Exciting Music 3"
+          : selectedLang === "ja"
+          ? "楽しい音楽 3"
+          : "",
       src: "/alertSounds/ExcitingMusic3.mp3",
     },
     {
       id: 15,
-      name: selectedLang === "ko" ? "신나는 음악 4" : selectedLang === "en" ? "Exciting Music 4" : selectedLang === "ja" ? "楽しい音楽 4": "",
+      name:
+        selectedLang === "ko"
+          ? "신나는 음악 4"
+          : selectedLang === "en"
+          ? "Exciting Music 4"
+          : selectedLang === "ja"
+          ? "楽しい音楽 4"
+          : "",
       src: "/alertSounds/ExcitingMusic4.mp3",
     },
     {
       id: 16,
-      name: selectedLang === "ko" ? "신나는 음악 5" : selectedLang === "en" ? "Exciting Music 5" : selectedLang === "ja" ? "楽しい音楽 5": "",
+      name:
+        selectedLang === "ko"
+          ? "신나는 음악 5"
+          : selectedLang === "en"
+          ? "Exciting Music 5"
+          : selectedLang === "ja"
+          ? "楽しい音楽 5"
+          : "",
       src: "/alertSounds/ExcitingMusic5.mp3",
     },
     {
       id: 17,
-      name: selectedLang === "ko" ? "긍정적인 음악 1" : selectedLang === "en" ? "Positive Music 1" : selectedLang === "ja" ? "ポジティブな音楽 1": "",
+      name:
+        selectedLang === "ko"
+          ? "긍정적인 음악 1"
+          : selectedLang === "en"
+          ? "Positive Music 1"
+          : selectedLang === "ja"
+          ? "ポジティブな音楽 1"
+          : "",
       src: "/alertSounds/PositiveMusic1.mp3",
     },
     {
       id: 18,
-      name: selectedLang === "ko" ? "긍정적인 음악 2" : selectedLang === "en" ? "Positive Music 2" : selectedLang === "ja" ? "ポジティブな音楽 2": "",
+      name:
+        selectedLang === "ko"
+          ? "긍정적인 음악 2"
+          : selectedLang === "en"
+          ? "Positive Music 2"
+          : selectedLang === "ja"
+          ? "ポジティブな音楽 2"
+          : "",
       src: "/alertSounds/PositiveMusic2.mp3",
     },
     {
       id: 19,
-      name: selectedLang === "ko" ? "긍정적인 음악 3" : selectedLang === "en" ? "Positive Music 3" : selectedLang === "ja" ? "ポジティブな音楽 3": "",
+      name:
+        selectedLang === "ko"
+          ? "긍정적인 음악 3"
+          : selectedLang === "en"
+          ? "Positive Music 3"
+          : selectedLang === "ja"
+          ? "ポジティブな音楽 3"
+          : "",
       src: "/alertSounds/PositiveMusic3.mp3",
     },
     {
       id: 20,
-      name: selectedLang === "ko" ? "긍정적인 음악 4" : selectedLang === "en" ? "Positive Music 4" : selectedLang === "ja" ? "ポジティブな音楽 4": "",
+      name:
+        selectedLang === "ko"
+          ? "긍정적인 음악 4"
+          : selectedLang === "en"
+          ? "Positive Music 4"
+          : selectedLang === "ja"
+          ? "ポジティブな音楽 4"
+          : "",
       src: "/alertSounds/PositiveMusic4.mp3",
     },
     {
       id: 21,
-      name: selectedLang === "ko" ? "긍정적인 음악 5" : selectedLang === "en" ? "Positive Music 5" : selectedLang === "ja" ? "ポジティブな音楽 5": "",
+      name:
+        selectedLang === "ko"
+          ? "긍정적인 음악 5"
+          : selectedLang === "en"
+          ? "Positive Music 5"
+          : selectedLang === "ja"
+          ? "ポジティブな音楽 5"
+          : "",
       src: "/alertSounds/PositiveMusic5.mp3",
     },
   ];
@@ -739,7 +841,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
           show={showModal}
           onHide={handleCloseModal}
         >
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>
               {selectedLang === "ko"
                 ? "설정"
@@ -907,7 +1009,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
           show={showAlertModal}
           onHide={handleCloseAlertModal}
         >
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>
               {selectedLang === "ko"
                 ? "타이머 종료"

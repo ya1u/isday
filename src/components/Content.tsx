@@ -21,6 +21,16 @@ const StyledCard = styled(Card)`
   .card-header:first-child {
     border-radius: 25px 25px 0 0;
   }
+`;
+
+const CardHeader = styled(Card.Header)`
+  height: 70px;
+  line-height: 53px;
+  background-color: darkcyan;
+  color: white;
+  font-size: 20px;
+  text-align: left; /* 왼쪽 정렬 추가 */
+  padding-left: 50px;
   ${(props) =>
     props.selectedLang === "ko" &&
     css`
@@ -38,17 +48,6 @@ const StyledCard = styled(Card)`
     css`
       font-weight: 900;
     `}
-`;
-
-const CardHeader = styled(Card.Header)`
-  height: 70px;
-  line-height: 53px;
-  background-color: darkcyan;
-  color: white;
-  font-weight: bold;
-  font-size: 22px;
-  text-align: left; /* 왼쪽 정렬 추가 */
-  padding-left: 50px;
 `;
 
 const StyledListGroup = styled(ListGroup)`
@@ -73,8 +72,8 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
       <StyledContainer>
-        <StyledCard selectedLang={selectedLang}>
-          <CardHeader>
+        <StyledCard>
+          <CardHeader selectedLang={selectedLang}>
             <FormattedMessage id="content.calculator" />
           </CardHeader>
           <StyledListGroup variant="flush">
@@ -85,7 +84,7 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
               <FormattedMessage id="content.calculator.compound" />
             </ListGroup.Item>
           </StyledListGroup>
-          <CardHeader>
+          <CardHeader selectedLang={selectedLang}>
             <FormattedMessage id="content.timer" />
           </CardHeader>
           <StyledListGroup variant="flush">

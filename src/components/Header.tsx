@@ -84,51 +84,14 @@ const StyledNavLink = styled(Nav.Link)`
     display: none;
     margin: 0 auto;
   }
-
-  ${(props) =>
-    props.selectedLang === "ko" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "en" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-      font-size: 16px;
-    `}
-
-  ${(props) =>
-    props.selectedLang === "ja" &&
-    css`
-      font-weight: 900;
-    `}
 `;
 
 const StyledInquireBtn = styled(Button)`
-  font-size: 14px;
+  font-size: 15px;
   width: 122px;
   @media (max-width: 630px) {
     display: none;
   }
-
-  ${(props) =>
-    props.selectedLang === "ko" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "en" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "ja" &&
-    css`
-      font-weight: 900;
-    `}
 `;
 
 // 상태와 액션 타입 정의
