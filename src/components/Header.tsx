@@ -320,6 +320,7 @@ const Header = ({
         show={showEmailModal}
         onClose={handleEmailModalClose}
         onSend={sendEmail}
+        selectedLang={selectedLang}
       />
     </IntlProvider>
   );

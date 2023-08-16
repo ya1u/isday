@@ -87,6 +87,7 @@ const Footer = ({ selectedLang }: { selectedLang: string }) => {
         show={showEmailModal}
         onClose={handleEmailModalClose}
         onSend={sendEmail}
+        selectedLang={selectedLang}
       />
     </FooterWrapper>
   );
