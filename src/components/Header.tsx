@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
