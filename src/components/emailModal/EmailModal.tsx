@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-import styled from "styled-components";
+import styles from "../../styles/EmailModal.module.css"
 
 interface EmailModalProps {
   show: boolean;
@@ -37,15 +37,9 @@ const EmailModal: React.FC<EmailModalProps> = ({
   );
 
   return (
-    <Modal show={show} onHide={onClose} style={{ marginTop: 200 }}>
-      <Modal.Header
-        style={{
-          backgroundColor: "darkcyan",
-          borderBottom: "none",
-          padding: "15px 20px",
-        }}
-      >
-        <Modal.Title style={{ color: "#FFF", fontSize: 24 }}>
+    <Modal className={styles.Modal} show={show} onHide={onClose}>
+      <Modal.Header className={styles.ModalHeader}>
+        <Modal.Title className={styles.ModalTitle}>
           {selectedLang === "ko"
             ? "문의하기"
             : selectedLang === "en"
@@ -72,58 +66,24 @@ const EmailModal: React.FC<EmailModalProps> = ({
           </Form.Group>
         </Form>
       </Modal.Body>
-      <Modal.Footer
-        style={{
-          padding: "10px 20px",
-        }}
-      >
-        <StyledGreyButton onClick={handleCloseClick}>
+      <Modal.Footer className={styles.ModalFooter}>
+        <Button className={styles.StyledGreyButton} onClick={handleCloseClick}>
           {selectedLang === "ko"
             ? "닫기"
             : selectedLang === "en"
             ? "Close"
             : "閉じる"}
-        </StyledGreyButton>
-        <StyledCyanButton onClick={handleSendClick}>
+        </Button>
+        <Button className={styles.StyledCyanButton} onClick={handleSendClick}>
           {selectedLang === "ko"
             ? "보내기"
             : selectedLang === "en"
             ? "Send"
             : "送信する"}
-        </StyledCyanButton>
+        </Button>
       </Modal.Footer>
     </Modal>
   );
 };
-
-const StyledGreyButton = styled(Button)`
-  background-color: grey;
-  border: none;
-  color: white;
-  padding: 10px 30px;
-  &:hover {
-    background-color: grey;
-    opacity: 0.8;
-  }
-  &:active {
-    background-color: grey;
-    opacity: 0.5;
-  }
-`;
-
-const StyledCyanButton = styled(Button)`
-  background-color: darkcyan;
-  border: none;
-  color: white;
-  padding: 10px 30px;
-  &:hover {
-    background-color: darkcyan;
-    opacity: 0.8;
-  }
-  &:active {
-    background-color: darkcyan;
-    opacity: 0.5;
-  }
-`;
 
 export default EmailModal;

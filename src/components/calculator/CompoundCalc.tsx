@@ -1,7 +1,9 @@
 import React, { useState, useCallback } from "react";
-import styled, { css } from "styled-components";
+import styles from "../../styles/CompoundCalc.module.css"
+import styled from "styled-components";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../../locales/messages";
+import { getLanguageStyle } from "../../App";
 
 interface InvestmentData {
   year: number;
@@ -17,6 +19,25 @@ interface CalculatorState {
   result: number | null;
   investmentData: InvestmentData[];
 }
+
+interface StyledTitleProps {
+  selectedLang: string;
+}
+
+const StyledTitle = styled.div<StyledTitleProps>`
+  ${props => getLanguageStyle(props.selectedLang)}
+`;
+
+const ResultDisplay = styled.p<StyledTitleProps>`
+  p {
+     ${props => getLanguageStyle(props.selectedLang)} 
+  }
+`;
+
+// 돈 형식에 콤마 추가 함수
+const numberWithCommas = (number: string) => {
+  return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
   const [calculatorState, setCalculatorState] = useState<CalculatorState>({
@@ -88,16 +109,17 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
 
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
-      <StyledContainer>
-        <CalculatorContainer>
-          <CalculatorScreen>
-            <StyledTitle selectedLang={selectedLang}>
+      <div className={styles.Container}>
+        <div className={styles.CalculatorContainer}>
+          <div className={styles.CalculatorScreen}>
+            <StyledTitle className={styles.Title} selectedLang={selectedLang}>
               <FormattedMessage id="content.compoundCalc.title" />
             </StyledTitle>
-            <InputLabel>
+            <label className={styles.InputLabel}>
               <FormattedMessage id="content.compoundCalc.investment" /> :
-            </InputLabel>
-            <Input
+            </label>
+            <input
+              className={styles.Input}
               type="text"
               value={
                 calculatorState.principal > 0
@@ -115,10 +137,11 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
               }
             />
 
-            <InputLabel>
+            <label className={styles.InputLabel}>
               <FormattedMessage id="content.compoundCalc.period" /> :
-            </InputLabel>
-            <Input
+            </label>
+            <input
+              className={styles.Input}
               type="text"
               value={calculatorState.period > 0 ? calculatorState.period : ""}
               onChange={handlePeriodChange}
@@ -132,10 +155,11 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
               }
             />
 
-            <InputLabel>
+            <label className={styles.InputLabel}>
               <FormattedMessage id="content.compoundCalc.rate" /> :
-            </InputLabel>
-            <Input
+            </label>
+            <input
+              className={styles.Input}
               type="number"
               value={
                 calculatorState.interestRate > 0
@@ -152,18 +176,18 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
               }
             />
 
-            <CalculateButton onClick={handleCalculateClick}>
+            <button className={styles.CalculateButton} onClick={handleCalculateClick}>
               {selectedLang === "ko"
                 ? "계산하기"
                 : selectedLang === "en"
                 ? "Calculate"
                 : "計算する"}
-            </CalculateButton>
-          </CalculatorScreen>
-        </CalculatorContainer>
+            </button>
+          </div>
+        </div>
 
         {calculatorState.result !== null && (
-          <ResultDisplay selectedLang={selectedLang}>
+          <ResultDisplay className={styles.ResultDisplay} selectedLang={selectedLang}>
             <p>
               {selectedLang === "ko"
                 ? "수익 금액"
@@ -176,7 +200,7 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
               )}{" "}
               {selectedLang === "ko" ? "₩" : selectedLang === "en" ? "$" : "円"}
             </p>
-            <BoldGreenText selectedLang={selectedLang}>
+            <p className={styles.BoldGreenText}>
               {selectedLang === "ko"
                 ? "최종 금액"
                 : selectedLang === "en"
@@ -184,27 +208,27 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
                 : "最終金額"}{" "}
               : {numberWithCommas(calculatorState.result.toFixed(0))}{" "}
               {selectedLang === "ko" ? "₩" : selectedLang === "en" ? "$" : "円"}
-            </BoldGreenText>
+            </p>
             {calculatorState.investmentData && (
-              <Table>
+              <table className={styles.Table}>
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>
+                    <th className={styles.Th}>#</th>
+                    <th className={styles.Th}>
                       {selectedLang === "ko"
                         ? "수익"
                         : selectedLang === "en"
                         ? "Income"
                         : "収益"}
                     </th>
-                    <th>
+                    <th className={styles.Th}>
                       {selectedLang === "ko"
                         ? "총 금액"
                         : selectedLang === "en"
                         ? "Total Amount"
                         : "合計金額"}
                     </th>
-                    <th>
+                    <th className={styles.Th}>
                       {selectedLang === "ko"
                         ? "수익률"
                         : selectedLang === "en"
@@ -216,8 +240,8 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
                 <tbody>
                   {calculatorState.investmentData.map((data) => (
                     <tr key={data.year}>
-                      <th>{data.year}</th>
-                      <td>
+                      <th className={styles.Th}>{data.year}</th>
+                      <td className={styles.Td}>
                         {numberWithCommas(data.income.toFixed(0))}{" "}
                         {selectedLang === "ko"
                           ? "₩"
@@ -225,7 +249,7 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
                           ? "$"
                           : "円"}
                       </td>
-                      <td>
+                      <td className={styles.Td}>
                         {numberWithCommas(data.amount.toFixed(0))}{" "}
                         {selectedLang === "ko"
                           ? "₩"
@@ -233,175 +257,17 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
                           ? "$"
                           : "円"}
                       </td>
-                      <td>{data.interestRate.toFixed(2)}%</td>
+                      <td className={styles.Td}>{data.interestRate.toFixed(2)}%</td>
                     </tr>
                   ))}
                 </tbody>
-              </Table>
+              </table>
             )}
           </ResultDisplay>
         )}
-      </StyledContainer>
+      </div>
     </IntlProvider>
   );
 };
-
-// 돈 형식에 콤마 추가 함수
-const numberWithCommas = (number: string) => {
-  return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
-
-const StyledContainer = styled.div`
-  background-color: #f7f7f7;
-  border: 1px solid transparent;
-  border-radius: 25px; /* 둥근 모서리 추가 */
-  box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
-  margin: 0;
-  padding: 0;
-`;
-
-interface StyledTitleProps {
-  selectedLang: string;
-}
-
-const StyledTitle = styled.div<StyledTitleProps>`
-  font-size: 28px;
-  margin: 20px auto;
-  ${(props) =>
-    props.selectedLang === "ko" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "en" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "ja" &&
-    css`
-      font-weight: 900;
-    `}
-`;
-
-const CalculatorContainer = styled.div`
-  justify-content: center;
-  align-items: center;
-  margin: 40px auto;
-  width: 350px;
-  /* height: 100vh; */
-`;
-
-const CalculatorScreen = styled.div`
-  background-color: #f7f7f7;
-  border-radius: 10px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const InputLabel = styled.label`
-  width: 90%;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 15px;
-  text-align: left;
-`;
-
-const Input = styled.input`
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  text-align: left; /* 숫자가 왼쪽 정렬되도록 설정 */
-  &:focus {
-    outline: none;
-    border: 2px solid darkcyan;
-  }
-`;
-
-const ResultDisplay = styled.p<StyledTitleProps>`
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid grey;
-  font-size: 18px;
-  margin: 30px 30px;
-  padding-top: 30px;
-  p {
-    ${(props) =>
-    props.selectedLang === "ko" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "en" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "ja" &&
-    css`
-      font-weight: 900;
-    `}
-  }
-`;
-
-const Table = styled.table`
-  border-top: 1px solid grey;
-  margin-top: 30px;
-  th,
-  td {
-    padding: 3px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-  }
-  th {
-    font-weight: bold;
-    text-align: center;
-  }
-  td {
-    text-align: right;
-  }
-`;
-
-const CalculateButton = styled.button`
-  background-color: darkcyan;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 30px;
-  font-size: 16px;
-  margin-top: 30px;
-  cursor: pointer;
-`;
-
-const BoldGreenText = styled.span<StyledTitleProps>`
-  font-weight: bold;
-  color: green;
-  ${(props) =>
-    props.selectedLang === "ko" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "en" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "ja" &&
-    css`
-      font-weight: 900;
-    `}
-`;
 
 export default CompoundCalculator;

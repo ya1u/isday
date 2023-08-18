@@ -1,0 +1,205 @@
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+.Container {
+  background-color: #f7f7f7;
+  border: 1px solid transparent;
+  border-radius: 25px;
+  box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
+  .TimerContainer {
+    padding-bottom: 80px;
+    .Title {
+      font-size: 28px;
+      margin: 80px auto;
+    }
+    .TimeDisplay {
+      font-family: "DSEG7Classic-BoldItalic";
+      font-size: 64px;
+      color: darkorange;
+      background-color: #333333;
+      margin: 52px;
+      height: 200px;
+      line-height: 200px;
+      border-radius: 20px;
+      .ShadowTime {
+        position: relative;
+        bottom: 200px;
+        opacity: 0.2;
+      }
+    }
+    .ButtonContainer {
+      margin: 0 52px;
+      align-items: center;
+      .CustomButton {
+        width: 25%;
+        height: 61px;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        font-size: 16px;
+        &:hover {
+          opacity: 0.8;
+        }
+        &:active {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
+
+.SettingModal {
+  margin-top: 200px; 
+
+  .ModalHeader {
+    background-color: darkcyan;
+    border-bottom: none;
+    padding: 15px 20px;
+    .ModalTitle {
+      color: #fff;
+      font-size: 24px;
+    }
+  }
+
+  .ModalBody {
+    margin: 0 10px;
+    .TimeSetContainer {
+      display: flex;
+      justify-content: space-between;
+      .Hour, .Min, .Sec {
+        display: flex;
+        flex-direction: column;
+        font-size: 22px;
+        .TimeSet {
+          flex-direction: row;
+          border: 1px solid lightgrey;
+          .TimeSetBtn {
+            border: none;
+            height: 50px;
+            &:hover {
+              opacity: 0.8;
+            }
+            &:active {
+              opacity: 0.5;
+            }
+          }
+          .TimeSelect {
+            width: 85px;
+            height: 45px;
+            font-size: 18px;
+            text-align: center;
+            border: none;
+            &:focus {
+              outline: none;
+            }
+          }
+        }
+      }
+    }
+
+    .SoundSetContainer {
+      margin-top: 40px;
+      .Sound {
+        font-size: 22px;
+      }
+      .SoundSet {
+        display: flex;
+        .SoundOption {
+          border: 1px solid lightgray;
+          .SoundSelect {
+            font-size: 18px;
+            padding-left: 10px;
+            border: none;
+            width: 230px;
+            height: 40px;
+            &:focus {
+              outline: none;
+            }
+          }
+          .TogleBtn {
+            border: none;
+            width: 64px;
+            height: 44px;
+            &:hover {
+              opacity: 0.7;
+            }
+            &:active {
+              opacity: 0.5;
+            }
+          }
+        }
+        .CheckBox {
+          margin: auto 10px;
+          .CheckBoxInput {
+            margin-right: 3px;
+            :checked {
+              width: 100px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .ModalFooter {
+    padding: 10px 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    .CancelBtn, .SaveBtn {
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      &:hover {
+        opacity: 0.8;
+      }
+      &:active {
+        opacity: 0.5;
+      }
+    }
+    .CancelBtn {
+      background-color: grey;
+    }
+    .SaveBtn {
+      background-color: darkcyan;
+    }
+  }
+}
+
+.AlarmModal {
+  margin-top: 200px;
+  .ModalHeader {
+    background-color: darkcyan;
+    border-bottom: none;
+    padding: 15px 20px;
+    .ModalTitle {
+      color: #fff;
+      font-size: 24px;
+    }
+  }
+  .ModalBody {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 30px;
+    .Ment {
+      margin-top: 30px;
+      font-size: 24px;
+    }
+  }
+  .ModalFooter {
+    .CheckBtn {
+      background-color: darkcyan;
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      &:hover {
+        opacity: 0.8;
+      }
+      &:active {
+        background-color: darkcyan;
+        opacity: 0.5;
+      }
+    }
+  }
+}

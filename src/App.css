@@ -5,3 +5,43 @@
   text-align: center;
   background-color: #F7F7F7;
 }
+
+.Container {
+  margin: 50px 0 50px 0;
+  display: flex;
+  justify-content: center;
+  
+  .Wrapper {
+    width: 1000px;
+    display: flex;
+
+    .ContentArea {
+      margin-right: 10px;
+      flex: 1;
+
+      @media (max-width: 991px) {
+        margin: 0 40px;
+      }
+    }
+
+    .Advertisement {
+      width: 300px;
+      border: 1px solid black;
+      @media (max-width: 991px) {
+        display: none;
+      }
+
+      .FirstAD {
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+      }
+
+      .SecondAD {
+        width: 300px;
+        height: 600px;
+        border: 1px solid black;
+      }
+    }
+  }
+}

@@ -1,52 +1,42 @@
 import React, { useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
-import Content from "./components/Content";
-import Footer from "./components/Footer";
+import styled, { css } from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Content from "./components/Content";
 import Calculator from "./components/calculator/Calculator";
-import PomodoroTimer from "./components/timer/PomodoroTimer";
-import styled from "styled-components";
 import CompoundCalc from "./components/calculator/CompoundCalc";
+import OnlineTimer from "./components/timer/OnlineTimer";
 
-const StyledContainer = styled.div`
-  margin: 50px 0 50px 0;
-  display: flex;
-  justify-content: center;
-`;
-
-const MainContainer = styled.div`
-  width: 1000px;
-  display: flex;
-`;
-
-const ContentContainer = styled.div`
-  margin-right: 10px;
-  flex: 1;
-  @media (max-width: 991px) {
-    margin: 0 40px;
+const FontFaceStyle = styled.div`
+  @font-face {
+    font-family: "Jalnan";
+    src: url("../fonts/Jalnan.woff") format("woff");
+  }
+  @font-face {
+    font-family: "MaplestoryBold";
+    src: url("../fonts/MaplestoryBold.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "DSEG7Classic-BoldItalic";
+    src: url("../fonts/DSEG7Classic-BoldItalic.woff") format("woff");
   }
 `;
 
-const Advertisement = styled.div`
-  width: 300px;
-  border: 1px solid black;
-  @media (max-width: 991px) {
-    display: none;
+const getLanguageStyle = (selectedLang : string) => {
+  if (selectedLang === 'ko' || selectedLang === 'en') {
+    return css`
+      font-family: "Jalnan", "MaplestoryBold";
+    `;
+  } else if (selectedLang === 'ja') {
+    return css`
+      font-weight: 900;
+    `;
+  } else {
+    return css``;
   }
-`;
-
-const FirstAD = styled.div`
-  width: 300px;
-  height: 300px;
-  border: 1px solid black;
-`;
-
-const SecondAD = styled.div`
-  width: 300px;
-  height: 600px;
-  border: 1px solid black;
-`;
+};
 
 function App() {
   const [selectedLang, setSelectedLang] = useState(
@@ -64,26 +54,28 @@ function App() {
           selectedLang={selectedLang}
           onLanguageChange={handleLanguageChange}
         />
-        <StyledContainer>
-          <MainContainer>
-            <ContentContainer>
+        <div className="Container">
+          <div className="Wrapper">
+            <div className="ContentArea">
               <Routes>
                 <Route path="/" element={<Content selectedLang={selectedLang} />} />
                 <Route path="/calc" element={<Calculator selectedLang={selectedLang} />} />
                 <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
-                <Route path="/pomodoro" element={<PomodoroTimer selectedLang={selectedLang} />} />
+                <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
               </Routes>
-            </ContentContainer>
-            <Advertisement>
-              <FirstAD>광고1을 넣어주세요</FirstAD>
-              <SecondAD>광고2를 넣어주세요</SecondAD>
-            </Advertisement>
-          </MainContainer>
-        </StyledContainer>
+            </div>
+            <div className="Advertisement">
+              <div className="FirstAD">광고1을 넣어주세요</div>
+              <div className="SecondAD">광고2를 넣어주세요</div>
+            </div>
+          </div>
+        </div>
         <Footer selectedLang={selectedLang} />
       </BrowserRouter>
+      <FontFaceStyle />
     </div>
   );
 }
 
 export default App;
+export { getLanguageStyle };

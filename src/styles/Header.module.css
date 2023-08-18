@@ -1,0 +1,76 @@
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+.Navbar {
+  background-color: darkcyan;
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .Container {
+    width: 1000px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    @media (max-width: 991px) {
+      width: 80%;
+    }
+    @media (max-width: 629px) {
+      justify-content: space-around;
+      text-align: center;
+      margin: 0 auto;
+      width: 95%;
+    }
+    .DropdownButton {
+      @media (min-width: 631px) {
+          display: none;
+        }
+    }
+    .NavBrand {
+      font-family: "Jalnan", "MaplestoryBold";
+      font-size: 32px;
+      text-decoration: none;
+      color: #fff;
+      margin-right: 16px;
+      @media (max-width: 630px) {
+        font-size: 34px;
+        margin: 0 auto;
+      }
+    }
+    .Nav {
+      @media (min-width: 631px) {
+        flex: 1;
+      }
+      .NavLink {
+        font-size: 18px;
+        text-decoration: none;
+        color: #fff;
+        white-space: nowrap;
+        padding: 8px;
+        @media (max-width: 660px) {
+          font-size: 16px;
+        }
+        @media (max-width: 630px) {
+          display: none;
+          margin: 0 auto;
+        }
+      }
+    }
+    .InquireBtn {
+      font-size: 15px;
+      width: 122px;
+      height: 39.79px;
+      margin-right: 8px;
+      background-color: #F8F9FA;
+      color: black;
+      border: 1px solid #F8F9FA;
+      @media (max-width: 630px) {
+        display: none;
+      }
+    }
+  }
+  
+}

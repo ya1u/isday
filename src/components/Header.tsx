@@ -1,98 +1,17 @@
 import React, { useEffect, useReducer, useState } from "react";
-import styled from "styled-components";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Nav, Navbar, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { FormattedMessage, IntlProvider } from "react-intl";
+import { Link } from "react-router-dom";
+import emailjs from "emailjs-com";
+
+import styles from "../styles/Header.module.css";
 import languageSVG from "../images/language_icon.svg";
 import smallSupportSVG from "../images/support_small_icon.svg";
 import supportSVG from "../images/support_icon.svg";
 import hamburgurSVG from "../images/hamburger_icon.svg";
-import { FormattedMessage, IntlProvider } from "react-intl";
+
 import messages from "../locales/messages";
 import EmailModal from "../components/emailModal/EmailModal";
-import emailjs from "emailjs-com";
-import { Link } from "react-router-dom";
-
-// @font-face를 선언합니다.
-const FontFaceStyle = styled.div`
-  @font-face {
-    font-family: "Jalnan";
-    src: url("../fonts/Jalnan.woff") format("woff"); /* ttf -> truetype로 수정 */
-  }
-  @font-face {
-    font-family: "MaplestoryBold";
-    src: url("../fonts/MaplestoryBold.ttf") format("truetype"); /* ttf -> truetype로 수정 */
-  }
-  @font-face {
-    font-family: "DSEG7Classic-BoldItalic";
-    src: url("../fonts/DSEG7Classic-BoldItalic.woff") format("woff"); /* ttf -> truetype로 수정 */
-  }
-`;
-
-const StyledNavbar = styled(Navbar)`
-  background-color: darkcyan;
-  height: 110px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledContainer = styled(Container)`
-  width: 1000px;
-  @media (max-width: 629px) {
-    justify-content: space-around;
-    text-align: center;
-    margin: 0 auto;
-  }
-`;
-
-const StyledMobileDropdownButton = styled(DropdownButton)`
-  @media (min-width: 631px) {
-    display: none;
-  }
-`;
-
-const StyledNavBrand = styled(Navbar.Brand)`
-  font-family: "Jalnan", "MaplestoryBold";
-  font-size: 32px;
-  text-decoration: none;
-  color: #fff;
-  margin-right: 16px;
-  @media (max-width: 630px) {
-    font-size: 34px;
-    margin: 0 auto;
-  }
-`;
-
-const StyleNav = styled(Nav)`
-  @media (min-width: 631px) {
-    flex: 1;
-  }
-`;
-
-const StyledNavLink = styled(Nav.Link)`
-  font-size: 18px;
-  text-decoration: none;
-  color: #fff;
-  white-space: nowrap;
-  padding: 8px;
-  @media (max-width: 660px) {
-    font-size: 16px;
-  }
-  @media (max-width: 630px) {
-    display: none;
-    margin: 0 auto;
-  }
-`;
-
-const StyledInquireBtn = styled(Button)`
-  font-size: 15px;
-  width: 122px;
-  @media (max-width: 630px) {
-    display: none;
-  }
-`;
 
 // 상태와 액션 타입 정의
 const initialState = {
@@ -193,10 +112,10 @@ const Header = ({
 
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
-      <FontFaceStyle />
-      <StyledNavbar variant="dark">
-        <StyledContainer className="justify-content-center">
-          <StyledMobileDropdownButton
+      <Navbar className={styles.Navbar} variant="dark">
+        <div className={styles.Container}>
+          <DropdownButton
+            className={styles.DropdownButton}
             id="dropdown-basic-button"
             align={{ lg: "end" }}
             variant="light"
@@ -211,43 +130,38 @@ const Header = ({
             <Dropdown.Item as={Link} to="/compound-interest-calc/">
               <FormattedMessage id="header.compoundCalculator" />
             </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/pomodoro">
-              <FormattedMessage id="header.pomodoroTimer" />
+            <Dropdown.Item as={Link} to="/onlinetimer">
+              <FormattedMessage id="header.onlinetimer" />
             </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={handleEmailModalShow}>
               <FormattedMessage id="header.inquiry" />
               <img src={smallSupportSVG} alt="Question Icon" />
             </Dropdown.Item>
-          </StyledMobileDropdownButton>
-          <StyledNavBrand as={Link} to="/">
+          </DropdownButton>
+          <Navbar.Brand className={styles.NavBrand} as={Link} to="/">
             <FormattedMessage id="header.title" />
-          </StyledNavBrand>
+          </Navbar.Brand>
           {state.isWideScreen && (
-            <StyleNav>
-              <StyledNavLink selectedLang={selectedLang} as={Link} to="/calc">
+            <Nav className={styles.Nav}>
+              <Nav.Link className={styles.NavLink} as={Link} to="/calc">
                 <FormattedMessage id="header.calculator" />
-              </StyledNavLink>
-              <StyledNavLink
+              </Nav.Link>
+              <Nav.Link
+                className={styles.NavLink}
                 as={Link}
-                selectedLang={selectedLang}
                 to="/compound-interest-calc"
               >
                 <FormattedMessage id="header.compoundCalculator" />
-              </StyledNavLink>
-              <StyledNavLink
-                as={Link}
-                selectedLang={selectedLang}
-                to="/pomodoro"
-              >
-                <FormattedMessage id="header.pomodoroTimer" />
-              </StyledNavLink>
-            </StyleNav>
+              </Nav.Link>
+              <Nav.Link className={styles.NavLink} as={Link} to="/onlinetimer">
+                <FormattedMessage id="header.onlinetimer" />
+              </Nav.Link>
+            </Nav>
           )}
-          <Nav className="">
-            <StyledInquireBtn
-              selectedLang={selectedLang}
-              className="btn btn-light me-2 nav-desktop"
+          <Nav>
+            <Button
+              className={styles.InquireBtn}
               onClick={handleEmailModalShow}
             >
               <img
@@ -256,7 +170,7 @@ const Header = ({
                 style={{ marginRight: 7 }}
               />
               <FormattedMessage id="header.inquiry" />
-            </StyledInquireBtn>
+            </Button>
             <DropdownButton
               id="dropdown-basic-button"
               align={{ lg: "start" }}
@@ -277,8 +191,8 @@ const Header = ({
               </Dropdown.Item>
             </DropdownButton>
           </Nav>
-        </StyledContainer>
-      </StyledNavbar>
+        </div>
+      </Navbar>
       <EmailModal
         show={showEmailModal}
         onClose={handleEmailModalClose}

@@ -1,0 +1,35 @@
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+.Container {
+  background-color: #e9e9e9;
+  height: 120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .InquiryBtn {
+    border: none;
+    margin-bottom: 5px;
+    color: black;
+    padding: 0;
+    transition: 0.1s;
+    @media (min-width: 991px) {
+    }
+  
+    &:hover {
+      opacity: 0.4;
+      cursor: pointer;
+    }
+  }
+  .EmailLink {
+    text-decoration: none;
+    color: black;
+    margin-bottom: 5px;
+    transition: 0.1s;
+
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+}

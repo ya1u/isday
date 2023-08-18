@@ -1,8 +1,18 @@
 import React, { useState, useCallback } from "react";
-import styled, { css } from "styled-components";
+import styles from "../../styles/Calculator.module.css";
+import styled from "styled-components";
 import * as math from "mathjs";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../../locales/messages";
+import { getLanguageStyle } from "../../App";
+
+interface StyledTitleProps {
+  selectedLang: string;
+}
+
+const StyledTitle = styled.div<StyledTitleProps>`
+  ${props => getLanguageStyle(props.selectedLang)}
+`;
 
 const Calculator = ({ selectedLang }: { selectedLang: string }) => {
   const [inputValue, setInputValue] = useState("");
@@ -58,167 +68,41 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
 
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
-      <StyledContainer>
-        <StyledTitle selectedLang={selectedLang}>
+      <div className={styles.Container}>
+        <StyledTitle className={styles.Title} selectedLang={selectedLang}>
           <FormattedMessage id="content.generalcalculator" />
         </StyledTitle>
-        <CalculatorContainer>
-          <CalculatorScreen>
-            <ResultDisplay>{result}</ResultDisplay>
-            <Input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-            />
-          </CalculatorScreen>
-          <ButtonGrid>
-            <GreyBtn onClick={() => handleButtonClick("(")}>(</GreyBtn>
-            <GreyBtn onClick={() => handleButtonClick(")")}>)</GreyBtn>
-            <GreyBtn onClick={handlePercentage}>%</GreyBtn>
-            <ResultBtn onClick={() => handleButtonClick("/")}>&#247;</ResultBtn>
-            <Button onClick={() => handleButtonClick("7")}>7</Button>
-            <Button onClick={() => handleButtonClick("8")}>8</Button>
-            <Button onClick={() => handleButtonClick("9")}>9</Button>
-            <ResultBtn onClick={() => handleButtonClick("*")}>
-              &times;
-            </ResultBtn>
-            <Button onClick={() => handleButtonClick("4")}>4</Button>
-            <Button onClick={() => handleButtonClick("5")}>5</Button>
-            <Button onClick={() => handleButtonClick("6")}>6</Button>
-            <ResultBtn onClick={() => handleButtonClick("-")}>-</ResultBtn>
-            <Button onClick={() => handleButtonClick("1")}>1</Button>
-            <Button onClick={() => handleButtonClick("2")}>2</Button>
-            <Button onClick={() => handleButtonClick("3")}>3</Button>
-            <ResultBtn onClick={() => handleButtonClick("+")}>+</ResultBtn>
-            <Button onClick={() => handleButtonClick(".")}>.</Button>
-            <Button onClick={() => handleButtonClick("0")}>0</Button>
-            <Button onClick={handleClear}>C</Button>
-            <ResultBtn onClick={calculateResult}>=</ResultBtn>
-          </ButtonGrid>
-        </CalculatorContainer>
-      </StyledContainer>
+        <div className={styles.CalculatorContainer}>
+          <div className={styles.CalculatorScreen}>
+            <p className={styles.ResultDisplay}>{result}</p>
+            <input className={styles.Input} type="text" value={inputValue} onChange={handleInputChange} />
+          </div>
+          <div className={styles.ButtonGrid}>
+            <button className={styles.GreyBtn} onClick={() => handleButtonClick("(")}>(</button>
+            <button className={styles.GreyBtn} onClick={() => handleButtonClick(")")}>)</button>
+            <button className={styles.GreyBtn} onClick={handlePercentage}>%</button>
+            <button className={styles.ResultBtn} onClick={() => handleButtonClick("/")}>&#247;</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("7")}>7</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("8")}>8</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("9")}>9</button>
+            <button className={styles.ResultBtn} onClick={() => handleButtonClick("*")}>&times;</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("4")}>4</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("5")}>5</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("6")}>6</button>
+            <button className={styles.ResultBtn} onClick={() => handleButtonClick("-")}>-</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("1")}>1</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("2")}>2</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("3")}>3</button>
+            <button className={styles.ResultBtn} onClick={() => handleButtonClick("+")}>+</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick(".")}>.</button>
+            <button className={styles.Btn} onClick={() => handleButtonClick("0")}>0</button>
+            <button className={styles.Btn} onClick={handleClear}>C</button>
+            <button className={styles.ResultBtn} onClick={calculateResult}>=</button>
+          </div>
+        </div>
+      </div>
     </IntlProvider>
   );
 };
-
-const StyledContainer = styled.div`
-  background-color: #f7f7f7;
-  border: 1px solid transparent;
-  border-radius: 25px;
-  box-shadow: 5px 10px 100px 50px rgba(0, 0, 0, 0.1);
-  margin: 0;
-  padding: 0;
-`;
-
-interface StyledTitleProps {
-  selectedLang: string;
-}
-
-const StyledTitle = styled.div<StyledTitleProps>`
-  font-size: 28px;
-  margin: 80px 0 auto;
-  ${(props) =>
-    props.selectedLang === "ko" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "en" &&
-    css`
-      font-family: "Jalnan", "MaplestoryBold";
-    `}
-
-  ${(props) =>
-    props.selectedLang === "ja" &&
-    css`
-      font-weight: 900;
-    `}
-`;
-
-const CalculatorContainer = styled.div`
-  background-color: #333;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  width: 350px;
-  margin: 40px auto;
-  text-align: center;
-`;
-
-const CalculatorScreen = styled.div`
-  background-color: #555;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-`;
-
-const ResultDisplay = styled.p`
-  color: #fff;
-  font-size: 30px;
-  height: 45px;
-`;
-
-const Input = styled.input`
-  background-color: #777;
-  color: #fff;
-  padding: 5px 10px;
-  margin-top: 5px;
-  border: none;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 22px;
-  transition: box-shadow 0.3s ease;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 128, 128, 0.7);
-  }
-`;
-
-const ButtonGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-`;
-
-const Button = styled.button`
-  background-color: darkcyan;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 8px 8px;
-  cursor: pointer;
-  font-size: 30px;
-  &:hover {
-    background-color: #20b2aa;
-  }
-`;
-
-const GreyBtn = styled.button`
-  background-color: #777;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 8px 8px;
-  cursor: pointer;
-  font-size: 30px;
-  &:hover {
-    background-color: #888;
-  }
-`;
-
-const ResultBtn = styled.button`
-  background-color: darkorange;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 8px 8px;
-  cursor: pointer;
-  font-size: 30px;
-  &:hover {
-    background-color: #ffa500;
-  }
-`;
 
 export default Calculator;

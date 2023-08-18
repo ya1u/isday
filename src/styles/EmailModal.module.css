@@ -1,0 +1,45 @@
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+.Modal {
+  margin-top: 200px;
+  .ModalHeader {
+    background-color: darkcyan;
+    border-bottom: none;
+    padding: 15px 20px;
+    .ModalTitle {
+      color: #FFF;
+      font-size: 24px;
+    }
+  }
+  .ModalFooter {
+    padding: 10px 20px;
+    .StyledGreyButton {
+      background-color: grey;
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      &:hover {
+        background-color: grey;
+        opacity: 0.8;
+      }
+      &:active {
+        background-color: grey;
+        opacity: 0.5;
+      }
+    }
+    .StyledCyanButton {
+      background-color: darkcyan;
+      border: none;
+      color: white;
+      padding: 10px 30px;
+      &:hover {
+        background-color: darkcyan;
+        opacity: 0.8;
+      }
+      &:active {
+        background-color: darkcyan;
+        opacity: 0.5;
+      }
+    }
+  }
+}
