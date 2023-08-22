@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
 import { FormattedMessage, IntlProvider } from "react-intl";
+import { useMediaQuery } from 'react-responsive';
 import messages from "../locales/messages";
 
 const CardHeader = styled(Card.Header)`
@@ -13,6 +14,7 @@ const CardHeader = styled(Card.Header)`
 `;
 
 const Content = ({ selectedLang }: { selectedLang: string }) => {
+  const isMobile = useMediaQuery({ maxWidth: 423 });
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
       <div className={styles.Container}>
@@ -25,7 +27,7 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
               <FormattedMessage id="content.calculator.general" />
             </ListGroup.Item>
             <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/compound-interest-calc">
-              <FormattedMessage id="content.calculator.compound" />
+              <FormattedMessage id={isMobile ? "content.calculator.compound-mobile" : "content.calculator.compound"} />
             </ListGroup.Item>
           </ListGroup>
           <CardHeader className={styles.CardHeader} selectedLang={selectedLang}>

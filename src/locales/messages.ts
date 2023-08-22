@@ -32,6 +32,7 @@ const messages: Messages = {
     "content.calculator": "Calculator",
     "content.calculator.general": "- General Calculator",
     "content.calculator.compound": "- Compound Interest Calculator",
+    "content.calculator.compound-mobile": "- Compound Interest Calc",
     "content.timer": "Timer",
     "content.timer.onlinetimer": "- Online Timer",
     "content.generalcalculator": "General Calculator",

@@ -64,10 +64,10 @@ function App() {
                 <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
               </Routes>
             </div>
-            <div className="Advertisement">
+            {/* <div className="Advertisement">
               <div className="FirstAD">광고1을 넣어주세요</div>
               <div className="SecondAD">광고2를 넣어주세요</div>
-            </div>
+            </div> */}
           </div>
         </div>
         <Footer selectedLang={selectedLang} />
