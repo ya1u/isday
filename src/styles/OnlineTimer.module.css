@@ -27,6 +27,12 @@
         bottom: 200px;
         opacity: 0.2;
       }
+      @media (max-width: 580px) {
+        font-size: 54px;
+      }
+      @media (max-width: 520px) {
+        font-size: 48px;
+      }
     }
     .ButtonContainer {
       margin: 0 52px;
@@ -80,17 +86,18 @@
           border: 1px solid lightgrey;
           .TimeSetBtn {
             border: none;
-            height: 50px;
             &:hover {
               opacity: 0.8;
             }
             &:active {
               opacity: 0.5;
             }
+            @media (min-width: 481px) {
+              height: 50px;
+            }
           }
           .TimeSelect {
             width: 85px;
-            height: 45px;
             font-size: 18px;
             text-align: center;
             border: none;
@@ -99,6 +106,9 @@
             }
             @media (max-width: 500px) {
               width: 60px;
+            }
+            @media (min-width: 481px) {
+              height: 45px;
             }
           }
         }
