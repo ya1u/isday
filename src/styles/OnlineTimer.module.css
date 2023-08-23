@@ -86,6 +86,7 @@
           border: 1px solid lightgrey;
           .TimeSetBtn {
             border: none;
+            color: black;
             &:hover {
               opacity: 0.8;
             }
@@ -101,6 +102,7 @@
             font-size: 18px;
             text-align: center;
             border: none;
+            color: black;
             &:focus {
               outline: none;
             }
@@ -130,12 +132,13 @@
             border: none;
             width: 230px;
             height: 40px;
+            color: black;
             &:focus {
               outline: none;
             }
-            @media (max-width: 458px) {
-              width: 180px;
-              font-size: 16px;
+            @media (max-width: 480px) {
+              width: 145px;
+              font-size: 14px;
             }
           }
           .TogleBtn {
