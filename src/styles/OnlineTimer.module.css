@@ -113,7 +113,7 @@
               outline: none;
             }
             @media (max-width: 500px) {
-              width: 60px;
+              width: 46px;
             }
             @media (min-width: 481px) {
               height: 45px;
@@ -157,6 +157,9 @@
             }
             &:active {
               opacity: 0.5;
+            }
+            @media (max-width: 480px) {
+              width: 48px;
             }
           }
         }
