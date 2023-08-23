@@ -96,6 +96,9 @@
             @media (min-width: 481px) {
               height: 50px;
             }
+            @media (min-width: 480px) {
+              width: 25px;
+            }
           }
           .TimeSelect {
             width: 85px;
@@ -103,6 +106,7 @@
             text-align: center;
             border: none;
             color: black;
+            background-color: #FFF;
             &:focus {
               outline: none;
             }
@@ -133,11 +137,12 @@
             width: 230px;
             height: 40px;
             color: black;
+            background-color: #FFF;
             &:focus {
               outline: none;
             }
             @media (max-width: 480px) {
-              width: 145px;
+              width: 155px;
               font-size: 14px;
             }
           }
