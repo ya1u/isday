@@ -23,6 +23,10 @@
       @media (max-width: 991px) {
         margin: 0 40px;
       }
+
+      @media (max-width: 480px) {
+        margin: 0 10px;
+      }
     }
 
     .Advertisement {
