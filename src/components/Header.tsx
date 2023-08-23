@@ -140,6 +140,7 @@ const Header = ({
             </Dropdown.Item>
           </DropdownButton>
           <Navbar.Brand className={styles.NavBrand} as={Link} to="/">
+            <img className={styles.logo} src={process.env.PUBLIC_URL + '/favicon.ico'} width={44} alt="" />
             <FormattedMessage id="header.title" />
           </Navbar.Brand>
           {state.isWideScreen && (

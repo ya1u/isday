@@ -39,6 +39,9 @@
         font-size: 34px;
         margin: 0 auto;
       }
+      .logo {
+        margin-bottom: 10px;
+      }
     }
     .Nav {
       @media (min-width: 631px) {

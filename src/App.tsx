@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import styled, { css } from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -47,6 +47,18 @@ function App() {
     setSelectedLang(lang);
     localStorage.setItem("lang", lang);
   };
+
+  useEffect(() => {
+    const titles: { [key: string]: string } = {
+      ko: '일상에 필요한 웹',
+      en: 'Web for Your Daily Needs',
+      ja: '日常に必要なウェブ',
+    };
+  
+    document.title = `isDay - ${titles[selectedLang] || titles['en']}`;
+  }, [selectedLang]);
+  
+  
   return (
     <div className="App">
       <BrowserRouter>
