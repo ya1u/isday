@@ -163,9 +163,6 @@
             &:active {
               opacity: 0.5;
             }
-            @media (max-width: 480px) {
-              width: 48px;
-            }
           }
         }
         .CheckBox {
