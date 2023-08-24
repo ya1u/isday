@@ -5,6 +5,7 @@ import * as math from "mathjs";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../../locales/messages";
 import { getLanguageStyle } from "../../App";
+import { Helmet } from 'react-helmet';
 
 interface StyledTitleProps {
   selectedLang: string;
@@ -68,6 +69,15 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
 
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+      <Helmet>
+        <title>
+          {selectedLang == "ko"
+            ? "isDay - 일반 계산기"
+            : selectedLang == "ja"
+            ? "isDay - 一般的な電卓"
+            : "isDay - General Calculator"}
+        </title>
+      </Helmet>
       <div className={styles.Container}>
         <StyledTitle className={styles.Title} selectedLang={selectedLang}>
           <FormattedMessage id="content.generalcalculator" />

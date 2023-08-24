@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import styled, { css } from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -8,6 +8,7 @@ import Content from "./components/Content";
 import Calculator from "./components/calculator/Calculator";
 import CompoundCalc from "./components/calculator/CompoundCalc";
 import OnlineTimer from "./components/timer/OnlineTimer";
+import { Helmet } from "react-helmet";
 
 const FontFaceStyle = styled.div`
   @font-face {
@@ -47,20 +48,18 @@ function App() {
     setSelectedLang(lang);
     localStorage.setItem("lang", lang);
   };
-
-  useEffect(() => {
-    const titles: { [key: string]: string } = {
-      ko: '일상에 필요한 웹',
-      en: 'Web for Your Daily Needs',
-      ja: '日常に必要なウェブ',
-    };
-  
-    document.title = `isDay - ${titles[selectedLang] || titles['en']}`;
-  }, [selectedLang]);
-  
   
   return (
     <div className="App">
+      <Helmet>
+        <title>
+          {selectedLang == "ko"
+            ? "isDay - 일상에 필요한 웹"
+            : selectedLang == "ja"
+            ? "isDay - 日常に必要なウェブ"
+            : "isDay - Web for Your Daily Needs"}
+        </title>
+      </Helmet>
       <BrowserRouter>
         <Header
           selectedLang={selectedLang}
@@ -71,15 +70,15 @@ function App() {
             <div className="ContentArea">
               <Routes>
                 <Route path="/" element={<Content selectedLang={selectedLang} />} />
-                <Route path="/calc" element={<Calculator selectedLang={selectedLang} />} />
+                <Route path="/general-calc" element={<Calculator selectedLang={selectedLang} />} />
                 <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
                 <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
               </Routes>
             </div>
-            {/* <div className="Advertisement">
+            <div className="Advertisement">
               <div className="FirstAD">광고1을 넣어주세요</div>
               <div className="SecondAD">광고2를 넣어주세요</div>
-            </div> */}
+            </div>
           </div>
         </div>
         <Footer selectedLang={selectedLang} />

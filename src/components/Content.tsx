@@ -23,7 +23,7 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
             <FormattedMessage id="content.calculator" />
           </CardHeader>
           <ListGroup className={styles.ListGroup} variant="flush">
-            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/calc">
+            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/general-calc">
               <FormattedMessage id="content.calculator.general" />
             </ListGroup.Item>
             <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/compound-interest-calc">

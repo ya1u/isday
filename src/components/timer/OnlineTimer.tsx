@@ -6,6 +6,7 @@ import startIcon from "../../images/start_icon.png";
 import pauseIcon from "../../images/pause_icon.png";
 import alramIcon from "../../images/alram_icon.png";
 import { getLanguageStyle } from "../../App";
+import { Helmet } from "react-helmet";
 
 interface StyledTitleProps {
   selectedLang: string;
@@ -493,6 +494,15 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
 
   return (
     <div className={styles.Container}>
+      <Helmet>
+        <title>
+          {selectedLang == "ko"
+            ? "isDay - 온라인타이머"
+            : selectedLang == "ja"
+            ? "isDay - オンラインタイマー"
+            : "isDay - Online Timer"}
+        </title>
+      </Helmet>
       <div>
         <div className={styles.TimerContainer}>
           <StyledTitle className={styles.Title} selectedLang={selectedLang}>
@@ -708,20 +718,23 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
                   </select>
                   {isPlaying ? (
                     <button className={styles.TogleBtn} onClick={pauseAlertSound}>
-                      <img
-                        src={pauseIcon}
-                        width={40}
-                        style={{ opacity: 1 }}
-                        alt="Toggle Icon"
-                      />
+                      <div className={styles.CenteredImageContainer}>
+                        <img
+                          className={styles.ToggleIcon}
+                          src={pauseIcon}
+                          alt="Toggle Icon"
+                        />
+                      </div>
                     </button>
                   ) : (
                     <button className={styles.TogleBtn} onClick={playPreviewAlertSound}>
-                      <img
-                        className={styles.ToggleIcon}
-                        src={startIcon}
-                        alt="Toggle Icon"
-                      />
+                      <div className={styles.CenteredImageContainer}>
+                        <img
+                          className={styles.ToggleIcon}
+                          src={startIcon}
+                          alt="Toggle Icon"
+                        />
+                      </div>
                     </button>
                   )}
                 </div>

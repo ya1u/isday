@@ -134,7 +134,7 @@ const Header = ({
             onMouseEnter={() => handleMouseEnter("menu")}
             onMouseLeave={handleCloseDropdowns}
           >
-            <Dropdown.Item as={Link} to="/calc" onClick={handleMenuItemClick}>
+            <Dropdown.Item as={Link} to="/general-calc" onClick={handleMenuItemClick}>
               <FormattedMessage id="header.calculator" />
             </Dropdown.Item>
             <Dropdown.Item as={Link} to="/compound-interest-calc/" onClick={handleMenuItemClick}>
@@ -157,7 +157,7 @@ const Header = ({
           </Navbar.Brand>
           {state.isWideScreen && (
             <Nav className={styles.Nav}>
-              <Nav.Link className={styles.NavLink} as={Link} to="/calc">
+              <Nav.Link className={styles.NavLink} as={Link} to="/general-calc">
                 <FormattedMessage id="header.calculator" />
               </Nav.Link>
               <Nav.Link

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../../locales/messages";
 import { getLanguageStyle } from "../../App";
+import { Helmet } from "react-helmet";
 
 interface InvestmentData {
   year: number;
@@ -109,6 +110,15 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
 
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+      <Helmet>
+        <title>
+          {selectedLang == "ko"
+            ? "isDay - 복리 계산기"
+            : selectedLang == "ja"
+            ? "isDay - 複利計算機"
+            : "isDay - Compound Interest Calculator"}
+        </title>
+      </Helmet>
       <div className={styles.Container}>
         <div className={styles.CalculatorContainer}>
           <div className={styles.CalculatorScreen}>

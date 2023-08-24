@@ -166,11 +166,16 @@
             @media (max-width: 482px) {
               width: 48px;
             }
-            .ToggleIcon {
-              width: 40px;
-              opacity: 1;
-              @media (max-width: 482px) {
-                width: 24px;
+            .CenteredImageContainer {
+              /* display: flex; */
+              justify-content: center;
+              align-items: center;
+              .ToggleIcon {
+                width: 40px;
+                opacity: 1;
+                @media (max-width: 482px) {
+                  width: 24px;
+                }
               }
             }
           }

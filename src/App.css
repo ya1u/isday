@@ -2,11 +2,15 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 .App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   text-align: center;
   background-color: #F7F7F7;
 }
 
 .Container {
+  flex: 1;
   margin: 50px 0 50px 0;
   display: flex;
   justify-content: center;
@@ -18,7 +22,6 @@
     .ContentArea {
       margin-right: 10px;
       flex: 1;
-      min-height: 650px;
 
       @media (max-width: 991px) {
         margin: 0 40px;
