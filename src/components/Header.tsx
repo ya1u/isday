@@ -98,16 +98,25 @@ const Header = ({
     }
   };
 
-  const handleMouseLeave = (mode: string) => {
+  const handleMouseClick = (mode: string) => {
     if (mode === "menu") {
-      dispatch({ type: actionTypes.SET_MENU_DROPDOWN, payload: false });
+      dispatch({ type: actionTypes.SET_MENU_DROPDOWN, payload: !state.showMenuDropdown });
     } else if (mode === "lang") {
-      dispatch({ type: actionTypes.SET_LANG_DROPDOWN, payload: false });
+      dispatch({ type: actionTypes.SET_LANG_DROPDOWN, payload: !state.showLangDropdown });
     }
   };
 
   const handleLanguageButtonClick = (lang: string) => {
     onLanguageChange(lang);
+  };
+
+  const handleCloseDropdowns = () => {
+    dispatch({ type: actionTypes.SET_MENU_DROPDOWN, payload: false });
+    dispatch({ type: actionTypes.SET_LANG_DROPDOWN, payload: false });
+  };
+
+  const handleMenuItemClick = () => {
+    handleCloseDropdowns();
   };
 
   return (
@@ -121,20 +130,23 @@ const Header = ({
             variant="light"
             title={<img src={hamburgurSVG} alt="Hamburgur Icon" />}
             show={state.showMenuDropdown}
+            onClick={() => handleMouseClick("menu")}
             onMouseEnter={() => handleMouseEnter("menu")}
-            onMouseLeave={() => handleMouseLeave("menu")}
+            onMouseLeave={handleCloseDropdowns}
           >
-            <Dropdown.Item as={Link} to="/calc">
+            <Dropdown.Item as={Link} to="/calc" onClick={handleMenuItemClick}>
               <FormattedMessage id="header.calculator" />
             </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/compound-interest-calc/">
+            <Dropdown.Item as={Link} to="/compound-interest-calc/" onClick={handleMenuItemClick}>
               <FormattedMessage id="header.compoundCalculator" />
             </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/onlinetimer">
+            <Dropdown.Item as={Link} to="/onlinetimer" onClick={handleMenuItemClick}>
               <FormattedMessage id="header.onlinetimer" />
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={handleEmailModalShow}>
+            <Dropdown.Item onClick={() => {
+              handleEmailModalShow()
+              handleMenuItemClick()}}>
               <FormattedMessage id="header.inquiry" />
               <img src={smallSupportSVG} alt="Question Icon" />
             </Dropdown.Item>
@@ -163,8 +175,9 @@ const Header = ({
           <Nav>
             <Button
               className={styles.InquireBtn}
-              onClick={handleEmailModalShow}
-            >
+              onClick={() => {
+                handleEmailModalShow()
+                handleMenuItemClick()}}>
               <img
                 src={supportSVG}
                 alt="Support Icon"
@@ -178,16 +191,23 @@ const Header = ({
               variant="light"
               title={<img src={languageSVG} alt="Language Icon" />}
               show={state.showLangDropdown}
+              onClick={() => handleMouseClick("lang")}
               onMouseEnter={() => handleMouseEnter("lang")}
-              onMouseLeave={() => handleMouseLeave("lang")}
+              onMouseLeave={handleCloseDropdowns}
             >
-              <Dropdown.Item onClick={() => handleLanguageButtonClick("ko")}>
+              <Dropdown.Item onClick={() => {
+                handleLanguageButtonClick("ko") 
+                handleMenuItemClick()}}>
                 한국어
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleLanguageButtonClick("en")}>
+              <Dropdown.Item onClick={() => {
+                handleLanguageButtonClick("en") 
+                handleMenuItemClick()}}>
                 English
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleLanguageButtonClick("ja")}>
+              <Dropdown.Item onClick={() => {
+                handleLanguageButtonClick("ja") 
+                handleMenuItemClick()}}>
                 日本語
               </Dropdown.Item>
             </DropdownButton>

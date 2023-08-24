@@ -718,9 +718,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
                   ) : (
                     <button className={styles.TogleBtn} onClick={playPreviewAlertSound}>
                       <img
+                        className={styles.ToggleIcon}
                         src={startIcon}
-                        width={40}
-                        style={{ opacity: 1 }}
                         alt="Toggle Icon"
                       />
                     </button>

@@ -163,10 +163,23 @@
             &:active {
               opacity: 0.5;
             }
+            @media (max-width: 482px) {
+              width: 48px;
+            }
+            .ToggleIcon {
+              width: 40px;
+              opacity: 1;
+              @media (max-width: 482px) {
+                width: 24px;
+              }
+            }
           }
         }
         .CheckBox {
           margin: auto 10px;
+          @media (max-width: 482px) {
+            font-size: 14px;
+          }
           .CheckBoxInput {
             margin-right: 3px;
             :checked {
