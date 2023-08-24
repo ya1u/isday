@@ -497,7 +497,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
       <Helmet>
         <title>
           {selectedLang == "ko"
-            ? "isDay - 온라인타이머"
+            ? "isDay - 온라인 타이머"
             : selectedLang == "ja"
             ? "isDay - オンラインタイマー"
             : "isDay - Online Timer"}
