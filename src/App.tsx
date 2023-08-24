@@ -61,29 +61,39 @@ function App() {
             ? "isDay - 日常に必要なウェブ"
             : "isDay - Web for Your Daily Needs"}
         </title>
+        <meta
+          name="description"
+          content={
+            selectedLang == "ko"
+              ? "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
+              : selectedLang == "ja"
+              ? "さまざまなアプリケーションに個人の財務計算ツールとオンラインタイマーを提供するプラットフォーム"
+              : "A platform that provides personal financial calculators and online timers for a variety of applications"
+          }
+        />
       </Helmet>
       <BrowserRouter>
-          <Header
-            selectedLang={selectedLang}
-            onLanguageChange={handleLanguageChange}
-          />
-          <div className={styles.Container}>
-            <div className={styles.Wrapper}>
-              <div className={styles.ContentArea}>
-                <Routes>
-                  <Route path="/" element={<Content selectedLang={selectedLang} />} />
-                  <Route path="/general-calc" element={<Calculator selectedLang={selectedLang} />} />
-                  <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
-                  <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
-                </Routes>
-              </div>
-              {/* <div className="Advertisement">
-                <div className="FirstAD">광고1을 넣어주세요</div>
-                <div className="SecondAD">광고2를 넣어주세요</div>
-              </div> */}
+        <Header
+          selectedLang={selectedLang}
+          onLanguageChange={handleLanguageChange}
+        />
+        <div className={styles.Container}>
+          <div className={styles.Wrapper}>
+            <div className={styles.ContentArea}>
+              <Routes>
+                <Route path="/" element={<Content selectedLang={selectedLang} />} />
+                <Route path="/general-calc" element={<Calculator selectedLang={selectedLang} />} />
+                <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
+                <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
+              </Routes>
             </div>
+            {/* <div className="Advertisement">
+              <div className="FirstAD">광고1을 넣어주세요</div>
+              <div className="SecondAD">광고2를 넣어주세요</div>
+            </div> */}
           </div>
-          <Footer selectedLang={selectedLang} />
+        </div>
+        <Footer selectedLang={selectedLang} />
       </BrowserRouter>
       <FontFaceStyle />
     </div>
