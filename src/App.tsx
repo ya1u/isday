@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import styled, { css } from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import styles from "./styles/App.module.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Content from "./components/Content";
@@ -9,6 +10,7 @@ import Calculator from "./components/calculator/Calculator";
 import CompoundCalc from "./components/calculator/CompoundCalc";
 import OnlineTimer from "./components/timer/OnlineTimer";
 import { Helmet } from "react-helmet";
+
 
 const FontFaceStyle = styled.div`
   @font-face {
@@ -50,7 +52,7 @@ function App() {
   };
   
   return (
-    <div className="App">
+    <div className={styles.App}>
       <Helmet>
         <title>
           {selectedLang == "ko"
@@ -65,9 +67,9 @@ function App() {
           selectedLang={selectedLang}
           onLanguageChange={handleLanguageChange}
         />
-        <div className="Container">
-          <div className="Wrapper">
-            <div className="ContentArea">
+        <div className={styles.Container}>
+          <div className={styles.Wrapper}>
+            <div className={styles.ContentArea}>
               <Routes>
                 <Route path="/" element={<Content selectedLang={selectedLang} />} />
                 <Route path="/general-calc" element={<Calculator selectedLang={selectedLang} />} />
@@ -75,10 +77,10 @@ function App() {
                 <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
               </Routes>
             </div>
-            <div className="Advertisement">
+            {/* <div className="Advertisement">
               <div className="FirstAD">광고1을 넣어주세요</div>
               <div className="SecondAD">광고2를 넣어주세요</div>
-            </div>
+            </div> */}
           </div>
         </div>
         <Footer selectedLang={selectedLang} />
