@@ -2,19 +2,15 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 .App {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   text-align: center;
   background-color: #F7F7F7;
 }
 
 .Container {
-  flex: 1;
-  margin: 50px 0 50px 0;
   display: flex;
   justify-content: center;
-  
+  margin: 50px 0 50px 0;
+  min-height: calc(100vh - 330px);
   .Wrapper {
     width: 1000px;
     display: flex;

@@ -63,27 +63,27 @@ function App() {
         </title>
       </Helmet>
       <BrowserRouter>
-        <Header
-          selectedLang={selectedLang}
-          onLanguageChange={handleLanguageChange}
-        />
-        <div className={styles.Container}>
-          <div className={styles.Wrapper}>
-            <div className={styles.ContentArea}>
-              <Routes>
-                <Route path="/" element={<Content selectedLang={selectedLang} />} />
-                <Route path="/general-calc" element={<Calculator selectedLang={selectedLang} />} />
-                <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
-                <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
-              </Routes>
+          <Header
+            selectedLang={selectedLang}
+            onLanguageChange={handleLanguageChange}
+          />
+          <div className={styles.Container}>
+            <div className={styles.Wrapper}>
+              <div className={styles.ContentArea}>
+                <Routes>
+                  <Route path="/" element={<Content selectedLang={selectedLang} />} />
+                  <Route path="/general-calc" element={<Calculator selectedLang={selectedLang} />} />
+                  <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
+                  <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
+                </Routes>
+              </div>
+              {/* <div className="Advertisement">
+                <div className="FirstAD">광고1을 넣어주세요</div>
+                <div className="SecondAD">광고2를 넣어주세요</div>
+              </div> */}
             </div>
-            {/* <div className="Advertisement">
-              <div className="FirstAD">광고1을 넣어주세요</div>
-              <div className="SecondAD">광고2를 넣어주세요</div>
-            </div> */}
           </div>
-        </div>
-        <Footer selectedLang={selectedLang} />
+          <Footer selectedLang={selectedLang} />
       </BrowserRouter>
       <FontFaceStyle />
     </div>
