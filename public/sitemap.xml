@@ -4,17 +4,17 @@
     <loc>https://isday.net/</loc>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://isday.net/general-calc</loc>
-    <priority>0.5</priority>
+    <url>
+    <loc>https://isday.net/onlinetimer</loc>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://isday.net/compound-interest-calc</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://isday.net/onlinetimer</loc>
-    <priority>0.7</priority>
+    <loc>https://isday.net/general-calc</loc>
+    <priority>0.5</priority>
   </url>
 </urlset>
 
