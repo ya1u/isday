@@ -111,15 +111,19 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
       <Helmet>
-        <title>
-          {selectedLang == "ko"
-            ? "isDay - 복리 계산기"
-            : selectedLang == "ja"
-            ? "isDay - 複利計算機"
-            : "isDay - Compound Interest Calculator"}
-        </title>
+        <meta property="og:url" content="https://isday.net/compound-interest-calc" />
         <meta
-          name="description"
+          property="og:title"
+          content={
+            selectedLang == "ko"
+              ? "isDay - 복리 계산기"
+              : selectedLang == "ja"
+              ? "isDay - 複利計算機"
+              : "isDay - Compound Interest Calculator"      
+          }
+        />    
+        <meta 
+          property="og:description" 
           content={
             selectedLang == "ko"
               ? "복리계산기는 사용자가 복리 원리를 이해하고 계산할 수 있도록 도와줍니다. 이 페이지를 통해 사용자는 특정 초기 투자 금액과 연이율을 입력하여, 향후 일정 기간 동안 얼마나 자금이 증가하는지를 예측할 수 있습니다."

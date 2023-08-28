@@ -55,9 +55,6 @@
       "last 1 safari version"
     ]
   },
-  "reactSnap": {
-    "include": ["/", "/general-calc", "/compound-interest-calc", "/onlinetimer"]
-  },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-helmet": "^6.1.6"

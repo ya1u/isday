@@ -54,15 +54,19 @@ function App() {
   return (
     <div className={styles.App}>
       <Helmet>
-        <title>
-          {selectedLang == "ko"
-            ? "isDay - 일상에 필요한 웹"
-            : selectedLang == "ja"
-            ? "isDay - 日常に必要なウェブ"
-            : "isDay - Web for Your Daily Needs"}
-        </title>
+        <meta property="og:url" content="https://isday.net" />
         <meta
-          name="description"
+          property="og:title"
+          content={
+            selectedLang == "ko"
+              ? "isDay - 일상에 필요한 웹"
+              : selectedLang == "ja"
+              ? "isDay - 日常に必要なウェブ"
+              : "isDay - Web for Your Daily Needs"
+          }
+        />    
+        <meta 
+          property="og:description" 
           content={
             selectedLang == "ko"
               ? "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"

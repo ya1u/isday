@@ -70,15 +70,19 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
   return (
     <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
       <Helmet>
-        <title>
-          {selectedLang == "ko"
-            ? "isDay - 일반 계산기"
-            : selectedLang == "ja"
-            ? "isDay - 一般的な電卓"
-            : "isDay - General Calculator"}
-        </title>
+        <meta property="og:url" content="https://isday.net/general-calc" />
         <meta
-          name="description"
+          property="og:title"
+          content={
+            selectedLang == "ko"
+              ? "isDay - 일반 계산기"
+              : selectedLang == "ja"
+              ? "isDay - 一般的な電卓"
+              : "isDay - General Calculator"
+          }
+        />    
+        <meta 
+          property="og:description" 
           content={
             selectedLang == "ko"
               ? "일반 계산기는 사용자가 간단한 수학적 계산을 수행하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 숫자와 연산자를 입력하여 더하기, 빼기, 곱하기, 나누기 등의 연산을 수행할 수 있습니다."
