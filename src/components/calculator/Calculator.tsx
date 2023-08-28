@@ -5,7 +5,7 @@ import * as math from "mathjs";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../../locales/messages";
 import { getLanguageStyle } from "../../App";
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 interface StyledTitleProps {
   selectedLang: string;

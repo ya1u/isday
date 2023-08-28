@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import messages from "../../locales/messages";
 import { getLanguageStyle } from "../../App";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 interface InvestmentData {
   year: number;

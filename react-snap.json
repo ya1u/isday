@@ -1,0 +1,13 @@
+{
+  "snapshots": [
+    {
+      "source": "public/index.html",
+      "destination": "public/snap/index.html",
+      "basepath": "",
+      "id": "index"
+    }
+  ],
+  "basePath": "public/snap",
+  "inlineCss": true,
+  "removeScriptTags": true
+}

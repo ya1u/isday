@@ -9,7 +9,7 @@ import Content from "./components/Content";
 import Calculator from "./components/calculator/Calculator";
 import CompoundCalc from "./components/calculator/CompoundCalc";
 import OnlineTimer from "./components/timer/OnlineTimer";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 
 const FontFaceStyle = styled.div`

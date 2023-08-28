@@ -6,7 +6,7 @@ import startIcon from "../../images/start_icon.png";
 import pauseIcon from "../../images/pause_icon.png";
 import alramIcon from "../../images/alram_icon.png";
 import { getLanguageStyle } from "../../App";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 interface StyledTitleProps {
   selectedLang: string;
