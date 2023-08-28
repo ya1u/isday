@@ -55,6 +55,9 @@
       "last 1 safari version"
     ]
   },
+  "reactSnap": {
+    "include":["/"]
+  },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-helmet": "^6.1.6"
