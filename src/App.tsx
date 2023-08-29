@@ -45,6 +45,7 @@ function App() {
   const [selectedLang, setSelectedLang] = useState(
     localStorage.getItem("lang") || navigator.language.split("-")[0]
   );
+  // const [selectedLang, setSelectedLang] = useState("ko");
 
   const handleLanguageChange = (lang: string) => {
     setSelectedLang(lang);
@@ -54,39 +55,40 @@ function App() {
   return (
     <div className={styles.App}>
       <Helmet>
+        <html lang={selectedLang} />
         <title>
-          {selectedLang == "ko"
-              ? "isDay - 일상에 필요한 웹"
+          {selectedLang == "en"
+              ? "isDay - Web for Your Daily Needs"
               : selectedLang == "ja"
               ? "isDay - 日常に必要なウェブ"
-              : "isDay - Web for Your Daily Needs"}
+              : "isDay - 일상에 필요한 웹"}
         </title>
         <meta name="description" content={
-            selectedLang == "ko"
-              ? "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
+            selectedLang == "en"
+              ? "A platform that provides personal financial calculators and online timers for a variety of applications"
               : selectedLang == "ja"
               ? "さまざまなアプリケーションに個人の財務計算ツールとオンラインタイマーを提供するプラットフォーム"
-              : "A platform that provides personal financial calculators and online timers for a variety of applications"
+              : "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
           }/>
-        <meta property="og:url" content="https://isday.net" />
+        <meta property="og:url" content="https://isday.net/" />
         <meta
           property="og:title"
           content={
-            selectedLang == "ko"
-              ? "isDay - 일상에 필요한 웹"
+            selectedLang == "en"
+              ? "isDay - Web for Your Daily Needs"
               : selectedLang == "ja"
               ? "isDay - 日常に必要なウェブ"
-              : "isDay - Web for Your Daily Needs"
+              : "isDay - 일상에 필요한 웹"
           }
         />    
         <meta 
           property="og:description" 
           content={
-            selectedLang == "ko"
-              ? "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
+            selectedLang == "en"
+              ? "A platform that provides personal financial calculators and online timers for a variety of applications"
               : selectedLang == "ja"
               ? "さまざまなアプリケーションに個人の財務計算ツールとオンラインタイマーを提供するプラットフォーム"
-              : "A platform that provides personal financial calculators and online timers for a variety of applications"
+              : "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
           }
         />
       </Helmet>
@@ -100,14 +102,14 @@ function App() {
             <div className={styles.ContentArea}>
               <Routes>
                 <Route path="/" element={<Content selectedLang={selectedLang} />} />
-                <Route path="/general-calc" element={<Calculator selectedLang={selectedLang} />} />
-                <Route path="/compound-interest-calc" element={<CompoundCalc selectedLang={selectedLang} />} />
-                <Route path="/onlinetimer" element={<OnlineTimer selectedLang={selectedLang} />} />
+                <Route path="/general-calc/" element={<Calculator selectedLang={selectedLang} />} />
+                <Route path="/compound-interest-calc/" element={<CompoundCalc selectedLang={selectedLang} />} />
+                <Route path="/onlinetimer/" element={<OnlineTimer selectedLang={selectedLang} />} />
               </Routes>
             </div>
-            {/* <div className="Advertisement">
-              <div className="FirstAD">광고1을 넣어주세요</div>
-              <div className="SecondAD">광고2를 넣어주세요</div>
+            {/* <div className={styles.Advertisement}>
+              <div className={styles.FirstAD}>광고1을 넣어주세요</div>
+              <div className={styles.SecondAD}>광고2를 넣어주세요</div>
             </div> */}
           </div>
         </div>

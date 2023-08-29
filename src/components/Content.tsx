@@ -23,10 +23,10 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
             <FormattedMessage id="content.calculator" />
           </CardHeader>
           <ListGroup className={styles.ListGroup} variant="flush">
-            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/general-calc">
+            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/general-calc/">
               <FormattedMessage id="content.calculator.general" />
             </ListGroup.Item>
-            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/compound-interest-calc">
+            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/compound-interest-calc/">
               <FormattedMessage id={isMobile ? "content.calculator.compound-mobile" : "content.calculator.compound"} />
             </ListGroup.Item>
           </ListGroup>
@@ -34,7 +34,7 @@ const Content = ({ selectedLang }: { selectedLang: string }) => {
             <FormattedMessage id="content.timer" />
           </CardHeader>
           <ListGroup className={styles.ListGroup} variant="flush">
-            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/onlinetimer">
+            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/onlinetimer/">
               <FormattedMessage id="content.timer.onlinetimer" />
             </ListGroup.Item>
           </ListGroup>

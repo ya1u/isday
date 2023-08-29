@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import emailjs from "emailjs-com";
 
 import styles from "../styles/Header.module.css";
+import styled, {css} from "styled-components";
 import languageSVG from "../images/language_icon.svg";
 import smallSupportSVG from "../images/support_small_icon.svg";
 import supportSVG from "../images/support_icon.svg";
@@ -25,6 +26,15 @@ const actionTypes = {
   SET_MENU_DROPDOWN: "SET_MENU_DROPDOWN",
   SET_LANG_DROPDOWN: "SET_LANG_DROPDOWN",
 };
+
+const InquiryButton = styled(Button)<{ selectedLang: string }>`
+  font-size: 15px;
+  ${(props) =>
+    props.selectedLang === "ja" &&
+    css`
+      font-size: 13px;
+    `}
+`;
 
 // 리듀서 함수
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -134,13 +144,13 @@ const Header = ({
             onMouseEnter={() => handleMouseEnter("menu")}
             onMouseLeave={handleCloseDropdowns}
           >
-            <Dropdown.Item as={Link} to="/general-calc" onClick={handleMenuItemClick}>
+            <Dropdown.Item as={Link} to="/general-calc/" onClick={handleMenuItemClick}>
               <FormattedMessage id="header.calculator" />
             </Dropdown.Item>
             <Dropdown.Item as={Link} to="/compound-interest-calc/" onClick={handleMenuItemClick}>
               <FormattedMessage id="header.compoundCalculator" />
             </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/onlinetimer" onClick={handleMenuItemClick}>
+            <Dropdown.Item as={Link} to="/onlinetimer/" onClick={handleMenuItemClick}>
               <FormattedMessage id="header.onlinetimer" />
             </Dropdown.Item>
             <Dropdown.Divider />
@@ -157,24 +167,25 @@ const Header = ({
           </Navbar.Brand>
           {state.isWideScreen && (
             <Nav className={styles.Nav}>
-              <Nav.Link className={styles.NavLink} as={Link} to="/general-calc">
+              <Nav.Link className={styles.NavLink} as={Link} to="/general-calc/">
                 <FormattedMessage id="header.calculator" />
               </Nav.Link>
               <Nav.Link
                 className={styles.NavLink}
                 as={Link}
-                to="/compound-interest-calc"
+                to="/compound-interest-calc/"
               >
                 <FormattedMessage id="header.compoundCalculator" />
               </Nav.Link>
-              <Nav.Link className={styles.NavLink} as={Link} to="/onlinetimer">
+              <Nav.Link className={styles.NavLink} as={Link} to="/onlinetimer/">
                 <FormattedMessage id="header.onlinetimer" />
               </Nav.Link>
             </Nav>
           )}
           <Nav>
-            <Button
+            <InquiryButton
               className={styles.InquireBtn}
+              selectedLang={selectedLang}
               onClick={() => {
                 handleEmailModalShow()
                 handleMenuItemClick()}}>
@@ -184,7 +195,7 @@ const Header = ({
                 style={{ marginRight: 7 }}
               />
               <FormattedMessage id="header.inquiry" />
-            </Button>
+            </InquiryButton>
             <DropdownButton
               id="dropdown-basic-button"
               align={{ lg: "start" }}

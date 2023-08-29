@@ -496,21 +496,21 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
     <div className={styles.Container}>
       <Helmet>
         <title>
-          {selectedLang == "ko"
-            ? "isDay - 온라인 타이머"
+          {selectedLang == "en"
+            ? "isDay - Online Timer"
             : selectedLang == "ja"
             ? "isDay - オンラインタイマー"
-            : "isDay - Online Timer"}
+            : "isDay - 온라인 타이머"}
         </title>
-        <meta name="url" content="https://isday.net/onlinetimer" />
+        <meta name="url" content="https://isday.net/onlinetimer/" />
         <meta 
           name="description" 
           content={
-            selectedLang == "ko"
-              ? "온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."
+            selectedLang == "en"
+              ? "Online timers help users effectively manage their time and reschedule. Use this page to allow users to set the desired time and start a timer to concentrate on their work or relax for a break for a specified time."
               : selectedLang == "ja"
               ? "オンライン タイマーは、ユーザが時間とスケジュールを効果的に管理するのに役立ちます。 このページを使用すると、ユーザは目的の時間を設定し、タイマーを起動して作業に集中したり、指定した時間の休憩を取ることができます。"
-              : "Online timers help users effectively manage their time and reschedule. Use this page to allow users to set the desired time and start a timer to concentrate on their work or relax for a break for a specified time."
+              : "온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."
           }
         />
       </Helmet>
