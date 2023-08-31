@@ -45,7 +45,6 @@ function App() {
   const [selectedLang, setSelectedLang] = useState(
     localStorage.getItem("lang") || navigator.language.split("-")[0]
   );
-  // const [selectedLang, setSelectedLang] = useState("ko");
 
   const handleLanguageChange = (lang: string) => {
     setSelectedLang(lang);
@@ -55,7 +54,6 @@ function App() {
   return (
     <div className={styles.App}>
       <Helmet>
-        <html lang={selectedLang} />
         <title>
           {selectedLang == "en"
               ? "isDay - Web for Your Daily Needs"

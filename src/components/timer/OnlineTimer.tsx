@@ -43,7 +43,7 @@ interface PomodoroTimerProps {
   selectedLang: string;
 }
 
-const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
+const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showAlertModal, setShowAlertModal] = useState<boolean>(false);
   const [hours, setHours] = useState<number>(0);
@@ -828,4 +828,4 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   );
 };
 
-export default PomodoroTimer;
+export default OnlineTimer;
