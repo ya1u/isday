@@ -69,26 +69,20 @@ function App() {
               : "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
           }/>
         <meta property="og:url" content="https://isday.net/" />
-        <meta
-          property="og:title"
-          content={
+        <meta property="og:title" content={
             selectedLang == "en"
               ? "isDay - Web for Your Daily Needs"
               : selectedLang == "ja"
               ? "isDay - 日常に必要なウェブ"
               : "isDay - 일상에 필요한 웹"
-          }
-        />    
-        <meta 
-          property="og:description" 
-          content={
+          }/>
+        <meta property="og:description" content={
             selectedLang == "en"
               ? "A platform that provides personal financial calculators and online timers for a variety of applications"
               : selectedLang == "ja"
               ? "さまざまなアプリケーションに個人の財務計算ツールとオンラインタイマーを提供するプラットフォーム"
               : "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
-          }
-        />
+          }/>
       </Helmet>
       <BrowserRouter>
         <Header
