@@ -113,10 +113,10 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
       <Helmet>
         <title>
           {selectedLang == "en"
-            ? "isDay - Compound Interest Calculator"
+            ? "Compound Interest Calculator"
             : selectedLang == "ja"
-            ? "isDay - 複利計算機"
-            : "isDay - 복리 계산기"}
+            ? "複利計算機"
+            : "복리 계산기"}
         </title>
         <meta name="url" content="https://isday.net/compound-interest-calc/" />
         <meta 

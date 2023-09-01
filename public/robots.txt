@@ -1,4 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
+Allow: /your-javascript-url
+Allow: /your-css-url
 Allow:/
 Sitemap: https://isday.net/sitemap.xml

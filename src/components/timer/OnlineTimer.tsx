@@ -497,10 +497,10 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
       <Helmet>
         <title>
           {selectedLang == "en"
-            ? "isDay - Online Timer"
+            ? "Online Timer"
             : selectedLang == "ja"
-            ? "isDay - オンラインタイマー"
-            : "isDay - 온라인 타이머"}
+            ? "オンラインタイマー"
+            : "온라인 타이머"}
         </title>
         <meta name="url" content="https://isday.net/onlinetimer/" />
         <meta 

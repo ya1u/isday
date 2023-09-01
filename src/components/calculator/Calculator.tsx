@@ -72,10 +72,10 @@ const Calculator = ({ selectedLang }: { selectedLang: string }) => {
       <Helmet>
         <title>
           {selectedLang == "en"
-            ? "isDay - General Calculator"
+            ? "General Calculator"
             : selectedLang == "ja"
-            ? "isDay - 一般的な電卓"
-            : "isDay - 일반 계산기"}
+            ? "一般的な電卓"
+            : "일반 계산기"}
         </title>
         <meta name="url" content="https://isdat.net/general-calc/" />
         <meta 
