@@ -59,7 +59,7 @@ function App() {
               ? "isDay - Web for Your Daily Needs"
               : selectedLang == "ja"
               ? "isDay - 日常に必要なウェブ"
-              : "isDay - 일상에 필요한 웹"}
+              : "isDay(이즈데이) - 일상에 필요한 웹"}
         </title>
         <meta name="description" content={
             selectedLang == "en"
@@ -74,7 +74,7 @@ function App() {
               ? "isDay - Web for Your Daily Needs"
               : selectedLang == "ja"
               ? "isDay - 日常に必要なウェブ"
-              : "isDay - 일상에 필요한 웹"
+              : "isDay(이즈데이) - 일상에 필요한 웹"
           }/>
         <meta property="og:description" content={
             selectedLang == "en"
