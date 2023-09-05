@@ -4,7 +4,6 @@ import styles from "../../styles/EmailModal.module.css"
 
 interface EmailModalProps {
   show: boolean;
-  selectedLang: string;
   onClose: () => void;
   onSend: (content: string) => void;
 }
@@ -13,7 +12,6 @@ const EmailModal: React.FC<EmailModalProps> = ({
   show,
   onClose,
   onSend,
-  selectedLang,
 }) => {
   const [emailContent, setEmailContent] = useState("");
 
@@ -39,26 +37,14 @@ const EmailModal: React.FC<EmailModalProps> = ({
   return (
     <Modal className={styles.Modal} show={show} onHide={onClose}>
       <Modal.Header className={styles.ModalHeader}>
-        <Modal.Title className={styles.ModalTitle}>
-          {selectedLang === "ko"
-            ? "문의하기"
-            : selectedLang === "en"
-            ? "Inquiry"
-            : "問い合わせ"}
-        </Modal.Title>
+        <Modal.Title className={styles.ModalTitle}>문의하기</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group controlId="emailContent">
             <Form.Control
               as="textarea"
-              placeholder={
-                selectedLang === "ko"
-                  ? "문의하실 내용을 입력해주세요. \n회신이 필요하면 이메일 주소를 남겨주세요."
-                  : selectedLang === "en"
-                  ? "Please enter your inquiry. \nIf you need a reply, please leave your email address."
-                  : "お問い合わせ内容を入力してください。 \n返信が必要な場合は、メールアドレスを残してください。"
-              }
+              placeholder={"문의하실 내용을 입력해주세요. \n회신이 필요하면 이메일 주소를 남겨주세요."}
               rows={10}
               value={emailContent}
               onChange={handleContentChange}
@@ -67,20 +53,8 @@ const EmailModal: React.FC<EmailModalProps> = ({
         </Form>
       </Modal.Body>
       <Modal.Footer className={styles.ModalFooter}>
-        <Button className={styles.StyledGreyButton} onClick={handleCloseClick}>
-          {selectedLang === "ko"
-            ? "닫기"
-            : selectedLang === "en"
-            ? "Close"
-            : "閉じる"}
-        </Button>
-        <Button className={styles.StyledCyanButton} onClick={handleSendClick}>
-          {selectedLang === "ko"
-            ? "보내기"
-            : selectedLang === "en"
-            ? "Send"
-            : "送信する"}
-        </Button>
+        <Button className={styles.StyledGreyButton} onClick={handleCloseClick}>닫기</Button>
+        <Button className={styles.StyledCyanButton} onClick={handleSendClick}>보내기</Button>
       </Modal.Footer>
     </Modal>
   );

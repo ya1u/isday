@@ -6,7 +6,7 @@ import smallSupportSVG from "../images/support_small_icon.svg";
 import EmailModal from "../components/emailModal/EmailModal";
 import emailjs from "emailjs-com";
 
-const Footer = ({ selectedLang }: { selectedLang: string }) => {
+const Footer = () => {
   const [showEmailModal, setShowEmailModal] = useState(false);
 
   const handleEmailModalShow = () => {
@@ -37,11 +37,7 @@ const Footer = ({ selectedLang }: { selectedLang: string }) => {
     <footer className={styles.Container}>
       <div className={styles.InquiryBtn} onClick={handleEmailModalShow}>
         <img src={smallSupportSVG} alt="Question Icon" />
-        {selectedLang === "ko"
-          ? "문의하기"
-          : selectedLang === "en"
-          ? "Inquiry"
-          : "問い合わせ"}
+        문의하기
       </div>
       <Link className={styles.EmailLink} to="/">
         <img src={smallQuestionSVG} alt="Question Icon" />
@@ -52,7 +48,6 @@ const Footer = ({ selectedLang }: { selectedLang: string }) => {
         show={showEmailModal}
         onClose={handleEmailModalClose}
         onSend={sendEmail}
-        selectedLang={selectedLang}
       />
     </footer>
   );

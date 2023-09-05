@@ -67,10 +67,22 @@
       height: 39.79px;
       margin-right: 8px;
       background-color: #F8F9FA;
+      font-size: 15px;
       color: black;
       border: 1px solid #F8F9FA;
+      .InquireBtnImg {
+        margin-right: 7px;
+        @media (max-width: 630px) {
+          margin-right: 0;
+        }
+      }
+      .InquireBtnText {
+          @media (max-width: 630px) {
+            display: none;
+          }    
+        }
       @media (max-width: 630px) {
-        display: none;
+        width: 63px;
       }
     }
   }

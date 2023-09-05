@@ -1,17 +1,13 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Nav, Navbar, Button, Dropdown, DropdownButton } from "react-bootstrap";
-import { FormattedMessage, IntlProvider } from "react-intl";
 import { Link } from "react-router-dom";
 import emailjs from "emailjs-com";
 
 import styles from "../styles/Header.module.css";
-import styled, {css} from "styled-components";
-import languageSVG from "../images/language_icon.svg";
 import smallSupportSVG from "../images/support_small_icon.svg";
 import supportSVG from "../images/support_icon.svg";
 import hamburgurSVG from "../images/hamburger_icon.svg";
 
-import messages from "../locales/messages";
 import EmailModal from "../components/emailModal/EmailModal";
 
 // 상태와 액션 타입 정의
@@ -26,15 +22,6 @@ const actionTypes = {
   SET_MENU_DROPDOWN: "SET_MENU_DROPDOWN",
   SET_LANG_DROPDOWN: "SET_LANG_DROPDOWN",
 };
-
-const InquiryButton = styled(Button)<{ selectedLang: string }>`
-  font-size: 15px;
-  ${(props) =>
-    props.selectedLang === "ja" &&
-    css`
-      font-size: 13px;
-    `}
-`;
 
 // 리듀서 함수
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,13 +38,7 @@ const reducer = (state: any, action: { type: any; payload: any }) => {
   }
 };
 
-const Header = ({
-  selectedLang,
-  onLanguageChange,
-}: {
-  selectedLang: string;
-  onLanguageChange: (lang: string) => void;
-}) => {
+const Header = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [showEmailModal, setShowEmailModal] = useState(false);
 
@@ -116,10 +97,6 @@ const Header = ({
     }
   };
 
-  const handleLanguageButtonClick = (lang: string) => {
-    onLanguageChange(lang);
-  };
-
   const handleCloseDropdowns = () => {
     dispatch({ type: actionTypes.SET_MENU_DROPDOWN, payload: false });
     dispatch({ type: actionTypes.SET_LANG_DROPDOWN, payload: false });
@@ -130,7 +107,7 @@ const Header = ({
   };
 
   return (
-    <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+    <div>
       <Navbar className={styles.Navbar} variant="dark">
         <div className={styles.Container}>
           <DropdownButton
@@ -145,58 +122,57 @@ const Header = ({
             onMouseLeave={handleCloseDropdowns}
           >
             <Dropdown.Item as={Link} to="/general-calc/" onClick={handleMenuItemClick}>
-              <FormattedMessage id="header.calculator" />
+              일반 계산기
             </Dropdown.Item>
             <Dropdown.Item as={Link} to="/compound-interest-calc/" onClick={handleMenuItemClick}>
-              <FormattedMessage id="header.compoundCalculator" />
+              복리 계산기
             </Dropdown.Item>
             <Dropdown.Item as={Link} to="/onlinetimer/" onClick={handleMenuItemClick}>
-              <FormattedMessage id="header.onlinetimer" />
+              온라인 타이머
             </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={() => {
               handleEmailModalShow()
               handleMenuItemClick()}}>
-              <FormattedMessage id="header.inquiry" />
+              문의하기
               <img src={smallSupportSVG} alt="Question Icon" />
             </Dropdown.Item>
           </DropdownButton>
           <Navbar.Brand className={styles.NavBrand} as={Link} to="/">
             <img className={styles.logo} src={process.env.PUBLIC_URL + '/favicon.ico'} width={44} alt="" />
-            <FormattedMessage id="header.title" />
+            isDay
           </Navbar.Brand>
           {state.isWideScreen && (
             <Nav className={styles.Nav}>
               <Nav.Link className={styles.NavLink} as={Link} to="/general-calc/">
-                <FormattedMessage id="header.calculator" />
+                일반 계산기
               </Nav.Link>
               <Nav.Link
                 className={styles.NavLink}
                 as={Link}
                 to="/compound-interest-calc/"
               >
-                <FormattedMessage id="header.compoundCalculator" />
+                복리 계산기
               </Nav.Link>
               <Nav.Link className={styles.NavLink} as={Link} to="/onlinetimer/">
-                <FormattedMessage id="header.onlinetimer" />
+                온라인 타이머
               </Nav.Link>
             </Nav>
           )}
           <Nav>
-            <InquiryButton
+            <Button
               className={styles.InquireBtn}
-              selectedLang={selectedLang}
               onClick={() => {
                 handleEmailModalShow()
                 handleMenuItemClick()}}>
               <img
                 src={supportSVG}
                 alt="Support Icon"
-                style={{ marginRight: 7 }}
+                className={styles.InquireBtnImg}
               />
-              <FormattedMessage id="header.inquiry" />
-            </InquiryButton>
-            <DropdownButton
+              <span className={styles.InquireBtnText}>문의하기</span>
+            </Button>
+            {/* <DropdownButton
               id="dropdown-basic-button"
               align={{ lg: "start" }}
               variant="light"
@@ -221,7 +197,7 @@ const Header = ({
                 handleMenuItemClick()}}>
                 日本語
               </Dropdown.Item>
-            </DropdownButton>
+            </DropdownButton> */}
           </Nav>
         </div>
       </Navbar>
@@ -229,9 +205,8 @@ const Header = ({
         show={showEmailModal}
         onClose={handleEmailModalClose}
         onSend={sendEmail}
-        selectedLang={selectedLang}
       />
-    </IntlProvider>
+    </div>
   );
 };
 

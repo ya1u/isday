@@ -5,42 +5,28 @@ import { getLanguageStyle } from '../App';
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
-import { FormattedMessage, IntlProvider } from "react-intl";
-import { useMediaQuery } from 'react-responsive';
-import messages from "../locales/messages";
 
 const CardHeader = styled(Card.Header)`
   ${props => getLanguageStyle(props.selectedLang)}
 `;
 
-const Content = ({ selectedLang }: { selectedLang: string }) => {
-  const isMobile = useMediaQuery({ maxWidth: 423 });
+const Content = () => {
   return (
-    <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+    <div>
       <div className={styles.Container}>
         <Card className={styles.Card}>
-          <CardHeader className={styles.CardHeader} selectedLang={selectedLang}>
-            <FormattedMessage id="content.calculator" />
-          </CardHeader>
+          <CardHeader className={styles.CardHeader}>계산기</CardHeader>
           <ListGroup className={styles.ListGroup} variant="flush">
-            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/general-calc/">
-              <FormattedMessage id="content.calculator.general" />
-            </ListGroup.Item>
-            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/compound-interest-calc/">
-              <FormattedMessage id={isMobile ? "content.calculator.compound-mobile" : "content.calculator.compound"} />
-            </ListGroup.Item>
+            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/general-calc/">- 계산기</ListGroup.Item>
+            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/compound-interest-calc/">- 복리 계산기</ListGroup.Item>
           </ListGroup>
-          <CardHeader className={styles.CardHeader} selectedLang={selectedLang}>
-            <FormattedMessage id="content.timer" />
-          </CardHeader>
+          <CardHeader className={styles.CardHeader}>타이머</CardHeader>
           <ListGroup className={styles.ListGroup} variant="flush">
-            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/onlinetimer/">
-              <FormattedMessage id="content.timer.onlinetimer" />
-            </ListGroup.Item>
+            <ListGroup.Item className={styles.ListGroupItem} as={Link} to="/onlinetimer/">- 온라인 타이머</ListGroup.Item>
           </ListGroup>
         </Card>
       </div>
-    </IntlProvider>
+    </div>
   );
 };
 

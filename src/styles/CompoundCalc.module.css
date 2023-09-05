@@ -20,6 +20,7 @@
       flex-direction: column;
       align-items: center;
       .Title {
+        font-family: 'Jalnan';
         font-size: 28px;
         margin: 20px auto;
       }
@@ -62,7 +63,11 @@
     font-size: 18px;
     margin: 30px 30px;
     padding-top: 30px;
+    .BoldText {
+      font-family: 'Jalnan';
+    }
     .BoldGreenText {
+      font-family: 'Jalnan';
       font-weight: bold;
       color: green;
     }

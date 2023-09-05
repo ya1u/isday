@@ -5,27 +5,15 @@ import { Modal, Button } from "react-bootstrap";
 import startIcon from "../../images/start_icon.png";
 import pauseIcon from "../../images/pause_icon.png";
 import alramIcon from "../../images/alram_icon.png";
-import { getLanguageStyle } from "../../App";
 import { Helmet } from "react-helmet-async";
-
-interface StyledTitleProps {
-  selectedLang: string;
-}
 
 interface TimerButtonProps {
   variant: "start" | "pause" | "reset" | "setting";
   onClick: () => void;
 }
 
-const StyledTitle = styled.div<StyledTitleProps>`
-  ${(props) => getLanguageStyle(props.selectedLang)}
-`;
-
-const ButtonContainer = styled.div<StyledTitleProps>`
-  ${(props) => getLanguageStyle(props.selectedLang)}
-`;
-
 const CustomButton = styled.button<TimerButtonProps>`
+  font-family: 'Jalnan';
   background-color: ${({ variant }) =>
     variant === "pause" || variant === "setting" ? "#333" : "grey"};
   color: #fff;
@@ -39,11 +27,7 @@ const CustomButton = styled.button<TimerButtonProps>`
     variant === "setting" ? "15px" : "0"};
 `;
 
-interface PomodoroTimerProps {
-  selectedLang: string;
-}
-
-const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
+const OnlineTimer = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showAlertModal, setShowAlertModal] = useState<boolean>(false);
   const [hours, setHours] = useState<number>(0);
@@ -65,254 +49,107 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   const alertSounds = [
     {
       id: 1,
-      name:
-        selectedLang === "ko"
-          ? "알람소리 1"
-          : selectedLang === "en"
-          ? "Alarm 1"
-          : selectedLang === "ja"
-          ? "アラーム 1"
-          : "",
+      name: "알람소리 1",
       src: "/alertSounds/alarm1.mp3",
     },
     {
       id: 2,
-      name:
-        selectedLang === "ko"
-          ? "알람소리 2"
-          : selectedLang === "en"
-          ? "Alarm 2"
-          : selectedLang === "ja"
-          ? "アラーム 2"
-          : "",
+      name: "알람소리 2",
       src: "/alertSounds/alarm2.mp3",
     },
     {
       id: 3,
-      name:
-        selectedLang === "ko"
-          ? "알람소리 3"
-          : selectedLang === "en"
-          ? "Alarm 3"
-          : selectedLang === "ja"
-          ? "アラーム 3"
-          : "",
+      name: "알람소리 3",
       src: "/alertSounds/alarm3.mp3",
     },
     {
       id: 4,
-      name:
-        selectedLang === "ko"
-          ? "알람소리 4"
-          : selectedLang === "en"
-          ? "Alarm 4"
-          : selectedLang === "ja"
-          ? "アラーム 4"
-          : "",
+      name: "알람소리 4",
       src: "/alertSounds/alarm4.mp3",
     },
     {
       id: 5,
-      name:
-        selectedLang === "ko"
-          ? "뻐꾸기"
-          : selectedLang === "en"
-          ? "Cuckoo"
-          : selectedLang === "ja"
-          ? "カッコウ"
-          : "",
+      name: "뻐꾸기",
       src: "/alertSounds/cuckoo.mp3",
     },
     {
       id: 6,
-      name:
-        selectedLang === "ko"
-          ? "초인종 1"
-          : selectedLang === "en"
-          ? "Doorbell 1"
-          : selectedLang === "ja"
-          ? "呼び鈴 1"
-          : "",
+      name: "초인종 1",
       src: "/alertSounds/doorbell1.mp3",
     },
     {
       id: 7,
-      name:
-        selectedLang === "ko"
-          ? "초인종 2"
-          : selectedLang === "en"
-          ? "Doorbell 2"
-          : selectedLang === "ja"
-          ? "呼び鈴 2"
-          : "",
+      name: "초인종 2",
       src: "/alertSounds/doorbell2.mp3",
     },
     {
       id: 8,
-      name:
-        selectedLang === "ko"
-          ? "노크 1"
-          : selectedLang === "en"
-          ? "Knock 1"
-          : selectedLang === "ja"
-          ? "ノック 1"
-          : "",
+      name: "노크 1",
       src: "/alertSounds/Knock1.mp3",
     },
     {
       id: 9,
-      name:
-        selectedLang === "ko"
-          ? "노크 2"
-          : selectedLang === "en"
-          ? "Knock 2"
-          : selectedLang === "ja"
-          ? "ノック 2"
-          : "",
+      name: "노크 2",
       src: "/alertSounds/Knock2.mp3",
     },
     {
       id: 10,
-      name:
-        selectedLang === "ko"
-          ? "노크 3"
-          : selectedLang === "en"
-          ? "Knock 3"
-          : selectedLang === "ja"
-          ? "ノック 3"
-          : "",
+      name: "노크 3",
       src: "/alertSounds/Knock3.mp3",
     },
     {
       id: 11,
-      name:
-        selectedLang === "ko"
-          ? "노크 4"
-          : selectedLang === "en"
-          ? "Knock 4"
-          : selectedLang === "ja"
-          ? "ノック 4"
-          : "",
+      name: "노크 4",
       src: "/alertSounds/Knock4.mp3",
     },
     {
       id: 12,
-      name:
-        selectedLang === "ko"
-          ? "신나는 음악 1"
-          : selectedLang === "en"
-          ? "Exciting Music 1"
-          : selectedLang === "ja"
-          ? "楽しい音楽 1"
-          : "",
+      name: "신나는 음악 1",
       src: "/alertSounds/ExcitingMusic1.mp3",
     },
     {
       id: 13,
-      name:
-        selectedLang === "ko"
-          ? "신나는 음악 2"
-          : selectedLang === "en"
-          ? "Exciting Music 2"
-          : selectedLang === "ja"
-          ? "楽しい音楽 2"
-          : "",
+      name: "신나는 음악 2",
       src: "/alertSounds/ExcitingMusic2.mp3",
     },
     {
       id: 14,
-      name:
-        selectedLang === "ko"
-          ? "신나는 음악 3"
-          : selectedLang === "en"
-          ? "Exciting Music 3"
-          : selectedLang === "ja"
-          ? "楽しい音楽 3"
-          : "",
+      name: "신나는 음악 3",
       src: "/alertSounds/ExcitingMusic3.mp3",
     },
     {
       id: 15,
-      name:
-        selectedLang === "ko"
-          ? "신나는 음악 4"
-          : selectedLang === "en"
-          ? "Exciting Music 4"
-          : selectedLang === "ja"
-          ? "楽しい音楽 4"
-          : "",
+      name: "신나는 음악 4",
       src: "/alertSounds/ExcitingMusic4.mp3",
     },
     {
       id: 16,
-      name:
-        selectedLang === "ko"
-          ? "신나는 음악 5"
-          : selectedLang === "en"
-          ? "Exciting Music 5"
-          : selectedLang === "ja"
-          ? "楽しい音楽 5"
-          : "",
+      name: "신나는 음악 5",
       src: "/alertSounds/ExcitingMusic5.mp3",
     },
     {
       id: 17,
-      name:
-        selectedLang === "ko"
-          ? "긍정적인 음악 1"
-          : selectedLang === "en"
-          ? "Positive Music 1"
-          : selectedLang === "ja"
-          ? "ポジティブな音楽 1"
-          : "",
+      name: "긍정적인 음악 1",
       src: "/alertSounds/PositiveMusic1.mp3",
     },
     {
       id: 18,
-      name:
-        selectedLang === "ko"
-          ? "긍정적인 음악 2"
-          : selectedLang === "en"
-          ? "Positive Music 2"
-          : selectedLang === "ja"
-          ? "ポジティブな音楽 2"
-          : "",
+      name: "긍정적인 음악 2",
       src: "/alertSounds/PositiveMusic2.mp3",
     },
     {
       id: 19,
-      name:
-        selectedLang === "ko"
-          ? "긍정적인 음악 3"
-          : selectedLang === "en"
-          ? "Positive Music 3"
-          : selectedLang === "ja"
-          ? "ポジティブな音楽 3"
-          : "",
+      name: "긍정적인 음악 3",
       src: "/alertSounds/PositiveMusic3.mp3",
     },
     {
       id: 20,
-      name:
-        selectedLang === "ko"
-          ? "긍정적인 음악 4"
-          : selectedLang === "en"
-          ? "Positive Music 4"
-          : selectedLang === "ja"
-          ? "ポジティブな音楽 4"
-          : "",
+      name: "긍정적인 음악 4",
       src: "/alertSounds/PositiveMusic4.mp3",
     },
     {
       id: 21,
-      name:
-        selectedLang === "ko"
-          ? "긍정적인 음악 5"
-          : selectedLang === "en"
-          ? "Positive Music 5"
-          : selectedLang === "ja"
-          ? "ポジティブな音楽 5"
-          : "",
+      name: "긍정적인 음악 5",
       src: "/alertSounds/PositiveMusic5.mp3",
     },
   ];
@@ -495,128 +332,50 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
   return (
     <div className={styles.Container}>
       <Helmet>
-        <title>
-          {selectedLang == "en"
-            ? "Online Timer"
-            : selectedLang == "ja"
-            ? "オンラインタイマー"
-            : "온라인 타이머"}
-        </title>
+        <title>온라인 타이머</title>
         <meta name="url" content="https://isday.net/onlinetimer/" />
-        <meta name="description" content={
-            selectedLang == "en"
-              ? "Online timers help users effectively manage their time and reschedule. Use this page to allow users to set the desired time and start a timer to concentrate on their work or relax for a break for a specified time."
-              : selectedLang == "ja"
-              ? "オンライン タイマーは、ユーザが時間とスケジュールを効果的に管理するのに役立ちます。 このページを使用すると、ユーザは目的の時間を設定し、タイマーを起動して作業に集中したり、指定した時間の休憩を取ることができます。"
-              : "온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."
-          }/>
-        <meta property="og:title" content={
-            selectedLang == "en"
-              ? "Online Timer - isDay.net"
-              : selectedLang == "ja"
-              ? "オンラインタイマー - isDay.net"
-              : "온라인 타이머 - isDay.net"
-          }/>
-        <meta property="og:description" content={
-            selectedLang == "en"
-              ? "Online timers help users effectively manage their time and reschedule. Use this page to allow users to set the desired time and start a timer to concentrate on their work or relax for a break for a specified time."
-              : selectedLang == "ja"
-              ? "オンライン タイマーは、ユーザが時間とスケジュールを効果的に管理するのに役立ちます。 このページを使用すると、ユーザは目的の時間を設定し、タイマーを起動して作業に集中したり、指定した時間の休憩を取ることができます。"
-              : "온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."
-          }/>
+        <meta name="description" content="온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."/>
+        <meta property="og:title" content="온라인 타이머 - isDay.net"/>
+        <meta property="og:description" content="온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."/>
       </Helmet>
       <div>
         <div className={styles.TimerContainer}>
-          <StyledTitle className={styles.Title} selectedLang={selectedLang}>
-            {selectedLang === "ko"
-              ? "온라인 타이머"
-              : selectedLang === "en"
-              ? "Online Timer"
-              : "オンラインタイマー"}
-          </StyledTitle>
+          <div className={styles.Title}>온라인 타이머</div>
           <div className={styles.TimeDisplay}>
             {`${hours.toString().padStart(2, "0")}:${minutes
               .toString()
               .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}
             <p className={styles.ShadowTime}>88:88:88</p>
           </div>
-          <ButtonContainer
-            className={styles.ButtonContainer}
-            selectedLang={selectedLang}
-          >
-            <CustomButton
-              className={styles.CustomButton}
-              variant="start"
-              onClick={handleStartTimer}
-            >
-              {selectedLang === "ko"
-                ? "시작"
-                : selectedLang === "en"
-                ? "Start"
-                : "スタート"}
+          <div className={styles.ButtonContainer}>
+            <CustomButton className={styles.CustomButton} variant="start" onClick={handleStartTimer}>
+              시작
             </CustomButton>
-            <CustomButton
-              className={styles.CustomButton}
-              variant="pause"
-              onClick={handlePauseTimer}
-            >
-              {selectedLang === "ko"
-                ? "일시정지"
-                : selectedLang === "en"
-                ? "Pause"
-                : "一時停止"}
+            <CustomButton className={styles.CustomButton} variant="pause" onClick={handlePauseTimer}>
+              일시정지
             </CustomButton>
-            <CustomButton
-              className={styles.CustomButton}
-              variant="reset"
-              onClick={handleResetTimer}
-            >
-              {selectedLang === "ko"
-                ? "리셋"
-                : selectedLang === "en"
-                ? "Reset"
-                : "リセット"}
+            <CustomButton className={styles.CustomButton} variant="reset" onClick={handleResetTimer}>
+              리셋
             </CustomButton>
-            <CustomButton
-              className={styles.CustomButton}
-              variant="setting"
-              onClick={handleShowModal}
-            >
-              {selectedLang === "ko"
-                ? "설정"
-                : selectedLang === "en"
-                ? "Setting"
-                : "設定"}
+            <CustomButton className={styles.CustomButton} variant="setting" onClick={handleShowModal}>
+              설정
             </CustomButton>
-          </ButtonContainer>
+          </div>
         </div>
 
         {/* 기존 시간 설정 모달 */}
         <Modal
           className={styles.SettingModal}
-          selectedLang={selectedLang}
           show={showModal}
           onHide={handleCloseModal}
         >
           <Modal.Header className={styles.ModalHeader}>
-            <Modal.Title className={styles.ModalTitle}>
-              {selectedLang === "ko"
-                ? "설정"
-                : selectedLang === "en"
-                ? "Setting"
-                : "設定"}
-            </Modal.Title>
+            <Modal.Title className={styles.ModalTitle}>설정</Modal.Title>
           </Modal.Header>
           <Modal.Body className={styles.ModalBody}>
             <div className={styles.TimeSetContainer}>
               <div className={styles.Hour}>
-                <label>
-                  {selectedLang === "ko"
-                    ? "시간"
-                    : selectedLang === "en"
-                    ? "Hour"
-                    : "時間"}
-                </label>
+                <label>시간</label>
                 <div className={styles.TimeSet}>
                   <button
                     className={styles.TimeSetBtn}
@@ -645,13 +404,7 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
                 </div>
               </div>
               <div className={styles.Min}>
-                <label>
-                  {selectedLang === "ko"
-                    ? "분"
-                    : selectedLang === "en"
-                    ? "Min"
-                    : "分"}
-                </label>
+                <label>분</label>
                 <div className={styles.TimeSet}>
                   <button
                     className={styles.TimeSetBtn}
@@ -680,13 +433,7 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
                 </div>
               </div>
               <div className={styles.Sec}>
-                <label>
-                  {selectedLang === "ko"
-                    ? "초"
-                    : selectedLang === "en"
-                    ? "Sec"
-                    : "秒"}
-                </label>
+                <label>초</label>
                 <div className={styles.TimeSet}>
                   <button
                     className={styles.TimeSetBtn}
@@ -718,13 +465,7 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
 
             {/* 알림음 선택 셀렉트 박스 */}
             <div className={styles.SoundSetContainer}>
-              <div className={styles.Sound}>
-                {selectedLang === "ko"
-                  ? "알림음"
-                  : selectedLang === "en"
-                  ? "Sound"
-                  : "通知音"}
-              </div>
+              <div className={styles.Sound}>알림음</div>
               <div className={styles.SoundSet}>
                 <div className={styles.SoundOption}>
                   <select
@@ -768,31 +509,13 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
                     onChange={() => {
                       setInputIsLooping(!inputIsLooping);
                     }}
-                  />
-                  {selectedLang === "ko"
-                    ? "반복재생"
-                    : selectedLang === "en"
-                    ? "Loop"
-                    : "反復再生"}
-                </label>
+                  />반복재생</label>
               </div>
             </div>
           </Modal.Body>
           <Modal.Footer className={styles.ModalFooter}>
-            <Button className={styles.CancelBtn} onClick={handleCloseModal}>
-              {selectedLang === "ko"
-                ? "취소"
-                : selectedLang === "en"
-                ? "Cancel"
-                : "キャンセル"}
-            </Button>
-            <Button className={styles.SaveBtn} onClick={handleSaveModal}>
-              {selectedLang === "ko"
-                ? "저장"
-                : selectedLang === "en"
-                ? "Save"
-                : "貯蔵"}
-            </Button>
+            <Button className={styles.CancelBtn} onClick={handleCloseModal}>취소</Button>
+            <Button className={styles.SaveBtn} onClick={handleSaveModal}>저장</Button>
           </Modal.Footer>
         </Modal>
 
@@ -803,32 +526,14 @@ const OnlineTimer: React.FC<PomodoroTimerProps> = ({ selectedLang }) => {
           onHide={handleCloseAlertModal}
         >
           <Modal.Header className={styles.ModalHeader}>
-            <Modal.Title className={styles.ModalTitle}>
-              {selectedLang === "ko"
-                ? "타이머 종료"
-                : selectedLang === "en"
-                ? "Timer termination"
-                : "タイマー終了"}
-            </Modal.Title>
+            <Modal.Title className={styles.ModalTitle}>타이머 종료</Modal.Title>
           </Modal.Header>
           <Modal.Body className={styles.ModalBody}>
             <img src={alramIcon} alt="Toggle Icon" />
-            <p className={styles.Ment}>
-              {selectedLang === "ko"
-                ? "타이머가 종료되었습니다."
-                : selectedLang === "en"
-                ? "Timer has ended."
-                : "タイマーが終了しました。"}
-            </p>
+            <p className={styles.Ment}>타이머가 종료되었습니다.</p>
           </Modal.Body>
           <Modal.Footer className={styles.ModalFooter}>
-            <Button className={styles.CheckBtn} onClick={handleCloseAlertModal}>
-              {selectedLang === "ko"
-                ? "확인"
-                : selectedLang === "en"
-                ? "Check"
-                : "確認"}
-            </Button>
+            <Button className={styles.CheckBtn} onClick={handleCloseAlertModal}>확인</Button>
           </Modal.Footer>
         </Modal>
       </div>

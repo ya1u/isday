@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled, { css } from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -42,61 +42,25 @@ const getLanguageStyle = (selectedLang : string) => {
 };
 
 function App() {
-  const [selectedLang, setSelectedLang] = useState(
-    localStorage.getItem("lang") || navigator.language.split("-")[0]
-  );
-
-  const handleLanguageChange = (lang: string) => {
-    setSelectedLang(lang);
-    localStorage.setItem("lang", lang);
-  };
-  
   return (
     <div className={styles.App}>
       <Helmet>
-        <title>
-          {selectedLang == "en"
-              ? "isDay - Web for Your Daily Needs"
-              : selectedLang == "ja"
-              ? "isDay - 日常に必要なウェブ"
-              : "isDay(이즈데이) - 일상에 필요한 웹"}
-        </title>
-        <meta name="description" content={
-            selectedLang == "en"
-              ? "A platform that provides personal financial calculators and online timers for a variety of applications"
-              : selectedLang == "ja"
-              ? "さまざまなアプリケーションに個人の財務計算ツールとオンラインタイマーを提供するプラットフォーム"
-              : "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
-          }/>
+        <title>isDay(이즈데이) - 일상에 필요한 웹</title>
+        <meta name="description" content="다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"/>
         <meta property="og:url" content="https://isday.net/" />
-        <meta property="og:title" content={
-            selectedLang == "en"
-              ? "isDay - Web for Your Daily Needs"
-              : selectedLang == "ja"
-              ? "isDay - 日常に必要なウェブ"
-              : "isDay(이즈데이) - 일상에 필요한 웹"
-          }/>
-        <meta property="og:description" content={
-            selectedLang == "en"
-              ? "A platform that provides personal financial calculators and online timers for a variety of applications"
-              : selectedLang == "ja"
-              ? "さまざまなアプリケーションに個人の財務計算ツールとオンラインタイマーを提供するプラットフォーム"
-              : "다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"
-          }/>
+        <meta property="og:title" content="isDay(이즈데이) - 일상에 필요한 웹"/>
+        <meta property="og:description" content="다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"/>
       </Helmet>
       <BrowserRouter>
-        <Header
-          selectedLang={selectedLang}
-          onLanguageChange={handleLanguageChange}
-        />
+        <Header/>
         <div className={styles.Container}>
           <div className={styles.Wrapper}>
             <div className={styles.ContentArea}>
               <Routes>
-                <Route path="/" element={<Content selectedLang={selectedLang} />} />
-                <Route path="/general-calc/" element={<Calculator selectedLang={selectedLang} />} />
-                <Route path="/compound-interest-calc/" element={<CompoundCalc selectedLang={selectedLang} />} />
-                <Route path="/onlinetimer/" element={<OnlineTimer selectedLang={selectedLang} />} />
+                <Route path="/" element={<Content/>} />
+                <Route path="/general-calc/" element={<Calculator />} />
+                <Route path="/compound-interest-calc/" element={<CompoundCalc />} />
+                <Route path="/onlinetimer/" element={<OnlineTimer />} />
               </Routes>
             </div>
             {/* <div className={styles.Advertisement}>
@@ -105,7 +69,7 @@ function App() {
             </div> */}
           </div>
         </div>
-        <Footer selectedLang={selectedLang} />
+        <Footer/>
       </BrowserRouter>
       <FontFaceStyle />
     </div>

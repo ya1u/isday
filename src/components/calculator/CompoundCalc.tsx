@@ -1,9 +1,5 @@
 import React, { useState, useCallback } from "react";
 import styles from "../../styles/CompoundCalc.module.css"
-import styled from "styled-components";
-import { FormattedMessage, IntlProvider } from "react-intl";
-import messages from "../../locales/messages";
-import { getLanguageStyle } from "../../App";
 import { Helmet } from "react-helmet-async";
 
 interface InvestmentData {
@@ -21,26 +17,12 @@ interface CalculatorState {
   investmentData: InvestmentData[];
 }
 
-interface StyledTitleProps {
-  selectedLang: string;
-}
-
-const StyledTitle = styled.div<StyledTitleProps>`
-  ${props => getLanguageStyle(props.selectedLang)}
-`;
-
-const ResultDisplay = styled.p<StyledTitleProps>`
-  p {
-     ${props => getLanguageStyle(props.selectedLang)} 
-  }
-`;
-
 // 돈 형식에 콤마 추가 함수
 const numberWithCommas = (number: string) => {
   return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
+const CompoundCalculator = () => {
   const [calculatorState, setCalculatorState] = useState<CalculatorState>({
     principal: 0,
     interestRate: 0,
@@ -109,47 +91,19 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
   }, []);
 
   return (
-    <IntlProvider locale={selectedLang} messages={messages[selectedLang]}>
+    <div>
       <Helmet>
-        <title>
-          {selectedLang == "en"
-            ? "Compound Interest Calculator"
-            : selectedLang == "ja"
-            ? "複利計算機"
-            : "복리 계산기"}
-        </title>
+        <title>복리 계산기</title>
         <meta name="url" content="https://isday.net/compound-interest-calc/" />
-        <meta name="description" content={
-            selectedLang == "en"
-              ? "The compound interest calculator helps users understand and calculate the compound interest principle. This page allows users to enter a specific initial investment amount and annual rate to predict how much funds will increase over the next period."
-              : selectedLang == "ja"
-              ? "複利計算機は、ユーザーが複利原理を理解し、計算するのに役立ちます。 このページでは、特定の初期投資金額と年率を入力して、次の期間にどれだけ資金が増加するかを予測することができます。"
-              : "복리계산기는 사용자가 복리 원리를 이해하고 계산할 수 있도록 도와줍니다. 이 페이지를 통해 사용자는 특정 초기 투자 금액과 연이율을 입력하여, 향후 일정 기간 동안 얼마나 자금이 증가하는지를 예측할 수 있습니다."
-          }/>
-        <meta property="og:title" content={
-            selectedLang == "en"
-              ? "Compound Interest Calculator - isDay.net"
-              : selectedLang == "ja"
-              ? "複利計算機 - isDay.net"
-              : "복리 계산기 - isDay.net"
-          }/>
-        <meta property="og:description" content={
-            selectedLang == "en"
-              ? "The compound interest calculator helps users understand and calculate the compound interest principle. This page allows users to enter a specific initial investment amount and annual rate to predict how much funds will increase over the next period."
-              : selectedLang == "ja"
-              ? "複利計算機は、ユーザーが複利原理を理解し、計算するのに役立ちます。 このページでは、特定の初期投資金額と年率を入力して、次の期間にどれだけ資金が増加するかを予測することができます。"
-              : "복리계산기는 사용자가 복리 원리를 이해하고 계산할 수 있도록 도와줍니다. 이 페이지를 통해 사용자는 특정 초기 투자 금액과 연이율을 입력하여, 향후 일정 기간 동안 얼마나 자금이 증가하는지를 예측할 수 있습니다."
-          }/>
+        <meta name="description" content="복리계산기는 사용자가 복리 원리를 이해하고 계산할 수 있도록 도와줍니다. 이 페이지를 통해 사용자는 특정 초기 투자 금액과 연이율을 입력하여, 향후 일정 기간 동안 얼마나 자금이 증가하는지를 예측할 수 있습니다."/>
+        <meta property="og:title" content="복리 계산기 - isDay.net"/>
+        <meta property="og:description" content="복리계산기는 사용자가 복리 원리를 이해하고 계산할 수 있도록 도와줍니다. 이 페이지를 통해 사용자는 특정 초기 투자 금액과 연이율을 입력하여, 향후 일정 기간 동안 얼마나 자금이 증가하는지를 예측할 수 있습니다."/>
       </Helmet>
       <div className={styles.Container}>
         <div className={styles.CalculatorContainer}>
           <div className={styles.CalculatorScreen}>
-            <StyledTitle className={styles.Title} selectedLang={selectedLang}>
-              <FormattedMessage id="content.compoundCalc.title" />
-            </StyledTitle>
-            <label className={styles.InputLabel}>
-              <FormattedMessage id="content.compoundCalc.investment" /> :
-            </label>
+            <div className={styles.Title}>복리 계산기</div>
+            <label className={styles.InputLabel}>투자원금 (₩) :</label>
             <input
               className={styles.Input}
               type="text"
@@ -160,36 +114,18 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
               }
               onChange={handlePrincipalChange}
               onKeyPress={handleKeyPress}
-              placeholder={
-                selectedLang === "ko"
-                  ? "원금을 입력하세요"
-                  : selectedLang === "en"
-                  ? "Enter principal amount"
-                  : "元金を入力してください"
-              }
-            />
+              placeholder="원금을 입력하세요"/>
 
-            <label className={styles.InputLabel}>
-              <FormattedMessage id="content.compoundCalc.period" /> :
-            </label>
+            <label className={styles.InputLabel}>투자기간 (년) :</label>
             <input
               className={styles.Input}
               type="text"
               value={calculatorState.period > 0 ? calculatorState.period : ""}
               onChange={handlePeriodChange}
               onKeyPress={handleKeyPress}
-              placeholder={
-                selectedLang === "ko"
-                  ? "기간을 입력하세요"
-                  : selectedLang === "en"
-                  ? "Enter period"
-                  : "期間を入力してください"
-              }
-            />
+              placeholder="기간을 입력하세요"/>
 
-            <label className={styles.InputLabel}>
-              <FormattedMessage id="content.compoundCalc.rate" /> :
-            </label>
+            <label className={styles.InputLabel}>연이율 (%) :</label>
             <input
               className={styles.Input}
               type="number"
@@ -199,74 +135,32 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
                   : ""
               }
               onChange={handleInterestRateChange}
-              placeholder={
-                selectedLang === "ko"
-                  ? "연이율을 입력하세요"
-                  : selectedLang === "en"
-                  ? "Enter annual interest rate"
-                  : "年利を入力してください"
-              }
-            />
+              placeholder="연이율을 입력하세요"/>
 
-            <button className={styles.CalculateButton} onClick={handleCalculateClick}>
-              {selectedLang === "ko"
-                ? "계산하기"
-                : selectedLang === "en"
-                ? "Calculate"
-                : "計算する"}
-            </button>
+            <button className={styles.CalculateButton} onClick={handleCalculateClick}>계산하기</button>
           </div>
         </div>
 
         {calculatorState.result !== null && (
-          <ResultDisplay className={styles.ResultDisplay} selectedLang={selectedLang}>
-            <p>
-              {selectedLang === "ko"
-                ? "수익 금액"
-                : selectedLang === "en"
-                ? "Income"
-                : "収益"}{" "}
-              :{" "}
-              {numberWithCommas(
-                (calculatorState.result - calculatorState.principal).toFixed(0)
-              )}{" "}
-              {selectedLang === "ko" ? "₩" : selectedLang === "en" ? "$" : "円"}
+          <div className={styles.ResultDisplay}>
+            <p className={styles.BoldText}>
+              {"수익 금액 : "}
+              {numberWithCommas((calculatorState.result - calculatorState.principal).toFixed(0))}
+              {" ₩"}
             </p>
             <p className={styles.BoldGreenText}>
-              {selectedLang === "ko"
-                ? "최종 금액"
-                : selectedLang === "en"
-                ? "Final Amount"
-                : "最終金額"}{" "}
-              : {numberWithCommas(calculatorState.result.toFixed(0))}{" "}
-              {selectedLang === "ko" ? "₩" : selectedLang === "en" ? "$" : "円"}
+              {"최종 금액 : "}
+              {numberWithCommas(calculatorState.result.toFixed(0))}
+              {" ₩"}
             </p>
             {calculatorState.investmentData && (
               <table className={styles.Table}>
                 <thead>
                   <tr>
                     <th className={styles.Th}>#</th>
-                    <th className={styles.Th}>
-                      {selectedLang === "ko"
-                        ? "수익"
-                        : selectedLang === "en"
-                        ? "Income"
-                        : "収益"}
-                    </th>
-                    <th className={styles.Th}>
-                      {selectedLang === "ko"
-                        ? "총 금액"
-                        : selectedLang === "en"
-                        ? "Total Amount"
-                        : "合計金額"}
-                    </th>
-                    <th className={styles.Th}>
-                      {selectedLang === "ko"
-                        ? "수익률"
-                        : selectedLang === "en"
-                        ? "Interest Rate"
-                        : "収益率"}
-                    </th>
+                    <th className={styles.Th}>수익</th>
+                    <th className={styles.Th}>총 금액</th>
+                    <th className={styles.Th}>수익률</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -274,31 +168,19 @@ const CompoundCalculator = ({ selectedLang }: { selectedLang: string }) => {
                     <tr key={data.year}>
                       <th className={styles.Th}>{data.year}</th>
                       <td className={styles.Td}>
-                        {numberWithCommas(data.income.toFixed(0))}{" "}
-                        {selectedLang === "ko"
-                          ? "₩"
-                          : selectedLang === "en"
-                          ? "$"
-                          : "円"}
-                      </td>
+                        {numberWithCommas(data.income.toFixed(0))}{" ₩"}</td>
                       <td className={styles.Td}>
-                        {numberWithCommas(data.amount.toFixed(0))}{" "}
-                        {selectedLang === "ko"
-                          ? "₩"
-                          : selectedLang === "en"
-                          ? "$"
-                          : "円"}
-                      </td>
+                        {numberWithCommas(data.amount.toFixed(0))}{" ₩"}</td>
                       <td className={styles.Td}>{data.interestRate.toFixed(2)}%</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             )}
-          </ResultDisplay>
+          </div>
         )}
       </div>
-    </IntlProvider>
+    </div>
   );
 };
 
