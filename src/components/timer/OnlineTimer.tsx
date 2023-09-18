@@ -6,6 +6,7 @@ import startIcon from "../../images/start_icon.png";
 import pauseIcon from "../../images/pause_icon.png";
 import alramIcon from "../../images/alram_icon.png";
 // import Head from "next/head";
+import { Helmet } from 'react-helmet-async';
 
 interface TimerButtonProps {
   variant: "start" | "pause" | "reset" | "setting";
@@ -331,13 +332,13 @@ const OnlineTimer = () => {
 
   return (
     <div className={styles.Container}>
-      {/* <Head>
+      <Helmet>
         <title>온라인 타이머</title>
         <meta name="url" content="https://isday.net/onlinetimer/" />
         <meta name="description" content="온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."/>
         <meta property="og:title" content="온라인 타이머 - isDay.net"/>
         <meta property="og:description" content="온라인 타이머는 사용자가 시간을 효과적으로 관리하고 일정을 조절하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 원하는 시간을 설정하고 타이머를 시작하여 지정된 시간 동안 작업을 집중하거나 휴식을 취할 수 있습니다."/>
-      </Head> */}
+      </Helmet>
       <div>
         <div className={styles.TimerContainer}>
           <div className={styles.Title}>온라인 타이머</div>
