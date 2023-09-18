@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import styles from "../../styles/Calculator.module.css";
 import * as math from "mathjs";
-import { Helmet } from 'react-helmet-async';
+// import Head from "next/head";
 
 const Calculator = () => {
   const [inputValue, setInputValue] = useState("");
@@ -57,13 +57,13 @@ const Calculator = () => {
 
   return (
     <div>
-      <Helmet>
+      {/* <Head>
         <title>일반 계산기</title>
         <meta name="url" content="https://isdat.net/general-calc/" />
         <meta name="description" content="일반 계산기는 사용자가 간단한 수학적 계산을 수행하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 숫자와 연산자를 입력하여 더하기, 빼기, 곱하기, 나누기 등의 연산을 수행할 수 있습니다."/>
         <meta property="og:title" content="일반 계산기 - isDay.net"/>
         <meta property="og:description" content="일반 계산기는 사용자가 간단한 수학적 계산을 수행하는 데 도움을 줍니다. 이 페이지를 사용하여 사용자는 숫자와 연산자를 입력하여 더하기, 빼기, 곱하기, 나누기 등의 연산을 수행할 수 있습니다."/>
-      </Helmet>
+      </Head> */}
       <div className={styles.Container}>
         <div className={styles.Title}>일반 계산기</div>
         <div className={styles.CalculatorContainer}>

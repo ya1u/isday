@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import styles from "../../styles/CompoundCalc.module.css"
-import { Helmet } from "react-helmet-async";
+// import Head from "next/head";
 
 interface InvestmentData {
   year: number;
@@ -92,13 +92,13 @@ const CompoundCalculator = () => {
 
   return (
     <div>
-      <Helmet>
+      {/* <Head>
         <title>복리 계산기</title>
         <meta name="url" content="https://isday.net/compound-interest-calc/" />
         <meta name="description" content="복리계산기는 사용자가 복리 원리를 이해하고 계산할 수 있도록 도와줍니다. 이 페이지를 통해 사용자는 특정 초기 투자 금액과 연이율을 입력하여, 향후 일정 기간 동안 얼마나 자금이 증가하는지를 예측할 수 있습니다."/>
         <meta property="og:title" content="복리 계산기 - isDay.net"/>
         <meta property="og:description" content="복리계산기는 사용자가 복리 원리를 이해하고 계산할 수 있도록 도와줍니다. 이 페이지를 통해 사용자는 특정 초기 투자 금액과 연이율을 입력하여, 향후 일정 기간 동안 얼마나 자금이 증가하는지를 예측할 수 있습니다."/>
-      </Helmet>
+      </Head> */}
       <div className={styles.Container}>
         <div className={styles.CalculatorContainer}>
           <div className={styles.CalculatorScreen}>

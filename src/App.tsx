@@ -9,8 +9,7 @@ import Content from "./components/Content";
 import Calculator from "./components/calculator/Calculator";
 import CompoundCalc from "./components/calculator/CompoundCalc";
 import OnlineTimer from "./components/timer/OnlineTimer";
-import { Helmet } from "react-helmet-async";
-
+// import Head from "next/head";
 
 const FontFaceStyle = styled.div`
   @font-face {
@@ -44,13 +43,13 @@ const getLanguageStyle = (selectedLang : string) => {
 function App() {
   return (
     <div className={styles.App}>
-      <Helmet>
-        <title>isDay(이즈데이) - 일상에 필요한 웹</title>
+      {/* <Head>
+        <title>isDay - 일상에 필요한 웹</title>
         <meta name="description" content="다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"/>
         <meta property="og:url" content="https://isday.net/" />
-        <meta property="og:title" content="isDay(이즈데이) - 일상에 필요한 웹"/>
+        <meta property="og:title" content="isDay - 일상에 필요한 웹"/>
         <meta property="og:description" content="다양한 용도에 사용되는 개인 금융 계산기와 온라인 타이머를 제공하는 플랫폼"/>
-      </Helmet>
+      </Head> */}
       <BrowserRouter>
         <Header/>
         <div className={styles.Container}>

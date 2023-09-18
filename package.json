@@ -17,20 +17,15 @@
     "install": "^0.13.0",
     "mathjs": "^11.9.1",
     "npm": "^9.8.1",
-    "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
-    "react-dom": "^18.2.0",
-    "react-helmet-async": "^1.3.0",
     "react-responsive": "^9.0.2",
-    "react-router-dom": "^6.14.2",
-    "react-scripts": "5.0.1",
-    "react-snap": "^1.23.0",
+    "react-router-dom": "^6.15.0",
+    "react-scripts": "^5.0.1",
     "styled-components": "^6.0.5",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "postbuild": "react-snap",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -55,7 +50,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/react-helmet": "^6.1.6"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
